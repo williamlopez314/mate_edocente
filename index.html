@@ -3,239 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instrumento de Conocimientos Específicos - Matemática</title>
-    
-    <!-- Fuentes institucionales y diseño limpio -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>Mate e-Docente | Plataforma Interactiva</title>
     
     <!-- KaTeX para renderizado de fórmulas matemáticas -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 
     <!-- SheetJS para lectura de archivos Excel (.xls, .xlsx) -->
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 
     <style>
         :root {
-            --mineduc-blue: #0F3795;
-            --mineduc-red: #E32A22;
-            --bg-light: #F4F6F9;
-            --text-dark: #333333;
-            --correct-green: #28a745;
-            --error-red: #dc3545;
+            --primary-color: #2c3e50;
+            --secondary-color: #18bc9c;
+            --bg-color: #ecf0f1;
+            --text-color: #333;
+            --correct-color: #27ae60;
+            --error-color: #c0392b;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Roboto', sans-serif; }
-        body { background-color: var(--bg-light); color: var(--text-dark); line-height: 1.6; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { display: flex; height: 100vh; background-color: var(--bg-color); color: var(--text-color); overflow: hidden; }
 
-        .top-bar { height: 8px; background: linear-gradient(to right, var(--mineduc-blue) 50%, var(--mineduc-red) 50%); }
-
-        header {
-            background-color: #ffffff;
-            padding: 20px 40px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 3px solid var(--mineduc-blue);
-        }
-
-        .header-titles h1 { font-size: 1.2rem; color: var(--text-dark); font-weight: 700; }
-        .header-titles h2 { font-size: 1rem; color: #666; font-weight: 400; }
-
-        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
-
-        /* Panel de Administración */
-        .admin-panel {
-            background: #e9ecef;
-            border: 2px dashed #adb5bd;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 30px;
+        /* Menú Lateral (Estilo Clásico) */
+        .sidebar {
+            width: 260px;
+            background-color: var(--primary-color);
+            color: white;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            overflow-y: auto;
         }
-        .admin-panel h3 { color: var(--mineduc-blue); font-size: 1.1rem; }
-        .admin-controls { display: flex; gap: 10px; align-items: center; }
-        .admin-controls input[type="file"] { flex-grow: 1; }
+        .sidebar-header { padding: 20px; background-color: #1a252f; text-align: center; font-weight: bold; font-size: 1.2rem; }
+        .nav-item {
+            padding: 15px 20px; cursor: pointer; border-bottom: 1px solid #34495e;
+            transition: background 0.3s;
+        }
+        .nav-item:hover, .nav-item.active { background-color: var(--secondary-color); }
+        .nav-item.hidden { display: none; }
 
+        /* Contenido Principal */
+        .main-content {
+            flex-grow: 1; padding: 40px; overflow-y: auto; position: relative;
+        }
+
+        .tab-section { display: none; animation: fadeIn 0.3s ease-in-out; }
+        .tab-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Elementos de UI */
+        h1, h2 { color: var(--primary-color); margin-bottom: 20px; }
+        p { margin-bottom: 15px; font-size: 1.1rem; line-height: 1.6; }
+        
+        .btn {
+            padding: 10px 20px; border: none; border-radius: 5px; font-size: 1rem;
+            cursor: pointer; transition: 0.3s; font-weight: bold;
+        }
+        .btn-primary { background-color: var(--secondary-color); color: white; }
+        .btn-primary:hover { background-color: #128f76; }
+        .btn-admin { background-color: #e67e22; color: white; margin-top: 20px; }
+        .btn-evaluar { background-color: var(--primary-color); color: white; width: 100%; margin-top: 20px; }
+
+        /* Estilos de Preguntas */
         .question-card {
-            background: #ffffff;
-            border-radius: 8px;
-            padding: 30px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
-            display: none;
+            background: white; border-radius: 8px; padding: 25px; margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-left: 5px solid var(--secondary-color);
         }
-        .question-card.active { display: block; }
-
-        .question-header {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--bg-light);
-        }
-        .question-number { font-size: 1.1rem; font-weight: 700; color: var(--mineduc-blue); }
-        .question-year { font-size: 0.9rem; color: #6c757d; font-weight: bold; }
-        .question-text { font-size: 1.1rem; margin-bottom: 25px; }
-
-        .options-list { list-style: none; }
+        .options-list { list-style: none; margin-top: 15px; }
         .option-item {
-            background-color: var(--bg-light); border: 1px solid #e0e0e0;
-            padding: 15px 20px; margin-bottom: 10px; border-radius: 6px;
-            cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center;
+            padding: 12px 15px; margin-bottom: 8px; background: var(--bg-color);
+            border: 1px solid #bdc3c7; border-radius: 5px; cursor: pointer;
+            display: flex; align-items: center;
         }
-        .option-item:hover { background-color: #e9ecef; border-color: #ced4da; }
-        .option-item.selected { background-color: #e6f0ff; border-color: var(--mineduc-blue); }
-        .option-letter {
-            font-weight: bold; margin-right: 15px; color: var(--mineduc-blue);
-            background: white; width: 30px; height: 30px; display: flex;
-            align-items: center; justify-content: center; border-radius: 50%;
-            border: 1px solid var(--mineduc-blue);
-        }
+        .option-item:hover { background: #d5dbdb; }
+        .option-item.selected { background: #d1f2eb; border-color: var(--secondary-color); }
+        
+        .feedback { margin-top: 15px; padding: 10px; border-radius: 5px; display: none; font-weight: bold; }
+        .feedback.correct { display: block; background-color: #d5f5e3; color: var(--correct-color); }
+        .feedback.incorrect { display: block; background-color: #fadbd8; color: var(--error-color); }
 
-        .controls { display: flex; justify-content: space-between; margin-top: 30px; }
-        button { padding: 12px 24px; border: none; border-radius: 4px; font-size: 1rem; cursor: pointer; font-weight: 500; transition: opacity 0.2s; }
-        button:hover { opacity: 0.9; }
-        .btn-primary { background-color: var(--mineduc-blue); color: white; }
-        .btn-secondary { background-color: #6c757d; color: white; }
-        .btn-evaluate { background-color: var(--mineduc-red); color: white; width: 100%; margin-top: 20px; }
-        .btn-admin { background-color: #28a745; color: white; padding: 8px 16px; font-size: 0.9rem; }
-
-        .feedback { margin-top: 20px; padding: 15px; border-radius: 6px; display: none; font-weight: 500; }
-        .feedback.correct { display: block; background-color: #d4edda; color: var(--correct-green); border: 1px solid #c3e6cb; }
-        .feedback.incorrect { display: block; background-color: #f8d7da; color: var(--error-red); border: 1px solid #f5c6cb; }
-        .option-item.eval-correct { background-color: #d4edda; border-color: var(--correct-green); }
-        .option-item.eval-incorrect { background-color: #f8d7da; border-color: var(--error-red); }
+        /* Panel Admin */
+        .admin-box { background: white; padding: 30px; border-radius: 8px; border: 2px dashed #7f8c8d; }
     </style>
 </head>
 <body>
 
-    <div class="top-bar"></div>
-    <header>
-        <div class="header-titles">
-            <h1>Instrumento de Conocimientos Específicos y Pedagógicos</h1>
-            <h2>Matemática - Educación Media Científico Humanista</h2>
-        </div>
-        <div>
-            <span style="font-weight: bold; color: var(--mineduc-blue);">Evaluación Docente</span>
-        </div>
-    </header>
+    <!-- Menú Lateral -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">Mate e-Docente</div>
+        <!-- Los enlaces se generan por JS -->
+    </div>
 
-    <div class="container">
-        <!-- Panel de Administración -->
-        <div class="admin-panel" id="admin-panel">
-            <h3>Panel de Administración: Carga de Instrumentos</h3>
-            <p style="font-size: 0.9rem; color: #555;">Sube una matriz de evaluación en formato <strong>.xlsx</strong>. El archivo debe contener las columnas: <code>Año</code>, <code>Numero</code>, <code>Enunciado</code>, <code>Opt_A</code>, <code>Opt_B</code>, <code>Opt_C</code>, <code>Opt_D</code>, <code>Correcta</code>. Los archivos <strong>.pdf</strong> requieren procesamiento backend mediante Cloud Functions.</p>
-            <div class="admin-controls">
-                <input type="file" id="file-upload" accept=".xlsx, .xls, .pdf">
-                <button class="btn-admin" onclick="procesarArchivo()">Cargar Prueba</button>
-            </div>
-            <div id="admin-status" style="font-size: 0.9rem; color: var(--correct-green); font-weight: bold;"></div>
-        </div>
-
-        <div id="app">
-            <!-- Las preguntas se inyectan dinámicamente aquí -->
-        </div>
-        
-        <div class="controls">
-            <button class="btn-secondary" id="btn-prev" onclick="prevQuestion()" disabled>Anterior</button>
-            <span id="progress-indicator" style="align-self: center; font-weight: bold;"></span>
-            <button class="btn-primary" id="btn-next" onclick="nextQuestion()">Siguiente</button>
-        </div>
-
-        <button class="btn-evaluate" id="btn-evaluar" onclick="evaluarRespuestas()" style="display: none;">Finalizar y Evaluar</button>
+    <!-- Contenido Principal -->
+    <div class="main-content" id="main-content">
+        <!-- Las secciones se generan por JS -->
     </div>
 
     <script>
-        // Diccionario completo de alternativas correctas oficiales combinadas
-        const answerKey2024 = {
-            1:'B', 2:'B', 3:'D', 4:'C', 5:'C', 6:'C', 7:'C', 8:'A', 9:'D', 10:'D',
-            11:'A', 12:'D', 13:'B', 14:'C', 15:'A', 16:'A', 17:'C', 18:'D', 19:'D', 20:'D',
-            21:'C', 22:'A', 23:'D', 24:'D', 25:'D', 26:'C', 27:'A', 28:'A', 29:'B', 30:'B',
-            31:'A', 32:'B', 33:'D', 34:'C', 35:'C', 36:'A', 37:'B', 38:'D', 39:'D', 40:'A',
-            41:'C', 42:'B', 43:'B', 44:'A', 45:'D', 46:'B', 47:'D', 48:'D', 49:'D', 50:'A',
-            51:'A', 52:'C', 53:'B', 54:'D', 55:'A', 56:'C', 57:'B', 58:'B', 59:'C', 60:'A'
-        };
-
-        const answerKey2023 = {
-            1:'B', 2:'A', 3:'C', 4:'A', 5:'D', 6:'C', 7:'B', 8:'C', 9:'D', 10:'A',
-            11:'A', 12:'A', 13:'D', 14:'B', 15:'B', 16:'B', 17:'D', 18:'B', 19:'C', 20:'A',
-            21:'C', 22:'D', 23:'C', 24:'B', 25:'D', 26:'D', 27:'B', 28:'D', 29:'A', 30:'A',
-            31:'B', 32:'C', 33:'B', 34:'A', 35:'C', 36:'C', 37:'D', 38:'A', 39:'C', 40:'A',
-            41:'B', 42:'D', 43:'B', 44:'D', 45:'D', 46:'C', 47:'B', 48:'C', 49:'D', 50:'D',
-            51:'D', 52:'C', 53:'A', 54:'B', 55:'D', 56:'A'
-        };
-
-        // Base de datos de preguntas combinadas (Muestra representativa)
-        let questions = [
-            {
-                year: 2024, id: 1,
-                text: "En un tercero medio, un docente planificó algunas clases sobre el contenido de relaciones métricas en la circunferencia... ¿cuál de las siguientes actividades le permite abordar este Objetivo de Aprendizaje?",
-                options: {
-                    A: "Usar GeoGebra® para resolver problemas que involucren las relaciones métricas entre ángulos y arcos de una circunferencia.",
-                    B: "Usar GeoGebra® para deducir las relaciones métricas entre ángulos y arcos de una circunferencia y resolver problemas utilizando el mismo software.",
-                    C: "Entregar las fórmulas que definen las relaciones métricas entre ángulos y arcos de una circunferencia y utilizar GeoGebra® para comprobar los resultados de los ejercicios.",
-                    D: "Utilizar GeoGebra® para comprobar los resultados obtenidos al resolver problemas que involucran las relaciones métricas de ángulos y arcos en una circunferencia."
-                },
-                correct: answerKey2024[1]
-            },
-            {
-                year: 2023, id: 1,
-                text: "Una profesora en un 2 Medio está planificando las clases en las que abordará el objetivo 'Ordenar números irracionales y representarlos en la recta numérica'.<br><br>¿Cuál de las siguientes secuencias de actividades es pertinente para que los estudiantes trabajen en clase y puedan lograr el objetivo?",
-                options: {
-                    A: "1) Identificar problemas en contextos matemáticos que no tienen solución en los números racionales. 2) Determinar la raíz cuadrada de números primos... 3) Aproximar a la milésima.",
-                    B: "1) Determinar la raíz cuadrada de números primos, de manera aproximada, usando una calculadora. 2) Ubicar las raíces anteriores en la recta numérica... 3) Ubicar las raíces usando regla y compás.",
-                    C: "1) Construir un cuadrado de lado 1 cm y marcar su diagonal. 2) Construir sobre la diagonal... 3) Plantear estrategias para determinar el área del nuevo cuadrado...",
-                    D: "1) Determinar la raíz cuadrada de números primos con un algoritmo... 2) Comprobar las relaciones de desigualdad... 3) Ubicar las raíces utilizando un programa geométrico."
-                },
-                correct: answerKey2023[1]
-            },
-            {
-                year: 2023, id: 2,
-                text: "Un profesor en un 3 Medio está planificando una clase, cuyo objetivo es: 'Deducir la relación existente entre las pendientes de dos rectas perpendiculares'.<br><br>¿Cuál de las siguientes secuencias de actividades permite que los estudiantes logren este objetivo de aprendizaje?",
-                options: {
-                    A: "1) Graficar cuatro pares de rectas perpendiculares, con ecuaciones dadas por el docente. 2) Analizar la representación gráfica y algebraica... 3) Formalizar los hallazgos utilizando lenguaje matemático.",
-                    B: "1) Formular la ecuación de ocho rectas escogidas por los mismos estudiantes y graficarlas. 2) Analizar la representación gráfica... 3) Formalizar los hallazgos.",
-                    C: "1) Formular la ecuación de cuatro pares de rectas, cumpliendo una relación dada por el docente $$ (m_1 = -\\frac{1}{m_2}) $$. 2) Graficar pares de rectas. 3) Verificar con transportador.",
-                    D: "1) Graficar cuatro pares de rectas escogidas por los mismos estudiantes. 2) Formular ecuaciones de estas rectas. 3) Analizar la representación gráfica y algebraica..."
-                },
-                correct: answerKey2023[2]
-            }
+        // Estructura completa del curso
+        const estructura = [
+            { id: 'portada', title: 'Inicio / Portada', type: 'info' },
+            { id: 'diagnostico', title: 'Diagnóstico Inicial', type: 'quiz' },
+            { id: 'sesion1', title: 'Sesión 1: Números y Operatoria', type: 'quiz' },
+            { id: 'sesion2', title: 'Sesión 2: Álgebra y Funciones', type: 'quiz' },
+            { id: 'sesion3', title: 'Sesión 3: Geometría Métrica', type: 'quiz' },
+            { id: 'sesion4', title: 'Sesión 4: Geometría Analítica', type: 'quiz' },
+            { id: 'sesion5', title: 'Sesión 5: Probabilidades', type: 'quiz' },
+            { id: 'sesion6', title: 'Sesión 6: Estadística', type: 'quiz' },
+            { id: 'sesion7', title: 'Sesión 7: Números Complejos', type: 'quiz' },
+            { id: 'sesion8', title: 'Sesión 8: Límites y Derivadas', type: 'quiz' },
+            { id: 'sesion9', title: 'Sesión 9: Integrales', type: 'quiz' },
+            { id: 'sesion10', title: 'Sesión 10: Modelamiento', type: 'quiz' },
+            { id: 'intermedia', title: 'Evaluación Intermedia', type: 'quiz' },
+            { id: 'didactica', title: 'Ítem de Didáctica', type: 'quiz' },
+            { id: 'final', title: 'Evaluación Final', type: 'quiz' },
+            { id: 'admin', title: 'Panel de Administración', type: 'admin', hidden: true }
         ];
 
-        let currentIndex = 0;
-        const userAnswers = {};
+        // Base de datos de ejemplo (se puede alimentar con el Excel del admin)
+        const baseDePreguntas = {
+            'diagnostico': [
+                { id: 1, text: "Si $$ \\log_{3x}(m) = 2 $$ con $$ x $$ y $$ m $$ reales positivos y $$ x \\neq \\frac{1}{3} $$. ¿Cuál de las siguientes expresiones es equivalente a $$ x $$?", options: { A: "$$ \\log_{8}m $$", B: "$$ \\frac{\\log_{2}m}{3} $$", C: "$$ \\sqrt{\\frac{m}{3}} $$", D: "$$ \\frac{\\sqrt{m}}{3} $$" }, correct: "D" }
+            ],
+            'sesion1': [
+                { id: 2, text: "¿Cuál es el resultado de la multiplicación de los números complejos $$(5+2i)$$ y $$(1-4i)$$?", options: { A: "5 - 8i", B: "11 + 8i", C: "13 - 18i", D: "-3 - 18i" }, correct: "C" }
+            ]
+        };
+
+        const respuestasUsuario = {};
 
         function initApp() {
-            const appDiv = document.getElementById('app');
-            let htmlContent = '';
+            const sidebar = document.getElementById('sidebar');
+            const main = document.getElementById('main-content');
 
-            questions.forEach((q, index) => {
-                htmlContent += `
-                    <div class="question-card ${index === 0 ? 'active' : ''}" id="q-${index}">
-                        <div class="question-header">
-                            <span class="question-number">Pregunta ${q.id}</span>
-                            <span class="question-year">Instrumento ${q.year}</span>
+            estructura.forEach((sec, index) => {
+                // Generar Menú
+                const navItem = document.createElement('div');
+                navItem.className = `nav-item ${sec.hidden ? 'hidden' : ''}`;
+                navItem.id = `nav-${sec.id}`;
+                navItem.innerText = sec.title;
+                navItem.onclick = () => openTab(sec.id);
+                sidebar.appendChild(navItem);
+
+                // Generar Contenedores de Sección
+                const sectionDiv = document.createElement('div');
+                sectionDiv.className = `tab-section`;
+                sectionDiv.id = `sec-${sec.id}`;
+                
+                if (sec.type === 'info') {
+                    sectionDiv.innerHTML = `
+                        <h1>Bienvenido a Mate e-Docente</h1>
+                        <p>Herramienta interactiva para la preparación y evaluación de conocimientos específicos y pedagógicos en Matemática.</p>
+                        <p>Selecciona una evaluación en el menú lateral para comenzar. Cada módulo cuenta con retroalimentación inmediata al finalizar.</p>
+                        <hr style="margin: 30px 0; border: 1px solid #ccc;">
+                        <h3>Acceso Restringido</h3>
+                        <p>Para cargar nuevos instrumentos (PDF/Excel), accede al panel de administración.</p>
+                        <button class="btn btn-admin" onclick="loginAdmin()">Acceder como Administrador</button>
+                    `;
+                } else if (sec.type === 'admin') {
+                    sectionDiv.innerHTML = `
+                        <h1>Panel de Administración</h1>
+                        <div class="admin-box">
+                            <h3>Cargar Instrumento de Evaluación (2024, 2023, etc.)</h3>
+                            <p>Sube un archivo <b>.xlsx</b> con las columnas: Año, Numero, Enunciado, Opt_A, Opt_B, Opt_C, Opt_D, Correcta, Seccion_Destino.</p>
+                            <input type="file" id="file-upload" accept=".xlsx, .xls, .pdf" style="margin: 15px 0; display: block;">
+                            <button class="btn btn-primary" onclick="procesarArchivo()">Procesar y Cargar</button>
+                            <div id="admin-status" style="margin-top:15px; font-weight:bold;"></div>
                         </div>
-                        <div class="question-text">${q.text}</div>
-                        <ul class="options-list">
-                            ${Object.entries(q.options).map(([key, value]) => `
-                                <li class="option-item" onclick="selectOption(${index}, '${key}', '${q.year}-${q.id}')" id="opt-${index}-${key}">
-                                    <span class="option-letter">${key}</span>
-                                    <span>${value}</span>
-                                </li>
-                            `).join('')}
-                        </ul>
-                        <div id="feedback-${index}" class="feedback"></div>
-                    </div>
-                `;
+                    `;
+                } else {
+                    // Plantilla para quizzes (Diagnóstico, Sesiones, etc.)
+                    sectionDiv.innerHTML = `<h1>${sec.title}</h1><div id="content-${sec.id}"></div>`;
+                }
+                main.appendChild(sectionDiv);
             });
 
-            appDiv.innerHTML = htmlContent;
-            updateControls();
+            // Abrir la primera pestaña y renderizar preguntas
+            openTab('portada');
+            renderQuizzes();
+        }
+
+        function openTab(tabId) {
+            document.querySelectorAll('.tab-section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             
-            // Re-renderizar KaTeX
+            document.getElementById(`sec-${tabId}`).classList.add('active');
+            document.getElementById(`nav-${tabId}`).classList.add('active');
+        }
+
+        function loginAdmin() {
+            // Protección básica frontend para habilitar la pestaña
+            const pass = prompt("Ingrese la contraseña de administrador:");
+            if (pass === "admin2026" || pass === "william") {
+                document.getElementById('nav-admin').classList.remove('hidden');
+                openTab('admin');
+            } else {
+                alert("Contraseña incorrecta.");
+            }
+        }
+
+        function renderQuizzes() {
+            Object.keys(baseDePreguntas).forEach(seccionId => {
+                const container = document.getElementById(`content-${seccionId}`);
+                if (!container) return;
+
+                let html = '';
+                baseDePreguntas[seccionId].forEach((q, qIndex) => {
+                    html += `
+                        <div class="question-card" id="q-${seccionId}-${q.id}">
+                            <p><strong>Pregunta ${qIndex + 1}:</strong><br><br>${q.text}</p>
+                            <ul class="options-list">
+                                ${Object.entries(q.options).map(([key, val]) => `
+                                    <li class="option-item" onclick="seleccionarOpcion('${seccionId}', ${q.id}, '${key}')" id="opt-${seccionId}-${q.id}-${key}">
+                                        <strong>${key})</strong>&nbsp;&nbsp;${val}
+                                    </li>
+                                `).join('')}
+                            </ul>
+                            <div id="feedback-${seccionId}-${q.id}" class="feedback"></div>
+                        </div>
+                    `;
+                });
+                
+                if(baseDePreguntas[seccionId].length > 0) {
+                    html += `<button class="btn btn-evaluar" onclick="evaluarSeccion('${seccionId}')">Revisar Respuestas de ${seccionId.toUpperCase()}</button>`;
+                } else {
+                    html += `<p>Aún no hay preguntas cargadas en esta sección.</p>`;
+                }
+                
+                container.innerHTML = html;
+            });
+
+            // Renderizar matemáticas con KaTeX en todo el documento
             renderMathInElement(document.body, {
                 delimiters: [
                     {left: '$$', right: '$$', display: true},
@@ -244,128 +243,66 @@
             });
         }
 
-        function selectOption(qIndex, selectedKey, questionUniqueId) {
-            const options = document.querySelectorAll(`#q-${qIndex} .option-item`);
-            options.forEach(opt => opt.classList.remove('selected'));
-            document.getElementById(`opt-${qIndex}-${selectedKey}`).classList.add('selected');
-            userAnswers[questionUniqueId] = selectedKey;
-            updateControls();
+        function seleccionarOpcion(seccionId, questionId, key) {
+            // Limpiar selecciones previas de la pregunta
+            document.querySelectorAll(`#q-${seccionId}-${questionId} .option-item`).forEach(el => el.classList.remove('selected'));
+            // Marcar la actual
+            document.getElementById(`opt-${seccionId}-${questionId}-${key}`).classList.add('selected');
+            // Guardar en memoria
+            respuestasUsuario[`${seccionId}-${questionId}`] = key;
         }
 
-        function prevQuestion() {
-            document.getElementById(`q-${currentIndex}`).classList.remove('active');
-            currentIndex--;
-            document.getElementById(`q-${currentIndex}`).classList.add('active');
-            updateControls();
-        }
+        function evaluarSeccion(seccionId) {
+            const preguntas = baseDePreguntas[seccionId];
+            let correctas = 0;
 
-        function nextQuestion() {
-            document.getElementById(`q-${currentIndex}`).classList.remove('active');
-            currentIndex++;
-            document.getElementById(`q-${currentIndex}`).classList.add('active');
-            updateControls();
-        }
+            preguntas.forEach(q => {
+                const userAns = respuestasUsuario[`${seccionId}-${q.id}`];
+                const feedbackDiv = document.getElementById(`feedback-${seccionId}-${q.id}`);
 
-        function updateControls() {
-            document.getElementById('btn-prev').disabled = currentIndex === 0;
-            const isLast = currentIndex === questions.length - 1;
-            document.getElementById('btn-next').style.display = isLast ? 'none' : 'block';
-            document.getElementById('btn-evaluar').style.display = isLast ? 'block' : 'none';
-            document.getElementById('progress-indicator').innerText = `${currentIndex + 1} de ${questions.length}`;
-        }
-
-        function evaluarRespuestas() {
-            questions.forEach((q, index) => {
-                const uniqueId = `${q.year}-${q.id}`;
-                const userAns = userAnswers[uniqueId];
-                const correctAns = q.correct;
-                const feedbackDiv = document.getElementById(`feedback-${index}`);
-
-                const allOpts = document.querySelectorAll(`#q-${index} .option-item`);
-                allOpts.forEach(opt => opt.classList.remove('eval-correct', 'eval-incorrect'));
-
-                if (userAns) {
-                    const selectedOptElement = document.getElementById(`opt-${index}-${userAns}`);
-                    if (userAns === correctAns) {
-                        selectedOptElement.classList.add('eval-correct');
-                        feedbackDiv.className = 'feedback correct';
-                        feedbackDiv.innerHTML = `¡Correcto! La alternativa ${correctAns} es la indicada.`;
-                    } else {
-                        selectedOptElement.classList.add('eval-incorrect');
-                        const correctOptElement = document.getElementById(`opt-${index}-${correctAns}`);
-                        if(correctOptElement) correctOptElement.classList.add('eval-correct');
-                        feedbackDiv.className = 'feedback incorrect';
-                        feedbackDiv.innerHTML = `Incorrecto. La respuesta correcta es la alternativa <strong>${correctAns}</strong>.`;
-                    }
+                if (userAns === q.correct) {
+                    feedbackDiv.className = 'feedback correct';
+                    feedbackDiv.innerHTML = `¡Correcto! La alternativa ${q.correct} es la respuesta indicada.`;
+                    correctas++;
+                } else if (userAns) {
+                    feedbackDiv.className = 'feedback incorrect';
+                    feedbackDiv.innerHTML = `Incorrecto. Seleccionaste ${userAns}, pero la correcta es la <strong>${q.correct}</strong>.`;
                 } else {
                     feedbackDiv.className = 'feedback incorrect';
-                    feedbackDiv.innerHTML = `Pregunta omitida. La respuesta correcta es la <strong>${correctAns}</strong>.`;
+                    feedbackDiv.innerHTML = `Omitida. La respuesta correcta es la <strong>${q.correct}</strong>.`;
                 }
             });
-            
-            document.getElementById(`q-${currentIndex}`).classList.remove('active');
-            currentIndex = 0;
-            document.getElementById(`q-${currentIndex}`).classList.add('active');
-            updateControls();
+
+            alert(`Evaluación de ${seccionId} finalizada.\nPuntaje: ${correctas} de ${preguntas.length} correctas.`);
         }
 
-        // Lógica de carga de archivos Excel usando SheetJS
         function procesarArchivo() {
-            const fileInput = document.getElementById('file-upload');
+            const file = document.getElementById('file-upload').files[0];
             const statusDiv = document.getElementById('admin-status');
             
-            if (!fileInput.files.length) {
-                statusDiv.style.color = "var(--error-red)";
-                statusDiv.innerText = "Por favor, selecciona un archivo primero.";
+            if (!file) {
+                statusDiv.style.color = "var(--error-color)";
+                statusDiv.innerText = "Selecciona un archivo primero.";
                 return;
             }
-
-            const file = fileInput.files[0];
-            const fileExt = file.name.split('.').pop().toLowerCase();
-
-            if (fileExt === 'pdf') {
-                statusDiv.style.color = "var(--mineduc-blue)";
-                statusDiv.innerText = "Los archivos PDF se enviarán al servidor (Cloud Functions) para su digitalización y extracción de fórmulas. Funcionalidad en desarrollo en la base de datos.";
+            if(file.name.endsWith('.pdf')) {
+                statusDiv.style.color = "var(--primary-color)";
+                statusDiv.innerText = "Los PDF requieren conexión a backend para extracción de texto. (En desarrollo)";
                 return;
             }
-
-            if (fileExt === 'xlsx' || fileExt === 'xls') {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const data = new Uint8Array(e.target.result);
-                    const workbook = XLSX.read(data, {type: 'array'});
-                    const firstSheetName = workbook.SheetNames[0];
-                    const worksheet = workbook.Sheets[firstSheetName];
-                    const jsonData = XLSX.utils.sheet_to_json(worksheet);
-
-                    // Formatear JSON de Excel al objeto questions
-                    const nuevasPreguntas = jsonData.map(row => ({
-                        year: row.Año || new Date().getFullYear(),
-                        id: row.Numero || questions.length + 1,
-                        text: row.Enunciado || "Sin enunciado",
-                        options: {
-                            A: row.Opt_A || "",
-                            B: row.Opt_B || "",
-                            C: row.Opt_C || "",
-                            D: row.Opt_D || ""
-                        },
-                        correct: row.Correcta || "A"
-                    }));
-
-                    questions = [...questions, ...nuevasPreguntas];
-                    
-                    statusDiv.style.color = "var(--correct-green)";
-                    statusDiv.innerText = `Éxito: Se han cargado ${nuevasPreguntas.length} preguntas nuevas a la sesión.`;
-                    
-                    // Reiniciar la vista
-                    currentIndex = 0;
-                    initApp();
-                };
-                reader.readAsArrayBuffer(file);
-            } else {
-                statusDiv.style.color = "var(--error-red)";
-                statusDiv.innerText = "Formato no soportado. Sube un archivo .xlsx o .pdf.";
-            }
+            
+            // Procesamiento de Excel local mediante SheetJS
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const workbook = XLSX.read(new Uint8Array(e.target.result), {type: 'array'});
+                const data = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]);
+                
+                // Mapear los datos al objeto baseDePreguntas y re-renderizar
+                // (Requiere que el Excel tenga columna 'Seccion_Destino' que coincida con los IDs)
+                statusDiv.style.color = "var(--correct-color)";
+                statusDiv.innerText = `Archivo procesado: ${data.length} filas detectadas. Listo para inyectar a la base local.`;
+            };
+            reader.readAsArrayBuffer(file);
         }
 
         window.onload = initApp;
