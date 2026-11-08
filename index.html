@@ -130,15 +130,16 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",
 const norm=o=>[o.dominio,o.nivel,o.enunciado,o.opciones,o.correcta,o.explicacion||"",o.fuente||"",o.ambito||"",o.id];
 const isAdmin=()=>!window.FB||(FB.admins||[]).includes((U.email||"").toLowerCase());
 const ls=k=>{try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}};
-function persist(){try{localStorage.setItem(lk(),JSON.stringify(st))}catch(e){}if(window.FB&&U)FB.save(U.uid,U.nombre,st).catch(e=>console.error(e))}
+function persist(){try{localStorage.setItem(lk(),JSON.stringify(st))}catch(e){}if(window.FB&&U){SYNC="Guardando…";sy();FB.save(U.uid,U.nombre,st).then(()=>{SYNC="ok";sy()}).catch(e=>{console.error(e);SYNC="⚠ No se pudo guardar en la nube ("+(e.code||e.message)+"). El avance solo queda en este dispositivo.";sy()})}}
+let SYNC="";function sy(){const e=document.getElementById("sy");if(e)e.innerHTML=SYNC=="ok"?"☁️ Avance guardado en la nube":esc(SYNC)}
 async function boot(u){BANK=[];
 if(window.FB){if(!u){U=null;return auth()}U={uid:u.uid,nombre:u.displayName||u.email,email:u.email};
-try{st=(await FB.load(U.uid))||{}}catch(e){st=ls(lk())||{}}try{BANK=(await FB.bank()).map(norm)}catch(e){}}
+try{st=(await FB.load(U.uid))||ls(lk())||{};SYNC=""}catch(e){st=ls(lk())||{};SYNC="⚠ No se pudo leer tu avance de la nube ("+(e.code||e.message)+")."}try{BANK=(await FB.bank()).map(norm)}catch(e){}}
 else{U=U||ls("ecepU");if(!U)return auth();st=ls(lk())||{};BANK=(ls("ecepBank")||[]).map((o,i)=>norm({...o,id:i}))}
 st.visto?home():welcome()}
 function auth(m){m=m||"reg";const fb=!!window.FB;
 $.innerHTML=`<div class="hero"><div class="logo">∑</div><h1>Preparación ECEP</h1><div class="m">Matemática · Educación Media</div></div><div class="card">`+
-(fb?`<div class="tabs"><button class="${m=="reg"?"p":""}" onclick="auth('reg')">Registrarme</button><button class="${m=="in"?"p":""}" onclick="auth('in')">Ingresar</button></div>`:`<p class="m">Modo sin conexión: tu avance se guarda solo en este dispositivo.</p>`)+
+(fb?`<div class="tabs"><button class="${m=="reg"?"p":""}" onclick="auth('reg')">Registrarme</button><button class="${m=="in"?"p":""}" onclick="auth('in')">Ingresar</button></div>`:`<p class="m">Modo sin conexión: tu avance se guarda solo en este dispositivo.${window.FBERR?"<br><b>Motivo:</b> "+esc(window.FBERR):""}</p>`)+
 (m=="reg"||!fb?`<label>Tu nombre</label><input id="n" autocomplete="name">`:"")+
 (fb?`<label>Correo</label><input id="e" type="email" autocomplete="email"><label>Contraseña (mínimo 6 caracteres)</label><input id="pw" type="password">`:"")+
 `<div id="er"></div><button class="p big" onclick="go('${m}')">${m=="reg"||!fb?"Comenzar":"Ingresar"}</button></div>`}
@@ -158,12 +159,12 @@ function welcome(re){$.innerHTML=`<div class="hero"><div class="logo">∑</div><
 <p class="m">El reloj corre 30 minutos; al terminar el tiempo la sesión se cierra sola y las preguntas sin responder cuentan como incorrectas.</p>
 <button class="p big" onclick="go2()">${re?"Volver":"Comenzar"}</button></div>`}
 function go2(){if(!st.visto){st.visto=1;persist()}home()}
-function home(){run&&clearInterval(run.tm);run=null;const done=S.filter((s,i)=>st[i]).length,dm=st.dom||{},nx=S.findIndex((s,i)=>!st[i]);
+function home(){run&&clearInterval(run.tm);run=null;setTimeout(sy,0);const done=S.filter((s,i)=>st[i]).length,dm=st.dom||{},nx=S.findIndex((s,i)=>!st[i]);
 const w=Object.keys(D).filter(d=>dm[d]&&dm[d].n>=3).sort((a,b)=>pct(dm[a])-pct(dm[b]))[0];
 $.innerHTML=`<div class="top"><div><div class="m">Hola,</div><h1 style="margin:0">${esc(U.nombre)}</h1></div><div class="ring" style="background:conic-gradient(var(--p) ${done*36}deg,var(--b) 0)"><b>${done}/10</b></div></div>
 <div class="card"><b>Tu dominio por eje</b>${Object.keys(D).map(d=>{const r=dm[d]||{ok:0,n:0};return`<div class="s m" style="margin-top:8px"><span>${D[d]}</span><span>${r.n?pct(r)+"%":"—"}</span></div><div class="bar"><i style="width:${pct(r)}%;background:${COL[d]}"></i></div>`}).join("")}${w?`<div class="m">Prioridad de estudio: <b>${D[w]}</b></div>`:""}</div>`+
 S.map((x,i)=>`<div class="card s"><div class="s" style="justify-content:flex-start;gap:12px"><span class="num">${i+1}</span><div><b>${x.t}</b><div class="m">${x.d}</div>${st[i]?`<span class="chip" style="background:${pct(st[i])>=70?"var(--ok)":"var(--p)"}">Último: ${pct(st[i])}%</span> `:""}${i==nx?`<span class="chip" style="background:var(--p2)">Siguiente</span>`:""}</div></div><button class="p" onclick="start(${i})">${st[i]?"Repetir":"Iniciar"}</button></div>`).join("")+
-`<div class="card"><p style="margin-top:0">${window.FB?"Sesión: "+esc(U.email||""):"Modo sin conexión (este dispositivo)"}</p><button onclick="welcome(1)">Cómo funciona</button> ${isAdmin()?`<button onclick="admin()">Administrador</button> `:""}${window.FB?"":`<button onclick="exp()">Exportar</button> <button onclick="imp()">Importar</button> `}<button onclick="out()">Cerrar sesión</button></div>`}
+`<div class="card"><p style="margin-top:0">${window.FB?"Sesión: "+esc(U.email||""):"Modo sin conexión (este dispositivo)"}</p><p class="m" id="sy"></p><button onclick="welcome(1)">Cómo funciona</button> ${isAdmin()?`<button onclick="admin()">Administrador</button> `:""}${window.FB?"":`<button onclick="exp()">Exportar</button> <button onclick="imp()">Importar</button> `}<button onclick="out()">Cerrar sesión</button></div>`}
 function exp(){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(st)],{type:"application/json"}));a.download="avance-ecep.json";a.click()}
 function imp(){const i=document.createElement("input");i.type="file";i.accept=".json";i.onchange=()=>i.files[0].text().then(t=>{try{st=JSON.parse(t);persist();home()}catch(e){alert("Archivo inválido")}});i.click()}
 function upd(){const e=document.getElementById("tm");if(e&&run)e.textContent="⏱ "+Math.floor(run.t/60)+":"+String(run.t%60).padStart(2,"0")}
@@ -208,8 +209,8 @@ const x=t=="json"?[JSON.stringify([ej],null,1),"plantilla-instrumento.json"]:["d
 const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([x[0]]));a.download=x[1];a.click()}
 </script>
 <script type="module">
-let cfg=null;try{cfg=await import("./firebase-config.js")}catch(e){}
-if(!cfg||!cfg.firebaseConfig||/TU_/.test(cfg.firebaseConfig.apiKey||"TU_")){window.boot()}
+let cfg=null;try{cfg=await import("./firebase-config.js")}catch(e){window.FBERR=location.protocol=="file:"?"Estás abriendo el archivo desde tu computador. Abre la página desde su dirección de GitHub Pages (https://...github.io/...).":"No se pudo cargar firebase-config.js. Verifica que esté subido a GitHub junto a index.html."}
+if(!cfg||!cfg.firebaseConfig||/TU_/.test(cfg.firebaseConfig.apiKey||"TU_")){window.FBERR=window.FBERR||"firebase-config.js no tiene tus datos de Firebase.";window.boot()}
 else{try{const B="https://www.gstatic.com/firebasejs/10.12.2/",{initializeApp}=await import(B+"firebase-app.js"),A=await import(B+"firebase-auth.js"),F=await import(B+"firebase-firestore.js");
 const app=initializeApp(cfg.firebaseConfig),auth=A.getAuth(app),db=F.getFirestore(app);let busy=0;
 window.FB={admins:(cfg.ADMIN_EMAILS||[]).map(e=>e.toLowerCase()),
@@ -220,5 +221,5 @@ save:(uid,nombre,st)=>F.setDoc(F.doc(db,"usuarios",uid),{nombre,st,t:F.serverTim
 async bank(){const d=await F.getDocs(F.collection(db,"banco"));return d.docs.map(x=>({...x.data(),id:x.id}))},
 async add(list){for(let i=0;i<list.length;i+=400){const b=F.writeBatch(db);list.slice(i,i+400).forEach(q=>b.set(F.doc(F.collection(db,"banco")),q));await b.commit()}},
 del:id=>F.deleteDoc(F.doc(db,"banco",id))};
-A.onAuthStateChanged(auth,u=>{if(!busy)window.boot(u)})}catch(e){console.error(e);window.FB=null;window.boot()}}
+A.onAuthStateChanged(auth,u=>{if(!busy)window.boot(u)})}catch(e){console.error(e);window.FBERR="Error al conectar con Firebase: "+(e.message||e);window.FB=null;window.boot()}}
 </script></body></html>
