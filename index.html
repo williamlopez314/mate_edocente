@@ -1,0 +1,88 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Preparación ECEP · Matemática Media</title>
+<style>
+:root{--bg:#f6f7fb;--c:#fff;--t:#1d2330;--m:#667;--p:#2f5bea;--ok:#188a4a;--no:#c53030;--b:#dde1ec}
+@media(prefers-color-scheme:dark){:root{--bg:#12151d;--c:#1b2030;--t:#e8ebf4;--m:#9aa3b8;--p:#7b9bff;--ok:#4cc585;--no:#ff7b7b;--b:#2b3248}}
+*{box-sizing:border-box}body{margin:0;font:16px/1.5 system-ui,sans-serif;background:var(--bg);color:var(--t)}
+main{max-width:720px;margin:0 auto;padding:16px}h1{font-size:1.4rem;margin:.3em 0}
+.card{background:var(--c);border:1px solid var(--b);border-radius:12px;padding:14px;margin:10px 0}
+button{font:inherit;border:1px solid var(--b);background:var(--c);color:var(--t);border-radius:10px;padding:10px 14px;cursor:pointer}
+button.p{background:var(--p);color:#fff;border-color:var(--p)}.o{display:block;width:100%;text-align:left;margin:6px 0}
+.ok{border-color:var(--ok)!important;background:color-mix(in srgb,var(--ok) 18%,var(--c))}.no{border-color:var(--no)!important;background:color-mix(in srgb,var(--no) 18%,var(--c))}
+.s{display:flex;justify-content:space-between;gap:10px;align-items:center}.m{color:var(--m);font-size:.9rem}
+.bar{height:8px;background:var(--b);border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--p)}
+.exp{margin-top:8px;padding:8px;border-left:3px solid var(--p);background:var(--bg)}
+</style></head><body><main id="app"></main><script>
+// [dominio, nivel(1-3), enunciado, opciones, índice correcto, explicación]
+const D={N:"Números",A:"Álgebra",F:"Funciones",G:"Geometría",D:"Datos y probabilidades",P:"Didáctica de la matemática"};
+const Q=[
+["N",1,"¿Cuál de los siguientes números es irracional?",["0,25","√16","√2","22/7"],2,"√2 no se puede escribir como fracción; √16=4, 0,25=1/4 y 22/7 son racionales."],
+["N",2,"¿Cuál es el valor de 2⁻³ · 2⁵?",["1/4","4","16","32"],1,"Se suman exponentes: 2⁻³⁺⁵=2²=4."],
+["N",2,"¿Cuál es el valor de log₂32 − log₂4?",["2","3","4","8"],1,"5 − 2 = 3 (equivale a log₂8)."],
+["N",3,"¿Cuál es el valor de i²⁰²⁵?",["1","−1","i","−i"],2,"Las potencias de i se repiten cada 4; 2025 = 4·506 + 1, luego i²⁰²⁵ = i."],
+["N",3,"√12 + √27 =",["√39","5√3","6√3","5√6"],1,"√12=2√3 y √27=3√3, suman 5√3."],
+["A",1,"Si 3x − 5 = 10, entonces x =",["3","5","6","15"],1,"3x = 15, x = 5."],
+["A",2,"¿Cuál es la suma de las soluciones de x² − 5x + 6 = 0?",["2","3","5","6"],2,"Soluciones 2 y 3; también −b/a = 5."],
+["A",2,"Si x + y = 7 y x − y = 1, ¿cuánto vale x·y?",["10","12","7","6"],1,"x=4, y=3, xy=12."],
+["A",3,"¿Para qué valores de k la ecuación x² + kx + 9 = 0 tiene una única solución real?",["k = 6","k = 6 o k = −6","k = 3","k = 3 o k = −3"],1,"Discriminante nulo: k² − 36 = 0, k = ±6."],
+["A",3,"El conjunto solución de |2x − 1| < 5 es",["(−2, 3)","(−3, 2)","(−2, 2)","(−3, 3)"],0,"−5 < 2x−1 < 5 ⇒ −4 < 2x < 6 ⇒ −2 < x < 3."],
+["F",1,"Si f(x) = 2x + 3, ¿cuánto vale f(4)?",["8","11","14","7"],1,"2·4+3 = 11."],
+["F",2,"¿Cuál es el vértice de y = x² − 4x + 1?",["(2, −3)","(−2, −3)","(2, 3)","(4, 1)"],0,"x = −b/2a = 2; y = 4−8+1 = −3."],
+["F",2,"¿Cuál es la pendiente de la recta que pasa por (1,2) y (3,8)?",["2","3","4","6"],1,"(8−2)/(3−1) = 3."],
+["F",3,"Si f(x) = 2ˣ, el cociente f(x+1)/f(x) es",["1","2","x","2ˣ"],1,"2ˣ⁺¹/2ˣ = 2: cada unidad de x duplica el valor."],
+["F",3,"La función inversa de f(x) = 3x − 6 es",["(x+6)/3","3x+6","(x−6)/3","1/(3x−6)"],0,"y=3x−6 ⇒ x=(y+6)/3."],
+["G",1,"Un triángulo rectángulo tiene catetos 6 y 8. ¿Cuánto mide su hipotenusa?",["10","12","14","√14"],0,"Pitágoras: √(36+64)=10."],
+["G",2,"¿Cuál es el área de un círculo de radio 3?",["6π","9π","3π","18π"],1,"πr² = 9π."],
+["G",2,"Un ángulo inscrito subtiende un arco de 80°. ¿Cuánto mide el ángulo?",["40°","80°","160°","20°"],0,"El ángulo inscrito mide la mitad del arco que subtiende."],
+["G",3,"Una figura de área 5 se amplía con una homotecia de razón 3. ¿Cuál es el área de la nueva figura?",["15","45","135","8"],1,"Las áreas escalan con k² = 9; 5·9 = 45."],
+["G",3,"¿Cuál es el volumen de un cono de radio 3 y altura 4?",["36π","12π","24π","9π"],1,"(1/3)·π·9·4 = 12π."],
+["D",1,"¿Cuál es la media de 2, 4, 6 y 8?",["4","5","6","20"],1,"20/4 = 5."],
+["D",2,"Se lanza una moneda dos veces. ¿Cuál es la probabilidad de obtener al menos un sello?",["1/4","1/2","3/4","1"],2,"1 − P(dos caras) = 1 − 1/4."],
+["D",2,"¿Cuál es la mediana de 3, 9, 4, 7, 10, 1?",["4","5,5","7","6"],1,"Ordenados: 1,3,4,7,9,10; mediana (4+7)/2."],
+["D",3,"Si P(A∩B)=0,2 y P(B)=0,5, ¿cuánto vale P(A|B)?",["0,1","0,4","0,7","0,25"],1,"P(A|B)=P(A∩B)/P(B)=0,4."],
+["D",3,"¿De cuántas formas se puede elegir un comité de 3 personas entre 6?",["18","20","120","216"],1,"C(6,3)=20 (el orden no importa)."],
+["P",1,"Un estudiante escribe (a+b)² = a²+b². ¿Qué intervención es más adecuada?",["Repetir la fórmula correcta","Pedirle probar con a=2, b=3 y comparar, y luego mostrar el modelo de áreas","Asignarle más ejercicios iguales","Corregirle y dar la respuesta"],1,"El contraejemplo numérico y la representación geométrica permiten aprender a partir del error."],
+["P",2,"Para evaluar si estudiantes comprenden la pendiente de una función lineal, el ítem más válido es",["Calcular la pendiente con una fórmula dada","Interpretar la pendiente en una situación de contexto y justificar","Recitar la definición","Graficar sin contexto"],1,"Evalúa comprensión y uso, no solo procedimiento."],
+["P",3,"Un estudiante simplifica (x+3)/3 como x+1. ¿Qué conocimiento previo es más probable que falte?",["Resolver ecuaciones","Simplificar solo factores comunes al numerador completo","Graficar rectas","Calcular áreas"],1,"Se simplifica un término y no el numerador completo: error con propiedades de fracciones y factores."],
+["P",2,"¿Qué actividad promueve mejor la modelación matemática?",["Calcular 20 derivadas","Plantear una función que describa el costo de un plan de telefonía y compararla con otra","Memorizar fórmulas","Copiar ejemplos de la pizarra"],1,"Modelar implica traducir una situación real a un modelo y analizarlo."]];
+const byD=d=>Q.map((q,i)=>i).filter(i=>Q[i][0]==d).sort((a,b)=>Q[a][1]-Q[b][1]);
+const pick=(n,f=()=>true)=>Q.map((q,i)=>i).filter(i=>f(Q[i])).sort(()=>Math.random()-.5).slice(0,n);
+const S=[
+{t:"Diagnóstico",d:"Mide tu nivel inicial en todos los dominios.",ex:1,ids:()=>[].concat(...Object.keys(D).map(d=>byD(d).slice(0,2)))},
+{t:"Números",d:"Sistemas numéricos, potencias, logaritmos y complejos.",ids:()=>byD("N")},
+{t:"Álgebra",d:"Ecuaciones, sistemas e inecuaciones.",ids:()=>byD("A")},
+{t:"Funciones",d:"Lineal, cuadrática, exponencial e inversa.",ids:()=>byD("F")},
+{t:"Geometría",d:"Pitágoras, circunferencia, homotecia y volúmenes.",ids:()=>byD("G")},
+{t:"Datos y probabilidades",d:"Medidas, probabilidad condicional y conteo.",ids:()=>byD("D")},
+{t:"Evaluación intermedia",d:"Mezcla de dominios con retroalimentación por dominio.",ex:1,ids:()=>pick(14)},
+{t:"Didáctica",d:"Errores frecuentes, intervención y evaluación.",ids:()=>byD("P")},
+{t:"Nivel avanzado",d:"Solo preguntas de dificultad alta.",ids:()=>pick(20,q=>q[1]==3)},
+{t:"Evaluación final",d:"Simulacro final; se compara con tu diagnóstico.",ex:1,ids:()=>pick(16)}];
+let st;try{st=JSON.parse(localStorage.getItem("ecepmat"))||{}}catch(e){st={}}
+const save=()=>{try{localStorage.setItem("ecepmat",JSON.stringify(st))}catch(e){}};
+const $=document.getElementById("app");let run=null;
+const pct=r=>Math.round(100*r.ok/r.n);
+function home(){run=null;const done=S.filter((s,i)=>st[i]).length;
+$.innerHTML=`<h1>Preparación ECEP · Matemática (Educación Media)</h1><div class="m">${done}/10 sesiones completadas</div><div class="bar"><i style="width:${done*10}%"></i></div>`+
+S.map((s,i)=>`<div class="card s"><div><b>${i+1}. ${s.t}</b><div class="m">${s.d}${st[i]?` · Último: ${pct(st[i])}%`:""}</div></div><button class="p" onclick="start(${i})">${st[i]?"Repetir":"Iniciar"}</button></div>`).join("")+
+`<div class="card"><b>Progreso entre dispositivos</b><div class="m">Los avances se guardan en este navegador. Para llevarlos a otro equipo, expórtalos e impórtalos.</div><p><button onclick="exp()">Exportar</button> <button onclick="imp()">Importar</button> <button onclick="if(confirm('¿Borrar avances?')){st={};save();home()}">Reiniciar</button></p></div>`;}
+function exp(){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(st)],{type:"application/json"}));a.download="avance-ecep.json";a.click()}
+function imp(){const i=document.createElement("input");i.type="file";i.accept=".json";i.onchange=()=>i.files[0].text().then(t=>{try{st=JSON.parse(t);save();home()}catch(e){alert("Archivo inválido")}});i.click()}
+function start(i){run={i,ids:S[i].ids(),k:0,ans:[]};show()}
+function show(){const s=S[run.i],q=Q[run.ids[run.k]];
+$.innerHTML=`<div class="s"><b>${s.t}</b><button onclick="home()">Salir</button></div><div class="m">Pregunta ${run.k+1} de ${run.ids.length} · ${D[q[0]]} · Nivel ${["básico","medio","alto"][q[1]-1]}</div><div class="bar"><i style="width:${100*run.k/run.ids.length}%"></i></div><div class="card"><p><b>${q[2]}</b></p>${q[3].map((o,j)=>`<button class="o" onclick="ans(${j})">${"ABCD"[j]}) ${o}</button>`).join("")}<div id="fb"></div></div>`}
+function ans(j){const s=S[run.i],q=Q[run.ids[run.k]];run.ans.push(j);
+if(s.ex){return next()}
+document.querySelectorAll(".o").forEach((b,x)=>{b.disabled=1;if(x==q[4])b.classList.add("ok");else if(x==j)b.classList.add("no")});
+document.getElementById("fb").innerHTML=`<div class="exp"><b>${j==q[4]?"¡Correcto!":"Incorrecto."}</b> ${q[5]}</div><p><button class="p" onclick="next()">Continuar</button></p>`}
+function next(){run.k++;run.k<run.ids.length?show():end()}
+function end(){const s=S[run.i],by={};let ok=0;
+run.ids.forEach((id,x)=>{const q=Q[id],c=run.ans[x]==q[4];ok+=c;by[q[0]]=by[q[0]]||{ok:0,n:0};by[q[0]].n++;by[q[0]].ok+=c});
+const r={ok,n:run.ids.length,by,date:new Date().toISOString().slice(0,10)};st[run.i]=r;if(run.i==0)st.diag=r;save();
+let h=`<h1>${s.t}: ${ok}/${r.n} (${pct(r)}%)</h1>`;
+if(run.i==9&&st.diag)h+=`<div class="card">Diagnóstico: ${pct(st.diag)}% → Final: ${pct(r)}%</div>`;
+h+=`<div class="card"><b>Por dominio</b>`+Object.keys(by).map(d=>`<div class="s"><span>${D[d]}</span><span>${by[d].ok}/${by[d].n}</span></div><div class="bar"><i style="width:${100*by[d].ok/by[d].n}%"></i></div>`).join("")+`</div>`;
+if(s.ex)h+=`<h3>Retroalimentación</h3>`+run.ids.map((id,x)=>{const q=Q[id],c=run.ans[x]==q[4];return`<div class="card ${c?"ok":"no"}"><b>${x+1}. ${q[2]}</b><div class="m">Tu respuesta: ${"ABCD"[run.ans[x]]}) ${q[3][run.ans[x]]}${c?"":` · Correcta: ${"ABCD"[q[4]]}) ${q[3][q[4]]}`}</div><div class="exp">${q[5]}</div></div>`}).join("");
+$.innerHTML=h+`<p><button class="p" onclick="home()">Volver al inicio</button></p>`}
+home();
+</script></body></html>
