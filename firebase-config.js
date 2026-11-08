@@ -10,4 +10,4 @@ export const firebaseConfig = {
 };
 // Correos con acceso al panel de administrador (deben coincidir con las reglas de Firestore).
 // CAMBIA este valor por tu correo antes de subir el archivo.
-export const ADMIN_EMAILS = ["tu-correo@ejemplo.cl"];
+export const ADMIN_EMAILS = ["williamlopez3.14@gmail.com"];
