@@ -3,142 +3,115 @@
 <style>
 :root{--bg:#f4f6ff;--c:#fff;--t:#1c2236;--m:#667089;--p:#4f6df5;--p2:#8b5cf6;--ok:#16a34a;--no:#dc2626;--b:#e2e6f3}
 @media(prefers-color-scheme:dark){:root{--bg:#0e1220;--c:#171d31;--t:#e9ecf8;--m:#9aa4c0;--p:#7b93ff;--p2:#a78bfa;--ok:#4ade80;--no:#fb7185;--b:#2a3350}}
-*{box-sizing:border-box}body{margin:0;font:15px/1.45 system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--t);background:radial-gradient(900px 420px at 50% -120px,color-mix(in srgb,var(--p) 28%,transparent),transparent),var(--bg);min-height:100vh}
+*{box-sizing:border-box}body{margin:0;font:16px/1.5 system-ui,-apple-system,sans-serif;color:var(--t);background:radial-gradient(900px 420px at 50% -120px,color-mix(in srgb,var(--p) 28%,transparent),transparent),var(--bg);min-height:100vh}
 main{max-width:720px;margin:0 auto;padding:16px 14px 40px}h1{font-size:1.45rem;margin:.2em 0}
-.card{background:var(--c);border:1px solid var(--b);border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 4px 16px rgba(20,30,70,.06)}
-.btn,.p,a.b{display:inline-block;padding:9px 14px;border-radius:10px;border:1px solid var(--b);background:var(--c);color:var(--t);font:inherit;font-weight:600;text-decoration:none;cursor:pointer}
-.p{background:var(--p);color:#fff;border:none}.p:hover{opacity:.93}.big{padding:12px 22px;font-size:1.05rem}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px}
-.chip{display:inline-block;padding:3px 9px;border-radius:99px;font-size:12px;font-weight:600;background:var(--b);color:var(--t)}
-.ok{background:color-mix(in srgb,var(--ok) 20%,transparent);color:var(--ok)}
-.no{background:color-mix(in srgb,var(--no) 20%,transparent);color:var(--no)}
-.m{color:var(--m);font-size:.9rem}
-ol,ul{padding-left:20px}.top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
-.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:11px 13px;white-space:normal;line-height:1.35;word-break:break-word}
-.opt.sel{border-color:var(--p);background:color-mix(in srgb,var(--p) 12%,var(--c))}
-.opt.c-ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 18%,var(--c))}
-.opt.c-no{border-color:var(--no);background:color-mix(in srgb,var(--no) 18%,var(--c))}
-.bar{height:7px;background:var(--b);border-radius:99px;overflow:hidden;margin:8px 0}.fill{height:100%;background:var(--p);transition:width .2s}
-.s{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--b)}.s:last-child{border:0}
-input,select,textarea{width:100%;padding:9px 11px;border-radius:8px;border:1px solid var(--b);background:var(--c);color:var(--t);font:inherit;margin:4px 0 10px}
-textarea{min-height:90px;resize:vertical}label{font-size:.85rem;font-weight:600;color:var(--m)}
-#er{color:var(--no);font-weight:600;margin:8px 0;white-space:pre-wrap}
-.exp{border-left:4px solid var(--p);padding-left:10px;margin-top:10px;font-size:.92rem}
-.sub{font-size:.8rem;color:var(--m);margin-top:2px}
-table.tab{width:100%;border-collapse:collapse;font-size:.88rem;margin:8px 0}table.tab th,table.tab td{padding:8px 6px;border-bottom:1px solid var(--b);text-align:left}
-table.tab th{color:var(--m);font-size:.78rem;text-transform:uppercase}
-</style></head><body><main id="app"></main>
-<script>
-// Base de preguntas disciplinares y didácticas (ECEP / PAES M2)
-const D={N:"Números",A:"Álgebra",F:"Funciones",G:"Geometría",D:"Datos y probabilidades",P:"Didáctica y ámbitos pedagógicos"};
+.hero{text-align:center;padding:22px 6px 8px}.logo{width:68px;height:68px;margin:0 auto 10px;border-radius:22px;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;font:700 36px/68px system-ui;box-shadow:0 10px 24px color-mix(in srgb,var(--p) 40%,transparent)}
+.card{background:var(--c);border:1px solid var(--b);border-radius:16px;padding:16px;margin:12px 0;box-shadow:0 4px 16px rgba(20,30,70,.06)}
+button{font:inherit;border:1px solid var(--b);background:var(--c);color:var(--t);border-radius:12px;padding:10px 14px;cursor:pointer}
+button.p{background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;border:0}button.big{width:100%;padding:13px;font-weight:600}
+.o{display:block;width:100%;text-align:left;margin:8px 0;padding:12px}.o:hover{border-color:var(--p)}
+.ok{border-color:var(--ok)!important;background:color-mix(in srgb,var(--ok) 18%,var(--c))}.no{border-color:var(--no)!important;background:color-mix(in srgb,var(--no) 18%,var(--c))}
+.s{display:flex;justify-content:space-between;gap:10px;align-items:center}.top{display:flex;justify-content:space-between;align-items:center;gap:8px}.m{color:var(--m);font-size:.9rem}
+.bar{height:8px;background:var(--b);border-radius:6px;overflow:hidden;margin:3px 0 9px}.bar i{display:block;height:100%;background:var(--p);border-radius:6px}
+.exp{margin-top:10px;padding:10px;border-left:4px solid var(--p);background:var(--bg);border-radius:8px}
+.ring{width:80px;height:80px;border-radius:50%;display:grid;place-items:center;flex:none}.ring b{background:var(--c);width:62px;height:62px;border-radius:50%;display:grid;place-items:center}
+.chip{display:inline-block;padding:2px 10px;border-radius:99px;font-size:.78rem;color:#fff;background:var(--p)}
+.num{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-weight:700;background:var(--bg);flex:none}
+.tabs{display:flex;gap:8px;margin-bottom:12px}.tabs button{flex:1}
+input,select,textarea{width:100%;font:inherit;padding:10px;border:1px solid var(--b);border-radius:10px;background:var(--bg);color:var(--t);margin:4px 0 10px}label{font-size:.9rem;color:var(--m)}
+#er{color:var(--no);min-height:1.2em}li{margin:6px 0}
+</style></head><body><main id="app"></main><script>
+// [dominio, nivel(1-3), enunciado, opciones, índice correcto, explicación]
+const D={N:"Números",A:"Álgebra",F:"Funciones",G:"Geometría",D:"Datos y probabilidades",P:"Didáctica de la matemática"};
 const Q=[
 ["N",1,"¿Cuál de los siguientes números es irracional?",["0,25","√16","√2","22/7"],2,"√2 no se puede escribir como fracción; √16=4, 0,25=1/4 y 22/7 son racionales."],
-["N",1,"¿A qué es equivalente 2⁻³?",["−8","−6","1/8","1/6"],2,"a⁻ⁿ = 1/aⁿ, luego 2⁻³ = 1/2³ = 1/8."],
-["N",1,"¿Cuál es el resultado de (−3)² − (−2)³?",["1","17","−17","−1"],1,"(−3)² = 9; (−2)³ = −8; 9 − (−8) = 17."],
-["N",2,"Si log₂ x = 5, ¿cuál es el valor de x?",["10","25","32","64"],2,"Por definición, log_b a = c ⇔ b^c = a. Luego 2⁵ = 32."],
-["N",2,"¿Cuál es el valor de log(1000) + log₀,₁(0,01)?",["5","1","3","4"],0,"log₁₀(1000) = 3; (0,1)² = 0,01 luego log₀,₁(0,01) = 2. 3 + 2 = 5."],
-["N",2,"Al simplificar √50 + √18 − √8 se obtiene:",["√60","6√2","8√2","4√2"],1,"5√2 + 3√2 − 2√2 = 6√2."],
+["N",2,"¿Cuál es el valor de 2⁻³ · 2⁵?",["1/4","4","16","32"],1,"Se suman exponentes: 2⁻³⁺⁵=2²=4."],
+["N",2,"¿Cuál es el valor de log₂32 − log₂4?",["2","3","4","8"],1,"5 − 2 = 3 (equivale a log₂8)."],
 ["N",3,"¿Cuál es el valor de i²⁰²⁵?",["1","−1","i","−i"],2,"Las potencias de i se repiten cada 4; 2025 = 4·506 + 1, luego i²⁰²⁵ = i."],
-["N",3,"Si z = 3 + 4i, ¿cuál es el módulo |z|?",["7","25","5","1"],2,"|z| = √(3² + 4²) = √(9+16) = 5."],
-["N",3,"Al racionalizar 2 / (√3 − 1) se obtiene:",["√3 + 1","√3 − 1","2√3 + 2","(√3 + 1)/2"],0,"Multiplicando por (√3 + 1): 2(√3+1)/(3−1) = √3 + 1."],
+["N",3,"√12 + √27 =",["√39","5√3","6√3","5√6"],1,"√12=2√3 y √27=3√3, suman 5√3."],
 ["A",1,"Si 3x − 5 = 10, entonces x =",["3","5","6","15"],1,"3x = 15, x = 5."],
-["A",1,"Al factorizar x² − 9 se obtiene:",["(x−3)²","(x+3)(x−3)","x(x−9)","(x+9)(x−1)"],1,"Diferencia de cuadrados: a² − b² = (a+b)(a−b)."],
-["A",1,"El sistema {x + y = 7, x − y = 1} tiene como solución:",["(4,3)","(3,4)","(5,2)","(6,1)"],0,"Sumando ambas ecuaciones: 2x = 8 ⇒ x = 4; y = 3."],
-["A",2,"Las soluciones de x² − 5x + 6 = 0 son:",["x=1, x=6","x=−2, x=−3","x=2, x=3","x=−1, x=5"],2,"(x − 2)(x − 3) = 0 ⇒ x = 2 o x = 3."],
-["A",2,"Si 2^(x+1) = 16, entonces x =",["3","4","7","2"],0,"2^(x+1) = 2⁴ ⇒ x + 1 = 4 ⇒ x = 3."],
-["A",2,"¿Cuál es el conjunto solución de |x − 3| < 2?",["x < 5","1 < x < 5","x < 1 o x > 5","−2 < x < 2"],1,"−2 < x − 3 < 2 ⇒ 1 < x < 5."],
-["A",3,"¿Para qué valores de k la ecuación x² + kx + 9 = 0 tiene una única solución real?",["k = 6","k = 6 o k = −6","k = 3","k > 6"],1,"Discriminante Δ = k² − 36 = 0 ⇒ k = ±6."],
-["A",3,"Si a + b = 5 y ab = 6, ¿cuánto vale a² + b²?",["13","19","25","1"],0,"(a+b)² = a² + 2ab + b² ⇒ 25 = a² + 12 + b² ⇒ 13."],
-["A",3,"Al resolver log₂(x) + log₂(x − 2) = 3 en ℝ, la solución es:",["x = 4 y x = −2","x = 4","x = 8","x = 2"],1,"log₂(x(x−2)) = 3 ⇒ x² − 2x = 8 ⇒ (x−4)(x+2)=0. Se descarta x=−2 por dominio."],
-["F",1,"Dada f(x) = 2x − 3, ¿cuál es el valor de f(4)?",["5","8","1","11"],0,"f(4) = 2(4) − 3 = 5."],
-["F",1,"El gráfico de f(x) = −3x + 2 es una recta con pendiente:",["3","−3","2","−2"],1,"En f(x) = mx + c, m es la pendiente: −3."],
-["F",1,"¿Cuál es el vértice de la parábola f(x) = x² − 4x + 5?",["(2, 1)","(−2, 17)","(4, 5)","(0, 5)"],0,"x_v = −b/(2a) = 4/2 = 2; f(2) = 4 − 8 + 5 = 1."],
-["F",2,"Si f(x) = 3^x, ¿cuál es f⁻¹(x)?",["f⁻¹(x) = x/3","f⁻¹(x) = log₃(x)","f⁻¹(x) = 3^(−x)","f⁻¹(x) = ∛x"],1,"La función inversa de la exponencial en base 3 es el logaritmo en base 3."],
-["F",2,"¿Cuál es el dominio de f(x) = √(x − 4)?",["ℝ","x > 0","[4, +∞[","]4, +∞["],2,"La cantidad subradical debe ser no negativa: x − 4 ≥ 0 ⇒ x ≥ 4."],
-["F",2,"La función f(x) = −2(x − 1)² + 3 alcanza su valor máximo en:",["y = 1","y = 3","y = −2","y = 0"],1,"Como a = −2 < 0, la parábola abre hacia abajo y el máximo es el y del vértice: 3."],
-["F",3,"Dadas f(x) = 2x + 1 y g(x) = x², ¿cuánto vale (g ∘ f)(3)?",["13","49","19","37"],1,"f(3) = 7; g(f(3)) = g(7) = 7² = 49."],
-["F",3,"¿Cuál es el recorrido de f(x) = 2 / (x − 1)?",["ℝ","ℝ \ {1}","ℝ \ {0}","[0, +∞["],2,"No puede tomar el valor 0 pues el numerador no se anula."],
-["F",3,"Si f(x) = log₂(x + 3), ¿cuál es su asíntota vertical?",["x = 0","x = 3","x = −3","y = −3"],2,"El argumento se anula en x = −3, que es la asíntota vertical."],
-["G",1,"En un triángulo rectángulo los catetos miden 6 cm y 8 cm. La hipotenusa mide:",["10 cm","14 cm","48 cm","12 cm"],0,"c = √(6² + 8²) = √(36+64) = 10."],
-["G",1,"¿Cuál es el área de un círculo de radio 5 cm? (en cm²)",["10π","25π","50π","5π"],1,"Área = π · r² = 25π."],
-["G",1,"Un ángulo inscrito subtiende un arco de 80°. ¿Cuánto mide el ángulo?",["40°","80°","160°","20°"],0,"El ángulo inscrito mide la mitad del arco que subtiende: 40°."],
-["G",2,"Una figura de área 5 se amplía con una homotecia de razón 3. ¿Cuál es el área de la nueva figura?",["15","45","135","8"],1,"Las áreas escalan con k² = 9; 5·9 = 45."],
-["G",2,"El volumen de un cilindro de radio 3 cm y altura 5 cm es:",["15π cm³","45π cm³","30π cm³","75π cm³"],1,"V = π r² h = π · 9 · 5 = 45π."],
-["G",2,"En un triángulo ABC, DE es paralela a BC con D en AB y E en AC. Si AD=3, DB=6 y AE=2, ¿cuánto mide EC?",["4","6","5","3"],0,"Por Tales: AD/DB = AE/EC ⇒ 3/6 = 2/EC ⇒ EC = 4."],
-["G",3,"Un cono y un cilindro tienen igual base y altura. Si el volumen del cilindro es 90 cm³, el del cono es:",["30 cm³","45 cm³","60 cm³","90 cm³"],0,"V_cono = (1/3) V_cilindro = 30 cm³."],
-["G",3,"¿Cuál es la distancia entre los puntos (1, 2) y (4, 6) en el plano cartesiano?",["5","7","√13","25"],0,"d = √((4−1)² + (6−2)²) = √(9 + 16) = 5."],
-["G",3,"Si la razón de homotecia es k = −2, la figura resultante es:",["Invertida y del doble de tamaño","Directa y de la mitad de tamaño","Invertida y de la mitad de tamaño","Igual a la original"],0,"k negativo invierte la figura; |k|=2 duplica sus dimensiones lineales."],
+["A",2,"¿Cuál es la suma de las soluciones de x² − 5x + 6 = 0?",["2","3","5","6"],2,"Soluciones 2 y 3; también −b/a = 5."],
+["A",2,"Si x + y = 7 y x − y = 1, ¿cuánto vale x·y?",["10","12","7","6"],1,"x=4, y=3, xy=12."],
+["A",3,"¿Para qué valores de k la ecuación x² + kx + 9 = 0 tiene una única solución real?",["k = 6","k = 6 o k = −6","k = 3","k = 3 o k = −3"],1,"Discriminante nulo: k² − 36 = 0, k = ±6."],
+["A",3,"El conjunto solución de |2x − 1| < 5 es",["(−2, 3)","(−3, 2)","(−2, 2)","(−3, 3)"],0,"−5 < 2x−1 < 5 ⇒ −4 < 2x < 6 ⇒ −2 < x < 3."],
+["F",1,"Si f(x) = 2x + 3, ¿cuánto vale f(4)?",["8","11","14","7"],1,"2·4+3 = 11."],
+["F",2,"¿Cuál es el vértice de y = x² − 4x + 1?",["(2, −3)","(−2, −3)","(2, 3)","(4, 1)"],0,"x = −b/2a = 2; y = 4−8+1 = −3."],
+["F",2,"¿Cuál es la pendiente de la recta que pasa por (1,2) y (3,8)?",["2","3","4","6"],1,"(8−2)/(3−1) = 3."],
+["F",3,"Si f(x) = 2ˣ, el cociente f(x+1)/f(x) es",["1","2","x","2ˣ"],1,"2ˣ⁺¹/2ˣ = 2: cada unidad de x duplica el valor."],
+["F",3,"La función inversa de f(x) = 3x − 6 es",["(x+6)/3","3x+6","(x−6)/3","1/(3x−6)"],0,"y=3x−6 ⇒ x=(y+6)/3."],
+["G",1,"Un triángulo rectángulo tiene catetos 6 y 8. ¿Cuánto mide su hipotenusa?",["10","12","14","√14"],0,"Pitágoras: √(36+64)=10."],
+["G",2,"¿Cuál es el área de un círculo de radio 3?",["6π","9π","3π","18π"],1,"πr² = 9π."],
+["G",2,"Un ángulo inscrito subtiende un arco de 80°. ¿Cuánto mide el ángulo?",["40°","80°","160°","20°"],0,"El ángulo inscrito mide la mitad del arco que subtiende."],
+["G",3,"Una figura de área 5 se amplía con una homotecia de razón 3. ¿Cuál es el área de la nueva figura?",["15","45","135","8"],1,"Las áreas escalan con k² = 9; 5·9 = 45."],
+["G",3,"¿Cuál es el volumen de un cono de radio 3 y altura 4?",["36π","12π","24π","9π"],1,"(1/3)·π·9·4 = 12π."],
 ["D",1,"¿Cuál es la media de 2, 4, 6 y 8?",["4","5","6","20"],1,"20/4 = 5."],
-["D",1,"Al lanzar un dado común de 6 caras, ¿cuál es la probabilidad de obtener un número primo?",["1/6","1/2","2/3","1/3"],1,"Casos favorables {2, 3, 5} (3 de 6): 3/6 = 1/2."],
-["D",1,"¿Cuál es la mediana del conjunto {3, 1, 7, 2, 9}?",["7","3","2","4,4"],1,"Ordenado: {1, 2, 3, 7, 9}; el valor central es 3."],
-["D",2,"En una caja hay 4 bolas rojas y 6 azules. Si se extraen dos bolas sin reposición, ¿cuál es P(ambas rojas)?",["16/100","2/15","4/15","12/90"],1,"P = (4/10) · (3/9) = 12/90 = 2/15."],
-["D",2,"¿Cuál es el rango de los datos {12, 5, 22, 18, 9}?",["17","22","5","13"],0,"Rango = Máx − Mín = 22 − 5 = 17."],
-["D",2,"Si X ~ N(0, 1), ¿cuál es P(X ≤ 0)?",["0","0,5","1","0,25"],1,"La distribución normal estándar es simétrica respecto a 0."],
+["D",2,"Se lanza una moneda dos veces. ¿Cuál es la probabilidad de obtener al menos un sello?",["1/4","1/2","3/4","1"],2,"1 − P(dos caras) = 1 − 1/4."],
+["D",2,"¿Cuál es la mediana de 3, 9, 4, 7, 10, 1?",["4","5,5","7","6"],1,"Ordenados: 1,3,4,7,9,10; mediana (4+7)/2."],
 ["D",3,"Si P(A∩B)=0,2 y P(B)=0,5, ¿cuánto vale P(A|B)?",["0,1","0,4","0,7","0,25"],1,"P(A|B)=P(A∩B)/P(B)=0,4."],
 ["D",3,"¿De cuántas formas se puede elegir un comité de 3 personas entre 6?",["18","20","120","216"],1,"C(6,3)=20 (el orden no importa)."],
-["D",3,"Si una variable X toma valores 0 y 2 con P(X=0)=0,3 y P(X=2)=0,7, su valor esperado E(X) es:",["1,0","1,4","0,6","2,0"],1,"E(X) = 0·0,3 + 2·0,7 = 1,4."],
-["P",1,"Una docente busca introducir las operaciones con números racionales de forma concreta y pictórica. ¿Cuál estrategia es más pertinente?",["Dictar las reglas de suma de fracciones con distinto denominador","Utilizar tiras de fracciones y diagramas de barras para representar equivalencias","Resolver 20 ejercicios simbólicos en la pizarra","Explicar el algoritmo del mínimo común múltiplo directamente"],1,"El uso de representaciones pictóricas (diagramas de barras/tiras) permite conectar el significado conceptual antes de la formalización algorítmica.",["ECEP 2023 · Ítem 1","Inst. Evaluación Docente"]],
-["P",1,"Un estudiante simplifica (x+3)/3 como x+1. ¿Qué conocimiento previo es más probable que falte?",["Resolver ecuaciones lineales","Propiedad distributiva y concepto de simplificación como división del numerador completo","Mínimo común múltiplo","Factorización de diferencia de cuadrados"],1,"El error proviene de simplificar un término del numerador en lugar de dividir cada sumando por el denominador (distributividad).",["ECEP 2024 · Ítem 5","Inst. Evaluación Docente"]],
-["P",2,"¿Qué actividad promueve mejor la modelación matemática en 3° Medio?",["Calcular 20 derivadas consecutivas","Plantear una función que describa el vaciado de un estanque y predecir tiempos","Memorizar las fórmulas de área de superficies","Resolver un sistema de ecuaciones abstracto por sustitución"],1,"Modelar implica representar un fenómeno del entorno mediante funciones y usar el modelo para hacer predicciones en contexto.",["ECEP 2023 · Ítem 10","Inst. Evaluación Docente"]],
-["P",2,"Para que los estudiantes comprendan el concepto de función inversa, ¿qué secuencia es más pertinente?",["Definición formal sagital → propiedades inyectivas → cálculo algorítmico","Partir de la función lineal afín en contexto (ej.: costo/conversión) e intercambiar variables de entrada y salida pictórica y gráficamente","Entregar directamente la regla y sustituir x por y","Graficar funciones cuadráticas no restringidas"],1,"El aprendizaje con sentido parte de contextos reversibles donde la entrada y salida intercambian roles antes de la técnica algebraica.",["ECEP 2023 · Ítem 9","Inst. Evaluación Docente"]],
-["P",3,"¿Qué ítem evalúa mejor el razonamiento y la argumentación en Geometría?",["Calcular el área de un triángulo de base 4 y altura 3","Decidir si una afirmación sobre semejanza es siempre, a veces o nunca verdadera, justificando con un contraejemplo","Medir con regla la hipotenusa de un triángulo dibujado","Aplicar el teorema de Pitágoras con datos numéricos directos"],1,"Justificar la validez de una conjetura o construir un contraejemplo requiere razonamiento matemático de nivel superior.",["ECEP 2024 · Ítem 8","Inst. Evaluación Docente"]],
-["P",1,"¿Qué recurso favorece más la visualización del teorema de Pitágoras?",["Una demostración con áreas de cuadrados sobre los lados de un triángulo rectángulo","Una guía con 30 ejercicios numéricos","Una disertación histórica sobre Pitágoras","Escribir a² + b² = c² en la pizarra repetidamente"],0,"La representación geométrica con áreas cuadradas permite comprobar físicamente la conservación del área a² + b² = c².",["ECEP 2024 · Ítem 3","Inst. Evaluación Docente"]],
-["P",2,"En una evaluación formativa se observa que el 60% comete el error log(a+b) = log(a)+log(b). ¿Cuál es la retroalimentación más efectiva?",["Descontar puntaje e indicar 'repasar propiedades'","Presentar contraejemplos numéricos (ej.: log(10+90) vs log 10 + log 90) para que comprueben la falsedad de la igualdad","Dictar la lista de propiedades 5 veces","Explicar que la suma se convierte en resta"],1,"Los contraejemplos generan disonancia cognitiva y ayudan a que los estudiantes identifiquen y corrijan el error por sí mismos.",["ECEP 2023 · Ítem 10","Inst. Evaluación Docente"]],
-["P",3,"Un profesor desea evaluar la habilidad de 'Resolver problemas' según el currículum. ¿Cuál situación es idónea?",["Un ejercicio de cálculo directo de porcentaje","Un problema no rutinario en contexto sin estrategia previa explícita donde deban seleccionar o crear un modelo","Una pregunta de opción múltiple de memorización de definiciones","Completar una tabla de valores dada la fórmula de la función"],1,"Resolver problemas implica enfrentar situaciones no rutinarias donde el estudiante debe decidir la estrategia adecuada.",["ECEP 2024 · Ítem 10","Inst. Evaluación Docente"]]
-];
-
-// Generadores dinámicos de ítems disciplinares con variaciones numéricas
-const pk=a=>a[Math.floor(Math.random()*a.length)];
-const ri=(m,M)=>Math.floor(Math.random()*(M-m+1))+m;
-const sp=n=>n.toString().replace(/0/g,"⁰").replace(/1/g,"¹").replace(/2/g,"²").replace(/3/g,"³").replace(/4/g,"⁴").replace(/5/g,"⁵").replace(/6/g,"⁶").replace(/7/g,"⁷").replace(/8/g,"⁸").replace(/9/g,"⁹");
-function sh(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]]}return r}
-function mk(d,l,e,c,o,ex){
-  const opts=[c,...o.slice(0,3)];
-  const s=sh(opts.map((x,i)=>({x,i})));
-  return [d,l,e,s.map(z=>String(z.x)),s.findIndex(z=>z.i===0),ex||""];
-}
+["P",1,"Un estudiante escribe (a+b)² = a²+b². ¿Qué intervención es más adecuada?",["Repetir la fórmula correcta","Pedirle probar con a=2, b=3 y comparar, y luego mostrar el modelo de áreas","Asignarle más ejercicios iguales","Corregirle y dar la respuesta"],1,"El contraejemplo numérico y la representación geométrica permiten aprender a partir del error."],
+["P",2,"Para evaluar si estudiantes comprenden la pendiente de una función lineal, el ítem más válido es",["Calcular la pendiente con una fórmula dada","Interpretar la pendiente en una situación de contexto y justificar","Recitar la definición","Graficar sin contexto"],1,"Evalúa comprensión y uso, no solo procedimiento."],
+["P",3,"Un estudiante simplifica (x+3)/3 como x+1. ¿Qué conocimiento previo es más probable que falte?",["Resolver ecuaciones","Simplificar solo factores comunes al numerador completo","Graficar rectas","Calcular áreas"],1,"Se simplifica un término y no el numerador completo: error con propiedades de fracciones y factores."],
+["P",2,"¿Qué actividad promueve mejor la modelación matemática?",["Calcular 20 derivadas","Plantear una función que describa el costo de un plan de telefonía y compararla con otra","Memorizar fórmulas","Copiar ejemplos de la pizarra"],1,"Modelar implica traducir una situación real a un modelo y analizarlo."],
+["P",1,"Al introducir la función cuadrática, ¿qué estrategia favorece más la comprensión conceptual?",["Entregar primero la fórmula del vértice","Explorar con tablas y gráficos cómo cambia la parábola al variar los coeficientes","Resolver 30 ejercicios idénticos","Dictar definiciones"],1,"Explorar varias representaciones construye significado antes de formalizar."],
+["P",2,"Una estudiante resuelve x² = 9 y responde solo x = 3. ¿Qué debería enfatizar el docente?",["Que hay dos soluciones, 3 y −3, comprobándolas por sustitución","Que debe memorizar la fórmula general","Que x² es siempre positivo","Nada, la respuesta es correcta"],0,"Verificar por sustitución permite que el propio estudiante descubra la solución faltante."],
+["P",2,"¿Qué indicador de evaluación es adecuado para el OA de resolver sistemas de ecuaciones?",["Memoriza el método de sustitución","Plantea un sistema a partir de una situación y verifica la solución en el contexto","Copia el procedimiento de la pizarra","Nombra los métodos de resolución"],1,"Un buen indicador describe un desempeño observable que combina modelar, resolver y validar."],
+["P",3,"Un estudiante usa la suma (razonamiento aditivo) en vez de la razón en un problema de proporcionalidad. ¿Qué tarea ayuda más a revelar y corregir esto?",["Comparar dos mezclas de jugo con distintas razones y justificar cuál sabe más fuerte","Repetir una tabla de multiplicar","Resolver ecuaciones de primer grado","Calcular áreas de rectángulos"],0,"Una situación de comparación de razones confronta el razonamiento aditivo con el multiplicativo."],
+["P",1,"Según el enfoque actual, ¿qué rol cumple el error en el aprendizaje matemático?",["Debe evitarse siempre","Es una oportunidad para identificar concepciones y retroalimentar","Indica falta de esfuerzo","Solo se corrige al final de la unidad"],1,"El error entrega información sobre cómo piensa el estudiante."],
+["P",2,"Para que los estudiantes comprendan el concepto de función, ¿qué secuencia es más pertinente?",["Definición formal y luego ejemplos","Situaciones concretas, tablas y gráficos, y luego la definición formal","Solo notación f(x)","Solo ejercicios algebraicos"],1,"Se avanza de lo concreto y pictórico a lo simbólico."],
+["P",3,"Un estudiante afirma que el cuadrado de un número siempre es mayor que el número. ¿Qué intervención es más pertinente?",["Decirle que es falso","Invitarlo a buscar contraejemplos con fracciones entre 0 y 1","Pedirle que memorice la regla","Ignorar la afirmación"],1,"Buscar contraejemplos desarrolla argumentación y evita la corrección autoritaria."],
+["P",2,"Al planificar una unidad de probabilidad, ¿qué conocimiento previo es más necesario?",["Fracciones, razones y porcentajes","Derivadas","Logaritmos","Trigonometría"],0,"La probabilidad se expresa como razón, fracción o porcentaje."],
+["P",3,"¿Qué ítem evalúa mejor el razonamiento y la argumentación?",["Calcular el 15% de 80","Decidir si una afirmación general es verdadera y justificar con ejemplo o contraejemplo","Completar una fórmula","Marcar V o F sin justificar"],1,"Exige justificar, no solo calcular."],
+["P",1,"¿Qué recurso favorece más la visualización del teorema de Pitágoras?",["Una demostración con áreas de cuadrados sobre los lados, con material concreto o software","Dictar la fórmula","Solo problemas numéricos","Ver un video sin actividad"],0,"La representación geométrica da sentido a la relación entre las áreas."]];
+const ri=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),pk=a=>a[ri(0,a.length-1)],sp=n=>String(n).replace(/\d/g,d=>"⁰¹²³⁴⁵⁶⁷⁸⁹"[d]);
+const sh=q=>{const c=q[3][q[4]],o=[...q[3]].sort(()=>Math.random()-.5);return[q[0],q[1],q[2],o,o.indexOf(c),q[5],q[6],q[7]]};
+const mk=(d,l,q,c,w,e)=>{c=String(c);let o=[...new Set([c,...w].map(String))].slice(0,4);const m=c.match(/^(\d+)(°|π)?$/);
+if(m)for(const j of [2,-2,3,5,-3,7]){if(o.length>=4)break;const v=+m[1]+j,f=v+(m[2]||"");if(v>0&&!o.includes(f))o.push(f)}
+if(o.length<4)o.push("Ninguna de las anteriores");return sh([d,l,q,o,0,e])};
 const G={
-  N:[
-    [1,()=>{const p=pk([10,20,25,30,40]),r=ri(2,12)*20;return mk("N",1,`¿Cuánto es el ${p}% de ${r}?`,r*p/100,[r*p/10,r+p,r*p/50],`Cálculo: (${p}/100) · ${r} = ${r*p/100}.`)}],
-    [2,()=>{const a=ri(2,5),b=ri(2,4);return mk("N",2,`Si log_(${a}) x = ${b}, ¿cuál es el valor de x?`,Math.pow(a,b),[a*b,Math.pow(b,a),a+b],`Por definición: ${a}^${b} = ${Math.pow(a,b)}.`)}],
-    [3,()=>{const n=ri(20,200),v=["1","i","−1","−i"];return mk("N",3,`¿Cuál es el valor de i${sp(n)}?`,v[n%4],v.filter((x,j)=>j!==n%4),`Potencias de i: n mod 4 = ${n%4} ⇒ iⁿ = ${v[n%4]}.`)}],
-    [3,()=>{const k=pk([4,6,8,10]),n=pk([3,5,7]);return mk("N",3,`Al racionalizar ${k}/√${n} se obtiene:`,`${k}√${n}/${n}`,[`${k}√${n}`,`${n}√${k}/${k}`,`${k}/${n}`],`Multiplicando por √${n}/√${n}.`)}]
-  ],
-  A:[
-    [1,()=>{const p=ri(3,9),q=ri(4,9),r=ri(1,2);return mk("A",1,`Al reducir ${p}a + ${q}a − ${r}a se obtiene:`,`${p+q-r}a`,[`${p+q+r}a`,`${p*q-r}a`,`${p+q}a`],`Suma y resta de términos semejantes: ${p}+${q}−${r} = ${p+q-r}.`)}],
-    [2,()=>{const b=ri(2,8),c=ri(1,9),d=b*b-4*c;return mk("A",2,`¿Cuál es el discriminante de x² + ${b}x + ${c} = 0?`,d,[b*b+4*c,b-4*c,2*b-c],`Δ = b² − 4ac = ${b}² − 4(1)(${c}) = ${d}.`)}],
-    [3,()=>{const a=ri(2,5),k=ri(1,4);return mk("A",3,`Si 2^(${a}x − ${k}) = 2^(${k}x + ${a+2}), entonces x =`,(a+2+k)/(a-k)|0===(a+2+k)/(a-k)?(a+2+k)/(a-k):`${a+2+k}/${a-k}`,["2","3","1"],`Igualando exponentes: ${a}x − ${k} = ${k}x + ${a+2}.`)}]
-  ],
-  F:[
-    [1,()=>{const m=ri(2,6),c=ri(1,9),x=ri(2,5);return mk("F",1,`Dada f(x) = ${m}x + ${c}, ¿cuál es f(${x})?`,m*x+c,[m+x+c,m*x,c*x],`f(${x}) = ${m}(${x}) + ${c} = ${m*x+c}.`)}],
-    [2,()=>{const h=ri(1,5),k=ri(1,5);return mk("F",2,`El vértice de la parábola f(x) = (x − ${h})² + ${k} es:`,`(${h}, ${k})`,[`(${-h}, ${k})`,`(${h}, ${-k})`,`(${k}, ${h})`],`Forma canónica f(x) = (x−h)² + k ⇒ V(${h}, ${k}).`)}]
-  ],
-  G:[
-    [1,()=>{const [a,b,c]=pk([[3,4,5],[5,12,13],[8,15,17],[7,24,25]]),k=ri(1,3);return mk("G",1,`Un triángulo rectángulo tiene catetos de ${a*k} cm y ${b*k} cm. Su hipotenusa mide:`,`${c*k} cm`,[`${(a+b)*k} cm`,`${c*k+2} cm`,`${a*b*k} cm`],`Trío pitagórico escalar (${a},${b},${c}) · ${k} = ${c*k}.`)}],
-    [2,()=>{const r=ri(2,6);return mk("G",2,`El área de un círculo de radio ${r} cm es:`,`${r*r}π cm²`,[`${2*r}π cm²`,`${r*r*r}π cm²`,`${4*r}π cm²`],`Área = π · r² = ${r*r}π.`)}]
-  ],
-  D:[
-    [1,()=>{let a,m;do{m=ri(10,20);a=[ri(5,25),ri(5,25),ri(5,25),ri(5,25)];a.push(5*m-a.reduce((x,y)=>x+y))}while(a[4]<1||a[4]>30);return mk("D",1,`La media de {${a.join(", ")}} es:`,m,[m-1,m+2,m+1],`Suma = ${5*m}; 5*m/5 = ${m}.`)}],
-    [1,()=>{const r=ri(2,9),b=ri(2,9)+(ri(0,1)?0:0);return mk("D",1,`Una urna tiene ${r} bolas rojas y ${b} azules. ¿Cuál es la probabilidad de extraer una bola roja?`,`${r}/${r+b}`,[`${b}/${r+b}`,`${r}/${b}`,`1/${r+b}`],`Casos favorables (${r}) / casos totales (${r+b}).`)}],
-    [3,()=>{const n=ri(4,6),f=[1,1,2,6,24,120,720];return mk("D",3,`¿De cuántas formas se pueden ordenar ${n} libros distintos en un estante?`,f[n],[n*n,n*(n-1),f[n-1]],"n!.")}]
-  ]
-};
-
-function dom0(d,l,u){
-  let c=Q.filter(q=>q[0]==d&&(d=="P"||q[1]==l)&&!u.has(q[2])),q;
-  if(d=="P"){if(!c.length)c=Q.filter(q=>q[0]=="P");q=sh(pk(c))}
-  else if(c.length&&Math.random()<.4)q=sh(pk(c));
-  else{const g=G[d].filter(x=>x[0]==l);for(let t=0;t<30;t++){q=pk(g)[1]();if(!u.has(q[2]))break}}
-  u.add(q[2]);return q
-}
-function dom(d,l,u){
-  const b=BANK.filter(x=>x[0]==d&&!u.has(x[2])&&(d=="P"||x[1]==l));
-  if(b.length&&(d=="P"||Math.random()<.7)){const q=sh(pk(b));u.add(q[2]);return q}
-  return dom0(d,l,u)
-}
-
+N:[[1,()=>{const a=ri(2,5),m=ri(3,6),n=m+ri(1,3);return mk("N",1,`¿Cuál es el resultado de ${a}${sp(m)} · ${a}${sp(n)}?`,`${a}${sp(m+n)}`,[`${a}${sp(m*n)}`,`${a*a}${sp(m+n)}`,`${a}${sp(n-m)}`],"Con igual base se suman los exponentes.")}],
+[1,()=>{const p=pk([10,20,25,30,40]),r=ri(2,12)*20;return mk("N",1,`¿Cuánto es el ${p}% de ${r}?`,r*p/100,[r*p/10,r+p,r*(100-p)/100],"Se multiplica por p/100.")}],
+[2,()=>{const b=ri(2,5),k=ri(3,6);return mk("N",2,`Si el logaritmo en base ${b} de x es ${k}, cuánto vale x?`,b**k,[b*k,b+k,b**(k-1)],`log_b x = k equivale a x = b^k = ${b**k}.`)}],
+[2,()=>{const a=ri(2,6),b=pk([2,3,5,7]);return mk("N",2,`¿A qué es igual √${a*a*b}?`,`${a}√${b}`,[`${a*a}√${b}`,`${a}√${a*b}`,`${a+b}√${b}`],`√(${a*a}·${b}) = ${a}√${b}.`)}],
+[3,()=>{const n=ri(20,200),v=["1","i","−1","−i"];return mk("N",3,`¿Cuál es el valor de i${sp(n)}?`,v[n%4],v.filter((x,j)=>j!=n%4),`Las potencias de i se repiten cada 4; ${n} deja resto ${n%4}.`)}],
+[3,()=>{const k=pk([4,6,8,10]),n=pk([3,5,7]);return mk("N",3,`Al racionalizar ${k}/√${n} se obtiene`,`${k}√${n}/${n}`,[`${k}/${n}`,`${k}√${n}`,`${k}√${n}/${k}`],"Se multiplica numerador y denominador por √n.")}]],
+A:[[1,()=>{const x=ri(2,9),a=ri(2,7),b=ri(1,9);return mk("A",1,`Si ${a}x + ${b} = ${a*x+b}, ¿cuánto vale x?`,x,[x+1,x-1,a*x],`${a}x = ${a*x}, luego x = ${x}.`)}],
+[1,()=>{const p=ri(3,9),q=ri(4,9),r=ri(1,2);return mk("A",1,`Al reducir ${p}a + ${q}a − ${r}a se obtiene`,`${p+q-r}a`,[`${p+q+r}a`,`${p*q-r}a`,`${p+q-r}a²`],"Se suman los coeficientes de los términos semejantes.")}],
+[2,()=>{let r1=ri(1,6),r2=ri(1,6);if(r1==r2)r2++;const s=r1+r2,p=r1*r2;return mk("A",2,`En x² − ${s}x + ${p} = 0, ¿cuál es la suma de las soluciones?`,s,[p,-s,s+p],`Las soluciones son ${r1} y ${r2}; suman ${s} (−b/a).`)}],
+[2,()=>{const b=ri(2,8),c=ri(1,9),d=b*b-4*c;return mk("A",2,`¿Cuál es el discriminante de x² + ${b}x + ${c} = 0?`,d,[b*b+4*c,b*b-c,4*c-b*b],"Δ = b² − 4ac.")}],
+[2,()=>{const x=ri(4,9),y=ri(1,3);return mk("A",2,`Si x + y = ${x+y} y x − y = ${x-y}, ¿cuánto vale x?`,x,[y,x+y,x-y],"Al sumar las ecuaciones: 2x = "+(2*x)+".")}],
+[3,()=>{const x0=ri(1,6),a=ri(2,5),b=ri(1,5);return mk("A",3,`La solución de ${a}x − ${b} > ${a*x0-b} es`,`x > ${x0}`,[`x < ${x0}`,`x > ${-x0}`,`x > ${x0+b}`],`${a}x > ${a*x0}, luego x > ${x0}.`)}],
+[3,()=>{const h=ri(1,5),r=ri(2,4);return mk("A",3,`El conjunto solución de |x − ${h}| < ${r} es`,`(${h-r}, ${h+r})`,[`(−∞, ${h-r}) ∪ (${h+r}, ∞)`,`(${-h-r}, ${-h+r})`,`(${h}, ${r})`],`−${r} < x − ${h} < ${r}.`)}],
+[3,()=>{const m=ri(2,6);return mk("A",3,`¿Para qué valores de k la ecuación x² + kx + ${m*m} = 0 tiene una única solución real?`,`k = ${2*m} o k = −${2*m}`,[`k = ${2*m}`,`k = ${m} o k = −${m}`,`k = ${m*m}`],"Δ = 0 ⇒ k² = "+(4*m*m)+".")}]],
+F:[[1,()=>{const a=ri(2,6),b=ri(1,9),t=ri(2,6);return mk("F",1,`Si f(x) = ${a}x + ${b}, ¿cuánto vale f(${t})?`,a*t+b,[a+t+b,a*(t+b),a*t-b],`${a}·${t}+${b}.`)}],
+[2,()=>{const a=ri(1,3),b=pk([-4,-3,-2,2,3,4]),c=ri(1,5),t=ri(2,4),v=a*t*t+b*t+c;return mk("F",2,`Si f(x) = ${a}x² ${b<0?"−":"+"} ${Math.abs(b)}x + ${c}, ¿cuánto vale f(${t})?`,v,[v+1,v-1,a*t*t+b+c],"Se reemplaza x y se respeta la jerarquía de operaciones.")}],
+[2,()=>{const x1=ri(0,3),dx=ri(1,4),m=ri(2,5),y1=ri(0,5);return mk("F",2,`¿Cuál es la pendiente de la recta que pasa por (${x1}, ${y1}) y (${x1+dx}, ${y1+m*dx})?`,m,[`1/${m}`,m+1,-m],"Pendiente = Δy/Δx.")}],
+[2,()=>{const h=ri(1,6),c=ri(1,9);return mk("F",2,`¿Cuál es la abscisa del vértice de y = x² − ${2*h}x + ${c}?`,h,[2*h,-h,h+1],"x = −b/2a.")}],
+[3,()=>{const k=ri(2,3),b=ri(2,3),n=ri(2,4);return mk("F",3,`Si f(x) = ${k}·${b}ˣ, ¿cuánto vale f(${n})?`,k*b**n,[(k*b)**n,k*b*n,k+b**n],`${k}·${b}${sp(n)}.`)}],
+[3,()=>{const a=ri(2,5),b=ri(1,9);return mk("F",3,`Si f(x) = ${a}x + ${b}, ¿cuál es f⁻¹(y)?`,`(y − ${b})/${a}`,[`(y + ${b})/${a}`,`${a}y − ${b}`,`1/(${a}y + ${b})`],"Se despeja x en y = ax + b.")}],
+[3,()=>{const p=ri(1,5),q=ri(1,5)+5;return mk("F",3,`La parábola y = (x − ${p})(x + ${q}) corta al eje X en`,`x = ${p} y x = −${q}`,[`x = −${p} y x = ${q}`,`x = ${p} y x = ${q}`,`x = ${p*q}`],"Los factores se anulan en esos valores.")}]],
+G:[[1,()=>{const [a,b,c]=pk([[3,4,5],[5,12,13],[8,15,17],[7,24,25]]),k=ri(1,3);return mk("G",1,`Un triángulo rectángulo tiene catetos ${a*k} y ${b*k}. ¿Cuánto mide la hipotenusa?`,c*k,[(a+b)*k,c*k+1,c*k-1],"Teorema de Pitágoras.")}],
+[1,()=>{const r=ri(3,9);return mk("G",1,`¿Cuál es el área de un círculo de radio ${r}?`,`${r*r}π`,[`${2*r}π`,`${r}π`,`${2*r*r}π`],"A = πr².")}],
+[2,()=>{const a=ri(5,16)*10;return mk("G",2,`Un ángulo inscrito subtiende un arco de ${a}°. ¿Cuánto mide el ángulo?`,`${a/2}°`,[`${a}°`,`${2*a}°`,`${180-a/2}°`],"Mide la mitad del arco.")}],
+[2,()=>{const n=ri(5,10);return mk("G",2,`¿Cuánto suman los ángulos interiores de un polígono convexo de ${n} lados?`,`${(n-2)*180}°`,[`${n*180}°`,`${(n-1)*180}°`,`${(n-2)*90}°`],"(n − 2)·180°.")}],
+[3,()=>{const A=ri(2,9),k=ri(2,4);return mk("G",3,`Una figura de área ${A} se amplía con una homotecia de razón ${k}. ¿Cuál es la nueva área?`,A*k*k,[A*k,A+k*k,2*A*k],"Las áreas escalan con k².")}],
+[3,()=>{const r=pk([3,6]),h=ri(2,8);return mk("G",3,`¿Cuál es el volumen de un cono de radio ${r} y altura ${h}?`,`${r*r*h/3}π`,[`${r*r*h}π`,`${r*r*h/2}π`,`${2*r*r*h/3}π`],"V = πr²h/3.")}],
+[3,()=>{const r=pk([3,6]);return mk("G",3,`¿Cuál es el volumen de una esfera de radio ${r}?`,`${4*r**3/3}π`,[`${4*r**3}π`,`${r**3}π`,`${2*r**3}π`],"V = (4/3)πr³.")}]],
+D:[[1,()=>{let a,m;do{m=ri(10,20);a=[ri(5,25),ri(5,25),ri(5,25),ri(5,25)];a.push(5*m-a.reduce((x,y)=>x+y))}while(a[4]<1||a[4]>30);return mk("D",1,`¿Cuál es la media de ${a.join(", ")}?`,m,[m+1,m-1,a[4]],"Suma total dividida por 5.")}],
+[1,()=>{const r=ri(2,9),b=ri(2,9)+(ri(0,1)?0:0);return mk("D",1,`Una urna tiene ${r} bolas rojas y ${b} azules. ¿Cuál es la probabilidad de sacar una roja?`,`${r}/${r+b}`,[`${b}/${r+b}`,`${r}/${b}`,`${r+b}/${r}`],"Casos favorables sobre casos totales.")}],
+[2,()=>{const a=[...new Set(Array.from({length:12},()=>ri(1,30)))].slice(0,7),s=[...a].sort((x,y)=>x-y);return mk("D",2,`¿Cuál es la mediana de ${a.join(", ")}?`,s[3],[s[2],s[4],a[3]],"Se ordenan los datos y se toma el central.")}],
+[2,()=>{const n=ri(5,12);return mk("D",2,`¿De cuántas formas se pueden elegir 2 personas entre ${n}?`,n*(n-1)/2,[n*(n-1),n*n,n*(n-1)/2+n],"C(n,2) = n(n−1)/2.")}],
+[3,()=>{const X=ri(1,3),Y=ri(4,8);return mk("D",3,`Si P(A∩B) = ${X/10} y P(B) = ${Y/10}, ¿cuánto vale P(A|B)?`,(X/Y).toFixed(2),[((Y-X)/10).toFixed(2),(X*Y/100).toFixed(2),(1-X/Y).toFixed(2)],"P(A|B) = P(A∩B)/P(B).")}],
+[3,()=>{const n=ri(4,6),f=[1,1,2,6,24,120,720];return mk("D",3,`¿De cuántas formas se pueden ordenar ${n} libros distintos en un estante?`,f[n],[n*n,n*(n-1),f[n-1]],"n!.")}]]]};
+function dom0(d,l,u){let c=Q.filter(q=>q[0]==d&&(d=="P"||q[1]==l)&&!u.has(q[2])),q;
+if(d=="P"){if(!c.length)c=Q.filter(q=>q[0]=="P");q=sh(pk(c))}
+else if(c.length&&Math.random()<.4)q=sh(pk(c));
+else{const g=G[d].filter(x=>x[0]==l);for(let t=0;t<30;t++){q=pk(g)[1]();if(!u.has(q[2]))break}}
+u.add(q[2]);return q}
+function dom(d,l,u){const b=BANK.filter(x=>x[0]==d&&!u.has(x[2])&&(d=="P"||x[1]==l));
+if(b.length&&(d=="P"||Math.random()<.7)){const q=sh(pk(b));u.add(q[2]);return q}return dom0(d,l,u)}
 const T0=d=>{const u=new Set();return[1,2,3].flatMap(l=>Array.from({length:5},()=>dom(d,l,u)))};
-const T=d=>{const u=new Set();return[...[1,2,3].flatMap(l=>Array.from({length:6},()=>dom(d,l,u))),...Array.from({length:12},()=>dom("P",1,u))]};
+const T=d=>{const u=new Set();return[...[1,2,3].flatMap(l=>Array.from({length:8},()=>dom(d,l,u))),...Array.from({length:6},()=>dom("P",1,u))]};
 const M2=(nd,np,ls)=>{const u=new Set(),r=[],ds=["N","A","F","G","D"];for(let k=0;k<nd;k++)r.push(dom(ds[k%5],pk(ls),u));for(let k=0;k<np;k++)r.push(dom("P",ri(1,3),u));return r.sort(()=>Math.random()-.5)};
 const S=[
 {t:"Diagnóstico",d:"Mide tu nivel inicial en todos los ejes.",ex:1,ids:()=>M2(20,10,[1,2])},
@@ -151,697 +124,164 @@ const S=[
 {t:"Didáctica y ámbitos pedagógicos",d:"Errores frecuentes, intervención, evaluación y estándares.",ids:()=>{const u=new Set();return Array.from({length:30},()=>dom("P",1,u))}},
 {t:"Nivel avanzado",d:"Preguntas de dificultad alta.",ids:()=>M2(20,10,[3])},
 {t:"Evaluación final",d:"Simulacro final con mayor peso pedagógico; se compara con tu diagnóstico.",ex:1,ids:()=>M2(14,16,[2,3])}];
-
-// Estado global y sincronización con Firebase Firestore
-let BANK=[...Q],SRC=[],USERS=[],CONS=[],ST={st:{},hist:[]},U={uid:"anon",nombre:"Anon"},run=null,AUTHERR="",WANTADM=0,NEWC=0;
-const $=document.getElementById("app"),st=ST.st,esc=s=>String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
-
-function norm(o){
-  return [o.dominio,o.nivel,o.enunciado,o.opciones,o.correcta,o.explicacion||"",o.fuente||"",o.ambito||"",o.id];
-}
-
-async function loadBank(){
-  if(window.FB){
-    try{
-      const b=await FB.bank();
-      if(b&&b.length)BANK=b.map(norm);
-    }catch(e){console.warn("Error cargando banco:",e)}
-  }
-}
-
+let st={},U=null,BANK=[],run=null,PEND=[],SRC=[],AUTHERR="",WANTADM=0,NEWC=0,AT="",USERS=[],CONS=[],IMP=[];D.P="Didáctica y ámbitos pedagógicos";
+const $=document.getElementById("app"),COL={N:"#6c8cff",A:"#a78bfa",F:"#34d399",G:"#f59e0b",D:"#fb7185",P:"#06b6d4"};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])),pct=r=>r.n?Math.round(100*r.ok/r.n):0,lk=()=>"ecep_"+(U?U.uid:"x");
+const norm=o=>[o.dominio,o.nivel,o.enunciado,o.opciones,o.correcta,o.explicacion||"",o.fuente||"",o.ambito||"",o.id];
 const isAdmin=()=>!window.FB||(FB.admins||[]).includes((U.email||"").toLowerCase());
+const ls=k=>{try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}};
+function persist(){try{localStorage.setItem(lk(),JSON.stringify(st))}catch(e){}if(window.FB&&U){SYNC="Guardando…";sy();FB.save(U.uid,U.nombre,st,U.email).then(()=>{SYNC="ok";sy()}).catch(e=>{console.error(e);SYNC="⚠ No se pudo guardar en la nube ("+(e.code||e.message)+"). El avance solo queda en este dispositivo.";sy()})}}
+let SYNC="";function sy(){const e=document.getElementById("sy");if(e)e.innerHTML=SYNC=="ok"?"☁️ Avance guardado en la nube":esc(SYNC)}
+async function boot(u){BANK=[];
+if(window.FB){if(!u){U=null;return auth(AUTHERR?"adm":"reg")}U={uid:u.uid,nombre:u.displayName||u.email,email:u.email};
+try{st=(await FB.load(U.uid))||ls(lk())||{};SYNC=""}catch(e){st=ls(lk())||{};SYNC="⚠ No se pudo leer tu avance de la nube ("+(e.code||e.message)+")."}try{BANK=(await FB.bank()).map(norm)}catch(e){}
+try{NEWC=(await FB.mineC(U.uid)).filter(c=>c.resp&&c.tResp>(st.cvis||0)).length}catch(e){NEWC=0}
+if(WANTADM){WANTADM=0;if(isAdmin())return admin();AUTHERR="Este correo no tiene permisos de administrador.";return FB.out()}}
+else{U=U||ls("ecepU");if(!U)return auth();st=ls(lk())||{};BANK=(ls("ecepBank")||[]).map((o,i)=>norm({...o,id:i}))}
+st.visto?home():welcome()}
+function auth(m){m=m||"reg";const fb=!!window.FB;
+$.innerHTML=`<div class="hero"><div class="logo">∑</div><h1>Preparación ECEP</h1><div class="m">Matemática · Educación Media</div></div><div class="card">`+
+(fb&&m=="adm"?`<b>🔑 Acceso administrador</b><div class="m">Ingresa con el correo de administrador.</div>`:fb?`<div class="tabs"><button class="${m=="reg"?"p":""}" onclick="auth('reg')">Registrarme</button><button class="${m=="in"?"p":""}" onclick="auth('in')">Ingresar</button></div>`:`<p class="m">Modo sin conexión: tu avance se guarda solo en este dispositivo.${window.FBERR?"<br><b>Motivo:</b> "+esc(window.FBERR):""}</p>`)+
+(m=="reg"||!fb?`<label>Tu nombre</label><input id="n" autocomplete="name">`:"")+
+(fb?`<label>Correo</label><input id="e" type="email" autocomplete="email"><label>Contraseña (mínimo 6 caracteres)</label><input id="pw" type="password">`:"")+
+`<div id="er">${esc(AUTHERR)}</div><button class="p big" onclick="go('${m}')">${m=="reg"||!fb?"Comenzar":m=="adm"?"Ingresar como administrador":"Ingresar"}</button></div>`+(fb&&m!="adm"?`<p style="text-align:center"><button onclick="auth('adm')">🔑 Acceso administrador</button></p>`:"");AUTHERR=""}
+async function go(m){const v=id=>(document.getElementById(id)||{}).value||"",er=t=>{document.getElementById("er").textContent=t},n=v("n").trim(),e=v("e").trim(),p=v("pw");
+if(!window.FB){if(!n)return er("Escribe tu nombre");U={uid:"local",nombre:n};localStorage.setItem("ecepU",JSON.stringify(U));return boot()}
+try{if(m=="reg"){if(!n)return er("Escribe tu nombre");boot(await FB.signUp(n,e,p))}else{WANTADM=m=="adm";await FB.signIn(e,p)}}
+catch(x){er(({"auth/email-already-in-use":"Ese correo ya está registrado. Usa «Ingresar».","auth/weak-password":"La contraseña debe tener al menos 6 caracteres.","auth/invalid-email":"Correo inválido.","auth/invalid-credential":"Correo o contraseña incorrectos."})[x.code]||"No se pudo completar: "+(x.code||x.message))}}
+async function out(){if(window.FB)await FB.out();else{localStorage.removeItem("ecepU");U=null;auth()}}
+function welcome(re){$.innerHTML=`<div class="hero"><div class="logo">∑</div><h1>¡Bienvenido/a, ${esc(U.nombre)}!</h1><div class="m">Tu entrenamiento para la ECEP de Matemática (Educación Media)</div></div>
+<div class="card"><b>Cómo funciona</b><ol>
+<li><b>10 sesiones</b> de 45 minutos y 30 preguntas: diagnóstico, 5 temáticas, evaluación intermedia, didáctica, nivel avanzado y evaluación final.</li>
+<li><b>Empieza con el diagnóstico</b> para medir tu nivel; al final lo comparas con tu evaluación final.</li>
+<li><b>Sesiones temáticas:</b> un mismo eje, de dificultad básica a alta, con explicación inmediata de cada respuesta.</li>
+<li><b>Evaluaciones</b> (diagnóstico, intermedia y final): sin ayuda durante la prueba y con retroalimentación completa al terminar.</li>
+<li><b>Didáctica y ámbitos pedagógicos</b> están en todas las sesiones, con más peso en las evaluaciones, porque la prueba real mide conocimiento disciplinar y pedagógico.</li>
+<li><b>Tu avance</b> ${window.FB?"se guarda en la nube: ingresa con tu correo desde cualquier dispositivo.":"se guarda en este dispositivo."}</li></ol>
+<p class="m">El reloj corre 45 minutos; al terminar el tiempo la sesión se cierra sola y las preguntas sin responder cuentan como incorrectas.</p>
+<button class="p big" onclick="go2()">${re?"Volver":"Comenzar"}</button></div>`}
+function go2(){if(!st.visto){st.visto=1;persist()}home()}
+function home(){run&&clearInterval(run.tm);run=null;setTimeout(sy,0);const done=S.filter((s,i)=>st[i]).length,dm=st.dom||{},nx=S.findIndex((s,i)=>!st[i]);
+const w=Object.keys(D).filter(d=>dm[d]&&dm[d].n>=3).sort((a,b)=>pct(dm[a])-pct(dm[b]))[0];
+$.innerHTML=`<div class="top"><div><div class="m">Hola,</div><h1 style="margin:0">${esc(U.nombre)}</h1></div><div class="ring" style="background:conic-gradient(var(--p) ${done*36}deg,var(--b) 0)"><b>${done}/10</b></div></div>
+<div class="card"><b>Tu dominio por eje</b>${Object.keys(D).map(d=>{const r=dm[d]||{ok:0,n:0};return`<div class="s m" style="margin-top:8px"><span>${D[d]}</span><span>${r.n?pct(r)+"%":"—"}</span></div><div class="bar"><i style="width:${pct(r)}%;background:${COL[d]}"></i></div>`}).join("")}${w?`<div class="m">Prioridad de estudio: <b>${D[w]}</b></div>`:""}</div>`+
+S.map((x,i)=>`<div class="card s"><div class="s" style="justify-content:flex-start;gap:12px"><span class="num">${i+1}</span><div><b>${x.t}</b><div class="m">${x.d}</div>${st[i]?`<span class="chip" style="background:${pct(st[i])>=70?"var(--ok)":"var(--p)"}">Último: ${pct(st[i])}%</span> `:""}${i==nx?`<span class="chip" style="background:var(--p2)">Siguiente</span>`:""}</div></div><button class="p" onclick="start(${i})">${st[i]?"Repetir":"Iniciar"}</button></div>`).join("")+
+`<div class="card"><p style="margin-top:0">${window.FB?"Sesión: "+esc(U.email||""):"Modo sin conexión (este dispositivo)"}</p><p class="m" id="sy"></p><button onclick="welcome(1)">Cómo funciona</button> ${window.FB?`<button onclick="consultas()">Consultas${NEWC?" ("+NEWC+" nueva"+(NEWC>1?"s":"")+")":""}</button> `:""}${isAdmin()?`<button onclick="admin()">Administrador</button> `:""}${window.FB?"":`<button onclick="exp()">Exportar</button> <button onclick="imp()">Importar</button> `}<button onclick="out()">Cerrar sesión</button></div>`}
+function exp(){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(st)],{type:"application/json"}));a.download="avance-ecep.json";a.click()}
+function imp(){const i=document.createElement("input");i.type="file";i.accept=".json";i.onchange=()=>i.files[0].text().then(t=>{try{st=JSON.parse(t);persist();home()}catch(e){alert("Archivo inválido")}});i.click()}
+function upd(){const e=document.getElementById("tm");if(e&&run)e.textContent="⏱ "+Math.floor(run.t/60)+":"+String(run.t%60).padStart(2,"0")}
+function start(i){run={i,ids:S[i].ids(),k:0,ans:[],t:2700};run.tm=setInterval(()=>{run.t--;upd();if(run.t<=0)end()},1000);show()}
+function show(){setTimeout(upd,0);const q=run.ids[run.k];
+$.innerHTML=`<div class="top"><b>${S[run.i].t}</b><span id="tm" class="chip"></span><button onclick="if(confirm('¿Salir? Se perderá esta sesión.'))home()">Salir</button></div><div class="m">Pregunta ${run.k+1} de ${run.ids.length}</div><div class="bar"><i style="width:${100*run.k/run.ids.length}%"></i></div>
+<div class="card"><span class="chip" style="background:${COL[q[0]]}">${D[q[0]]}</span> <span class="m">Nivel ${["básico","medio","alto"][q[1]-1]}${q[7]?" · "+esc(q[7]):""}</span><p><b>${esc(q[2])}</b></p>${q[3].map((o,j)=>`<button class="o" onclick="ans(${j})">${"ABCD"[j]}) ${esc(o)}</button>`).join("")}<div id="fb"></div></div>`}
+function ans(j){const q=run.ids[run.k];run.ans.push(j);if(S[run.i].ex)return next();
+document.querySelectorAll(".o").forEach((b,x)=>{b.disabled=1;if(x==q[4])b.classList.add("ok");else if(x==j)b.classList.add("no")});
+document.getElementById("fb").innerHTML=`<div class="exp"><b>${j==q[4]?"¡Correcto!":"Incorrecto."}</b> ${esc(q[5])}${q[6]?`<div class="m">Fuente: ${esc(q[6])}</div>`:""}</div><p><button class="p" onclick="next()">Continuar</button> ${window.FB?`<button onclick="duda(run.ids[run.k])">Enviar duda al profesor</button>`:""}</p>`}
+function next(){run.k++;run.k<run.ids.length?show():end()}
+function end(){clearInterval(run.tm);const s=S[run.i],by={};let ok=0;st.dom=st.dom||{};
+run.ids.forEach((q,x)=>{const c=run.ans[x]==q[4];ok+=c;for(const o of[by,st.dom]){o[q[0]]=o[q[0]]||{ok:0,n:0};o[q[0]].n++;o[q[0]].ok+=c}});
+const r={ok,n:run.ids.length,by,date:new Date().toISOString().slice(0,10)};st[run.i]=r;if(run.i==0)st.diag=r;persist();
+const ks=Object.keys(by).sort((a,b)=>pct(by[a])-pct(by[b]));
+let h=`<div class="hero"><h1>${s.t}</h1><div class="ring" style="margin:8px auto;background:conic-gradient(var(--p) ${pct(r)*3.6}deg,var(--b) 0)"><b>${pct(r)}%</b></div><div class="m">${ok} de ${r.n} correctas</div></div>`;
+if(run.i==9&&st.diag)h+=`<div class="card">Diagnóstico: <b>${pct(st.diag)}%</b> → Final: <b>${pct(r)}%</b></div>`;
+h+=`<div class="card"><b>Resultado por eje</b>`+ks.map(d=>`<div class="s m" style="margin-top:8px"><span>${D[d]}</span><span>${by[d].ok}/${by[d].n}</span></div><div class="bar"><i style="width:${pct(by[d])}%;background:${COL[d]}"></i></div>`).join("")+`<div class="m">Para mejorar: refuerza <b>${D[ks[0]]}</b>.</div></div>`;
+if(s.ex)h+=`<h3>Retroalimentación</h3>`+run.ids.map((q,x)=>{const c=run.ans[x]==q[4];return`<div class="card ${c?"ok":"no"}"><b>${x+1}. ${esc(q[2])}</b><div class="m">Tu respuesta: ${run.ans[x]>=0?"ABCD"[run.ans[x]]+") "+esc(q[3][run.ans[x]]):"sin responder"}${c?"":" · Correcta: "+"ABCD"[q[4]]+") "+esc(q[3][q[4]])}</div><div class="exp">${esc(q[5])}</div>${window.FB?`<button onclick="duda(run.ids[${x}])">Enviar duda</button>`:""}</div>`}).join("");
+$.innerHTML=h+`<p><button class="p big" onclick="home()">Volver al inicio</button></p>`}
+// ---- Administrador
+const dm=s=>{const l=String(s||"").trim().normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();return/^[nafgdp]$/.test(l)?l.toUpperCase():({numeros:"N",algebra:"A",funciones:"F",geometria:"G",datos:"D",probabilidades:"D","datos y probabilidades":"D",didactica:"P",pedagogia:"P",pedagogico:"P"})[l]};
+function val(o){let op=(o.opciones||[o.a,o.b,o.c,o.d]).map(x=>String(x==null?"":x).trim()),c=o.correcta;if(typeof c=="string"&&/^[a-d]$/i.test(c.trim()))c="abcd".indexOf(c.trim().toLowerCase());c=+c;const d=dm(o.dominio),l=+o.nivel||2,e=String(o.enunciado||"").trim();
+if(!d||!e||op.length!=4||op.some(x=>!x)||new Set(op).size!=4||!(c>=0&&c<4)||l<1||l>3)return null;return{dominio:d,nivel:l,enunciado:e,opciones:op,correcta:c,explicacion:String(o.explicacion||""),fuente:String(o.fuente||""),ambito:String(o.ambito||"")}}
+function csv(t){const r=[];let w=[],c="",q=0;for(let i=0;i<t.length;i++){const h=t[i];if(q){if(h=='"'){if(t[i+1]=='"'){c+='"';i++}else q=0}else c+=h}else if(h=='"')q=1;else if(h==","||h==";"){w.push(c);c=""}else if(h=="\n"||h=="\r"){if(h=="\r"&&t[i+1]=="\n")i++;w.push(c);r.push(w);w=[];c=""}else c+=h}if(c||w.length){w.push(c);r.push(w)}return r.filter(x=>x.join("").trim())}
+function bankHtml(msg){const c={},sr={};BANK.forEach(q=>{c[q[0]]=(c[q[0]]||0)+1;const k=q[6]||"(sin fuente)";sr[k]=(sr[k]||0)+1});SRC=Object.keys(sr);
+return `${msg?`<div class="card exp">${msg}</div>`:""}
+<div class="card"><b>Banco de preguntas (${BANK.length})</b><div class="m">${Object.keys(D).map(d=>D[d]+": "+(c[d]||0)).join(" · ")}</div>${SRC.map((k,i)=>`<div class="s" style="margin-top:8px"><span>${esc(k)} · ${sr[k]}</span><button onclick="delSrc(${i})">Eliminar</button></div>`).join("")}<div class="m">Las preguntas cargadas aquí se usan antes que las generadas automáticamente.</div></div>
+<div class="card"><b>1. Cargar un instrumento</b><div class="m">Archivo .json o .csv con las preguntas del instrumento (usa la plantilla). Indica el nombre del instrumento para citarlo como fuente.</div>
+<input id="fz" placeholder="Ej.: ECEP 2023 · Educación Media Matemática"><input type="file" id="f" accept=".json,.csv" onchange="readF(this)"><div id="pv"></div><button onclick="dl('json')">Plantilla JSON</button> <button onclick="dl('csv')">Plantilla CSV</button></div>
+<div class="card"><b>2. Agregar una pregunta</b><label>Eje</label><select id="fd">${Object.keys(D).map(d=>`<option value="${d}">${D[d]}</option>`).join("")}</select><label>Nivel</label><select id="fl"><option value="1">Básico</option><option value="2" selected>Medio</option><option value="3">Alto</option></select>
+<label>Enunciado</label><textarea id="fq" rows="3"></textarea>${"ABCD".split("").map(x=>`<label>Alternativa ${x}</label><input id="f${x}">`).join("")}<label>Correcta</label><select id="fc"><option>A</option><option>B</option><option>C</option><option>D</option></select>
+<label>Explicación</label><textarea id="fe" rows="2"></textarea><label>Ámbito pedagógico (opcional)</label><input id="fa" placeholder="Didáctica, evaluación, gestión del error…"><label>Fuente</label><input id="fs"><button class="p" onclick="addOne()">Agregar</button></div>`}
 
-function init(){
-  const s=localStorage.getItem("ecep_st_v2");
-  if(s)try{Object.assign(ST,JSON.parse(s))}catch(e){}
-  if(window.FB){
-    FB.auth(async u=>{
-      if(u){
-        U={uid:u.uid,email:u.email,nombre:u.displayName||u.email.split("@")[0]};
-        await FB.saveU(U.uid,{email:U.email,nombre:U.nombre,last:Date.now()});
-        try{
-          const data=await FB.loadU(U.uid);
-          if(data&&data.st)ST.st=data.st;
-        }catch(e){}
-        try{
-          NEWC=(await FB.mineC(U.uid)).filter(c=>c.resp&&c.tResp>(st.cvis||0)).length;
-        }catch(e){NEWC=0}
-      }else{
-        U={uid:"anon",nombre:"Sin sesión"};
-      }
-      if(WANTADM){
-        WANTADM=0;
-        if(isAdmin())return admin();
-        AUTHERR="Este correo no tiene permisos de administrador.";
-        return FB.out().then(()=>auth("adm"));
-      }
-      home();
-    });
-  }else home();
-}
-
-function sy(){
-  localStorage.setItem("ecep_st_v2",JSON.stringify(ST));
-  if(window.FB&&U.uid!="anon")FB.saveU(U.uid,{st:ST.st}).catch(()=>0);
-}
-
-function note(m){return m?`<div class="card chip ok" style="display:block;margin-bottom:10px">${esc(m)}</div>`:""}
-
-function auth(m,msg=""){
-  const fb=!!window.FB;
-  $.innerHTML=`<div class="top"><button onclick="home()">← Volver</button><b>${m=="adm"?"Administración":m=="reg"?"Crear cuenta":"Ingresar"}</b></div>
-  <div class="card">
-  ${fb&&m=="adm"?`<b>🔑 Acceso administrador</b><div class="m">Ingresa con el correo de administrador.</div>`:fb?`<div class="m">Usa tu correo para guardar tu avance en la nube.</div>`:`<div class="m">Modo sin conexión activo (sin Firebase).</div>`}
-  ${note(msg)}
-  <div id="er">${esc(AUTHERR)}</div>
-  ${fb?`<label>Correo electrónico</label><input type="email" id="em" placeholder="profesor@colegio.cl">
-  <label>Contraseña</label><input type="password" id="pw" placeholder="••••••••">
-  ${m=="reg"?`<label>Nombre completo</label><input type="text" id="nm" placeholder="Prof. Juan Pérez">`:""}
-  <button class="p big" onclick="go('${m}')">${m=="reg"?"Crear cuenta":m=="adm"?"Ingresar como administrador":"Ingresar"}</button>`:`<p class="m">En este entorno puedes usar la app de forma local.</p><button class="p" onclick="home()">Continuar en modo local</button>`}
-  </div>`;
-}
-
-async function go(m){
-  AUTHERR="";
-  const g=i=>document.getElementById(i).value.trim(),em=g("em"),pw=g("pw");
-  if(!em||!pw){AUTHERR="Ingresa correo y contraseña.";return auth(m)}
-  try{
-    if(m=="reg"){
-      const u=await FB.reg(em,pw);
-      await FB.saveU(u.uid,{email:em,nombre:g("nm")||em.split("@")[0],role:"profesor"});
-    }else{
-      if(m=="adm")WANTADM=1;
-      await FB.login(em,pw);
-    }
-  }catch(e){
-    AUTHERR=e.message||"Error al autenticar.";
-    auth(m);
-  }
-}
-
-function home(){
-  if(run&&run.tm)clearInterval(run.tm);
-  run=null;
-  setTimeout(sy,0);
-  const done=S.filter((s,i)=>st[i]).length,dm=st.dom||{};
-  
-  $.innerHTML=`
-  <div class="top">
-    <div>
-      <span class="chip ok">ECEP Matemática 2026</span>
-      <h1>Entrenador de Conocimientos Específicos y Pedagógicos</h1>
-      <div class="m">Educación Media · Científico Humanista</div>
-    </div>
-    <div style="text-align:right">
-      ${window.FB&&U.uid!="anon"?`<button class="btn" onclick="consultas()">💬 Consultas ${NEWC?`<span class="chip no">${NEWC}</span>`:""}</button> <button class="btn" onclick="FB.out().then(home)">Salir (${esc(U.nombre)})</button>`:`<button class="btn" onclick="auth('log')">Ingresar con cuenta</button>`}
-      ${isAdmin()?`<button class="btn p" onclick="admin()" style="margin-left:4px">⚙️ Admin</button>`:""}
-    </div>
-  </div>
-
-  <div class="card">
-    <b>Cómo funciona</b>
-    <ol>
-      <li><b>10 sesiones</b> de 45 minutos y 30 preguntas: diagnóstico, 5 temáticas, evaluación intermedia, didáctica, nivel avanzado y evaluación final.</li>
-      <li><b>Sesiones temáticas:</b> un mismo eje, de dificultad básica a alta, con explicación inmediata de cada respuesta.</li>
-      <li><b>Evaluaciones</b> (diagnóstico, intermedia y final): sin ayuda durante la prueba y con retroalimentación completa al terminar.</li>
-      <li><b>Didáctica y ámbitos pedagógicos</b> están en todas las sesiones, con más peso en las evaluaciones, porque la prueba real mide conocimiento disciplinar y pedagógico.</li>
-      <li><b>Progreso guardado:</b> ${window.FB&&U.uid!="anon"?"se sincroniza con tu correo desde cualquier dispositivo.":"se guarda en este dispositivo."}</li>
-    </ol>
-    <p class="m">El reloj corre 45 minutos; al terminar el tiempo la sesión se cierra sola y las preguntas sin responder cuentan como incorrectas.</p>
-  </div>
-
-  <div class="card">
-    <div class="top">
-      <b>Avance general (${done}/10 sesiones completadas)</b>
-      <span class="chip">${Math.round(done*10)}%</span>
-    </div>
-    <div class="bar"><div class="fill" style="width:${done*10}%"></div></div>
-  </div>
-
-  <div class="card">
-    <b>Tu dominio por eje</b>
-    ${Object.keys(D).map(d=>{
-      const r=dm[d]||{ok:0,n:0};
-      return `<div class="s m"><span>${D[d]}</span><b>${r.n?Math.round(r.ok/r.n*100):0}% (${r.ok}/${r.n})</b></div>`;
-    }).join("")}
-  </div>
-
-  <h2>Sesiones de estudio</h2>
-  <div class="grid">
-    ${S.map((s,i)=>{
-      const r=st[i],ok=r?r.ok:0,tot=r?r.tot:0;
-      return `<div class="card" style="display:flex;flex-direction:column;justify-content:space-between">
-        <div>
-          <div class="top">
-            <span class="chip">${i+1}. ${s.t}</span>
-            ${s.ex?`<span class="chip no">Evaluación</span>`:""}
-          </div>
-          <p class="m" style="margin:8px 0">${s.d}</p>
-        </div>
-        <div>
-          ${r?`<div class="s m"><span>Resultado</span><b>${Math.round(ok/tot*100)}% (${ok}/${tot})</b></div>`:""}
-          <button class="p" style="width:100%;margin-top:10px" onclick="start(${i})">${r?"Repetir sesión":"Comenzar sesión (30 prg / 45 min)"}</button>
-        </div>
-      </div>`;
-    }).join("")}
-  </div>
-  
-  <div class="card">
-    <p style="margin-top:0">${window.FB?"Sesión: "+esc(U.email||""):"Modo sin conexión (este dispositivo)"}</p>
-    <button class="btn" onclick="if(confirm('¿Reiniciar todo tu historial?')){delete ST.st;ST.st={};sy();home()}">Reiniciar mi progreso</button>
-  </div>`;
-}
-
-function start(i){
-  run={i,ids:S[i].ids(),k:0,ans:[],t:2700};
-  run.tm=setInterval(()=>{
-    run.t--;
-    upd();
-    if(run.t<=0)end();
-  },1000);
-  show();
-}
-
-function upd(){
-  const e=document.getElementById("tm");
-  if(e){
-    const m=Math.floor(run.t/60),s=run.t%60;
-    e.textContent=`⏱ ${m}:${s<10?"0":""}${s}`;
-    if(run.t<300)e.className="chip no";
-  }
-}
-
-function show(){
-  setTimeout(upd,0);
-  const q=run.ids[run.k];
-  const e=document.getElementById("box");
-  if(!e)return renderRun();
-  e.innerHTML=qHtml(q);
-}
-
-function renderRun(){
-  const isEx=S[run.i].ex,q=run.ids[run.k],total=run.ids.length;
-  $.innerHTML=`
-  <div class="top">
-    <b>${S[run.i].t}</b>
-    <span id="tm" class="chip"></span>
-    <button onclick="if(confirm('¿Salir de la sesión?'))home()">Abandonar</button>
-  </div>
-  <div class="card">
-    <div class="top">
-      <span>Pregunta ${run.k+1} de ${total}</span>
-      <span class="chip">${D[q[0]]||q[0]}</span>
-    </div>
-    <div class="bar"><div class="fill" style="width:${(run.k+1)/total*100}%"></div></div>
-    <div id="box">${qHtml(q)}</div>
-  </div>`;
-}
-
-function qHtml(q){
-  const isEx=S[run.i].ex,a=run.ans[run.k],done=a!==undefined;
-  return `
-  <p style="font-size:1.05rem;margin:12px 0"><b>${esc(q[2])}</b></p>
-  ${q[3].map((op,j)=>{
-    let cl="opt";
-    if(a===j)cl+=" sel";
-    if(!isEx&&done){
-      if(j===q[4])cl+=" c-ok";
-      else if(a===j)cl+=" c-no";
-    }
-    return `<button class="${cl}" ${done&&!isEx?"disabled":""} onclick="pick(${j})">
-      <b>${["A","B","C","D"][j]}.</b> ${esc(op)}
-    </button>`;
-  }).join("")}
-  ${!isEx&&done?`<div class="exp"><b>Explicación:</b> ${esc(q[5]||"Sin explicación disponible.")}</div>`:""}
-  <div class="top" style="margin-top:16px">
-    <button class="btn" ${run.k==0?"disabled":""} onclick="run.k--;show()">← Anterior</button>
-    ${run.k<run.ids.length-1?`<button class="p" ${a===undefined?"disabled":""} onclick="run.k++;show()">Siguiente →</button>`:`<button class="p ok" ${a===undefined?"disabled":""} onclick="end()">Finalizar y ver resultados</button>`}
-  </div>`;
-}
-
-function pick(j){
-  run.ans[run.k]=j;
-  show();
-}
-
-function end(){
-  clearInterval(run.tm);
-  const ids=run.ids,ans=run.ans,tot=ids.length;
-  let ok=0;
-  const dm=st.dom||(st.dom={});
-  ids.forEach((q,k)=>{
-    const hit=ans[k]===q[4];
-    if(hit)ok++;
-    const d=q[0];
-    if(!dm[d])dm[d]={ok:0,n:0};
-    dm[d].n++;
-    if(hit)dm[d].ok++;
-  });
-  st[run.i]={ok,tot,t:Date.now()};
-  sy();
-
-  const pct=Math.round(ok/tot*100);
-  $.innerHTML=`
-  <div class="top"><button onclick="home()">← Ir al inicio</button><b>Resultados de la sesión</b></div>
-  <div class="card" style="text-align:center">
-    <h2>${S[run.i].t}</h2>
-    <h1 style="font-size:3rem;color:${pct>=70?"var(--ok)":"var(--no)"}">${pct}%</h1>
-    <p>Respondiste correctamente <b>${ok} de ${tot}</b> preguntas.</p>
-    <p class="m">${pct>=80?"¡Excelente nivel! Estás listo para este eje.":pct>=60?"Buen desempeño, pero se sugiere reforzar los errores.":"Debes repasar los conceptos fundamentales de este eje."}</p>
-  </div>
-  <h3>Revisión de respuestas</h3>
-  ${ids.map((q,k)=>{
-    const hit=ans[k]===q[4],usr=ans[k];
-    return `<div class="card ${hit?"":"exp"}" style="${!hit?"border-left-color:var(--no)":""}">
-      <div class="top">
-        <span class="chip ${hit?"ok":"no"}">${k+1}. ${hit?"Correcta":"Incorrecta"}</span>
-        <span class="chip">${D[q[0]]}</span>
-      </div>
-      <p><b>${esc(q[2])}</b></p>
-      <p class="m">Tu respuesta: <b>${usr!=null?["A","B","C","D"][usr]+" ) "+esc(q[3][usr]):"Sin responder"}</b></p>
-      ${!hit?`<p class="m" style="color:var(--ok)">Respuesta correcta: <b>${["A","B","C","D"][q[4]]} ) ${esc(q[3][q[4]])}</b></p>`:""}
-      <div class="exp"><b>Explicación:</b> ${esc(q[5]||"Sin explicación.")}</div>
-      ${window.FB&&U.uid!="anon"?`<button class="btn" style="margin-top:8px" onclick="duda('${esc(q[2])}')">💬 Consultar al profesor sobre esta pregunta</button>`:""}
-    </div>`;
-  }).join("")}
-  <button class="p big" style="width:100%" onclick="home()">Volver a las sesiones</button>`;
-}
-
-// Módulo Administrador
-function val(o){
-  let op=(o.opciones||[o.a,o.b,o.c,o.d]).map(x=>String(x==null?"":x).trim()),c=o.correcta;
-  if(typeof c=="string"){
-    const i=["A","B","C","D"].indexOf(c.trim().toUpperCase());
-    if(i>=0)c=i;else c=parseInt(c,10);
-  }
-  c=Number(c);
-  const d=String(o.dominio||"").trim().toUpperCase(),e=String(o.enunciado||"").trim(),l=Number(o.nivel||1);
-  if(!d||!e||op.length!=4||op.some(x=>!x)||new Set(op).size!=4||!(c>=0&&c<4)||l<1||l>3)return null;
-  return [d,l,e,op,c,String(o.explicacion||"").trim(),String(o.fuente||"").trim(),String(o.ambito||"").trim(),String(o.id||"")];
-}
-
-function admin(a,b){
-  const T=["usuarios","consultas","banco","importar"],tab=T.includes(a)?a:a?"banco":(window.FB?"consultas":"banco");
-  $.innerHTML=`
-  <div class="top">
-    <button onclick="home()">← Volver</button>
-    <b>Panel de administrador</b>
-  </div>
-  <div class="top" style="justify-content:flex-start;gap:6px">
-    ${window.FB?`<button class="btn ${tab=='usuarios'?'p':''}" onclick="aUsers()">Usuarios</button>
-    <button class="btn ${tab=='consultas'?'p':''}" onclick="aCons()">Consultas</button>`:''}
-    <button class="btn ${tab=='banco'?'p':''}" onclick="aBank()">Banco (${BANK.length})</button>
-    <button class="btn ${tab=='importar'?'p':''}" onclick="aImp()">Importar</button>
-  </div>
-  <div id="adm"></div>`;
-  if(tab=="usuarios")aUsers();
-  else if(tab=="consultas")aCons();
-  else if(tab=="banco")aBank();
-  else aImp();
-}
-
-async function aUsers(msg){
-  const el=document.getElementById("adm");
-  if(!el)return;
-  el.innerHTML="<p class='m'>Cargando usuarios...</p>";
-  try{
-    USERS=await FB.allU();
-  }catch(e){
-    el.innerHTML=`<div class="card exp">Error al cargar usuarios: ${esc(e.message)}</div>`;
-    return;
-  }
-  el.innerHTML=note(msg)+`<div class="m">${USERS.length} usuarios registrados</div>`+USERS.map((u,i)=>{
-    const x=u.st||{},n=S.filter((s,k)=>x[k]).length;
-    return `<div class="card">
-      <div class="top">
-        <b>${esc(u.nombre||"Sin nombre")}</b>
-        <span class="chip">${u.role||"profesor"}</span>
-      </div>
-      <div class="m">${esc(u.email||"")} · ${n}/10 sesiones realizadas</div>
-      <div class="top" style="margin-top:8px">
-        <button class="btn" onclick="uDet(${i})">Ver detalle</button>
-        <button class="btn" onclick="rst(${i},-1)">Limpiar avance por sesión</button>
-        <button class="btn" style="color:var(--no)" onclick="delU(${i})">Borrar usuario</button>
-      </div>
-    </div>`;
-  }).join("");
-}
-
-function uDet(i){
-  const u=USERS[i],x=u.st||{},el=document.getElementById("adm");
-  el.innerHTML=`<button class="btn" onclick="aUsers()">← Usuarios</button>
-  <div class="card">
-    <b>${esc(u.nombre||"")}</b>
-    <div class="m">${esc(u.email||"")}</div>
-    <table class="tab">
-      <thead><tr><th>Sesión</th><th>Resultado</th><th>Fecha</th><th>Acción</th></tr></thead>
-      <tbody>
-        ${S.map((s,k)=>{
-          const r=x[k];
-          return `<tr>
-            <td>${s.t}</td>
-            <td>${r?Math.round(r.ok/r.tot*100)+"% ("+r.ok+"/"+r.tot+")":"—"}</td>
-            <td>${r?new Date(r.t).toLocaleDateString():"—"}</td>
-            <td>${r?`<button onclick="rst(${i},${k})">Borrar</button>`:"—"}</td>
-          </tr>`;
-        }).join("")}
-      </tbody>
-    </table>
-    <p><button onclick="rst(${i},-1)">Borrar todos los resultados</button> <button onclick="delU(${i})" style="color:var(--no)">Borrar usuario completo</button></p>
-  </div>`;
-}
-
-async function rst(ui,si){
-  const u=USERS[ui];
-  if(!confirm(si<0?"¿Reiniciar todas las sesiones de "+(u.nombre||"este usuario")+"?":"¿Borrar esta sesión?"))return;
-  const nst=Object.assign({},u.st||{});
-  if(si<0)for(let k=0;k<10;k++)delete nst[k];
-  else delete nst[si];
-  try{
-    await FB.saveU(u.uid,{st:nst});
-    u.st=nst;
-    aUsers("Avance actualizado.");
-  }catch(e){alert("Error: "+e.message)}
-}
-
-async function delU(i){
-  const u=USERS[i];
-  if(!confirm("¿Eliminar a "+(u.nombre||"este usuario")+" y todos sus datos?"))return;
-  try{
-    await FB.delU(u.uid);
-    aUsers("Usuario eliminado.");
-  }catch(e){alert("Error: "+e.message)}
-}
-
-async function aCons(msg){
-  const el=document.getElementById("adm");
-  if(!el)return;
-  el.innerHTML="<p class='m'>Cargando consultas...</p>";
-  try{
-    CONS=await FB.allC();
-  }catch(e){
-    el.innerHTML=`<div class="card exp">Error al cargar consultas: ${esc(e.message)}</div>`;
-    return;
-  }
-  const L=CONS;
-  el.innerHTML=note(msg)+(L.length?`<div class="m">${L.filter(c=>c.estado=="abierta").length} pendientes de ${L.length}</div>`:"<p class='m'>No hay consultas.</p>")+L.map((c,i)=>`
-    <div class="card">
-      <div class="top">
-        <span><b>${esc(c.nombre||c.email||"Anónimo")}</b> (${esc(c.email||"")})</span>
-        <span class="chip ${c.estado=='abierta'?'no':'ok'}">${c.estado||'abierta'}</span>
-      </div>
-      <p><b>Pregunta referida:</b> ${esc(c.q||"General")}</p>
-      <p class="exp">${esc(c.txt||"")}</p>
-      ${c.resp?`<div class="card exp" style="border-left-color:var(--ok)"><b>Tu respuesta (${new Date(c.tResp||0).toLocaleString()}):</b><br>${esc(c.resp)}</div>`:''}
-      <label>Responder o actualizar respuesta</label>
-      <textarea id="rc${i}">${esc(c.resp||"")}</textarea>
-      <div class="top">
-        <button class="p" onclick="rCons(${i})">Guardar respuesta</button>
-        <button class="btn" style="color:var(--no)" onclick="delC(${i})">Eliminar</button>
-      </div>
-    </div>
-  `).join("");
-}
-
-async function rCons(i){
-  const c=CONS[i],txt=document.getElementById("rc"+i).value.trim();
-  if(!txt)return alert("Escribe una respuesta.");
-  try{
-    await FB.ansC(c.id,txt);
-    aCons("Respuesta enviada.");
-  }catch(e){alert("Error: "+e.message)}
-}
-
-async function delC(i){
-  if(!confirm("¿Eliminar esta consulta?"))return;
-  try{
-    await FB.delC(CONS[i].id);
-    aCons("Consulta eliminada.");
-  }catch(e){alert("Error: "+e.message)}
-}
-
-async function consultas(pre){
-  let L=[];
-  try{L=(await FB.mineC(U.uid)).sort((a,b)=>b.t-a.t)}catch(e){}
-  NEWC=0;
-  st.cvis=Date.now();
-  sy();
-
-  $.innerHTML=`
-  <div class="top"><button onclick="home()">← Volver</button><b>Consultas al profesor</b></div>
-  <div class="card">
-    <b>Enviar nueva duda pedagógica o disciplinar</b>
-    <textarea id="dq" placeholder="Escribe aquí tu consulta...">${esc(pre||"")}</textarea>
-    <button class="p" onclick="sendDuba()">Enviar consulta</button>
-  </div>
-  <h3>Tus consultas anteriores</h3>
-  ${L.length?L.map(c=>`
-    <div class="card">
-      <div class="top">
-        <span class="chip ${c.estado=='abierta'?'no':'ok'}">${c.estado||'abierta'}</span>
-        <span class="m">${new Date(c.t).toLocaleDateString()}</span>
-      </div>
-      ${c.q?`<p class="m"><b>Sobre:</b> ${esc(c.q)}</p>`:''}
-      <p>${esc(c.txt)}</p>
-      ${c.resp?`<div class="exp" style="border-left-color:var(--ok)"><b>Respuesta del profesor:</b><br>${esc(c.resp)}</div>`:'<p class="m">Pendiente de respuesta.</p>'}
-    </div>
-  `).join(""):`<div class="card m">Aún no has enviado consultas.</div>`}`;
-}
-
-async function sendDuba(){
-  const t=document.getElementById("dq").value.trim();
-  if(!t)return alert("Escribe tu consulta.");
-  try{
-    await FB.sendC({uid:U.uid,email:U.email,nombre:U.nombre,txt:t});
-    consultas();
-  }catch(e){alert("Error: "+e.message)}
-}
-
-async function duda(q){
-  const t=prompt("Escribe tu duda sobre esta pregunta:");
-  if(!t)return;
-  try{
-    await FB.sendC({uid:U.uid,email:U.email,nombre:U.nombre,q,txt:t});
-    alert("Consulta enviada.");
-  }catch(e){alert("Error: "+e.message)}
-}
-
-function aBank(){
-  const el=document.getElementById("adm");
-  const c={};
-  BANK.forEach(x=>c[x[0]]=(c[x[0]]||0)+1);
-  el.innerHTML=`
-  <div class="card">
-    <b>Banco de preguntas (${BANK.length})</b>
-    <div class="m">${Object.keys(D).map(d=>D[d]+": "+(c[d]||0)).join(" · ")}</div>
-  </div>
-  ${BANK.slice(0,50).map((q,i)=>`
-    <div class="card">
-      <div class="top">
-        <span class="chip">${i+1}. ${D[q[0]]||q[0]} (Niv ${q[1]})</span>
-        <span class="m">${esc(q[6]||"Por defecto")}</span>
-      </div>
-      <p><b>${esc(q[2])}</b></p>
-      <ol type="A">${q[3].map((op,j)=>`<li style="${j==q[4]?'color:var(--ok);font-weight:600':''}">${esc(op)}</li>`).join("")}</ol>
-      <div class="exp">${esc(q[5]||"")}</div>
-    </div>
-  `).join("")}`;
-}
-
-let IMP=[],PEND=[];
-
-function aImp(){
-  const el=document.getElementById("adm");
-  el.innerHTML=impHtml();
-}
-
-function impHtml(msg){
-  const o=Object.keys(D).map(d=>`<option value="${d}">${D[d]}</option>`).join("");
-  return note(msg)+`
-  <div class="card">
-    <b>1. Cargar un instrumento completo (PDF, JSON o CSV)</b>
-    <div class="m">Archivo .json o .csv con las preguntas del instrumento (ECEP, PAES, etc.), o un PDF original para extracción automática.</div>
-    <input id="fz" placeholder="Ej.: ECEP 2023 · Educación Media Matemática">
-    <input type="file" id="f" accept=".json,.csv,.pdf" onchange="readF(this)">
-    <div id="pv"></div>
-  </div>
-  <div class="card">
-    <b>2. Agregar una pregunta individual al banco</b>
-    <label>Eje</label><select id="fd">${o}</select>
-    <label>Nivel (1 básica, 2 media, 3 alta)</label><select id="fl"><option value="1">1</option><option value="2" selected>2</option><option value="3">3</option></select>
-    <label>Enunciado de la pregunta</label><textarea id="fq" placeholder="Escribe el enunciado..."></textarea>
-    <label>Alternativa A</label><input id="fo0">
-    <label>Alternativa B</label><input id="fo1">
-    <label>Alternativa C</label><input id="fo2">
-    <label>Alternativa D</label><input id="fo3">
-    <label>Alternativa correcta</label><select id="fc"><option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option></select>
-    <label>Explicación o solución paso a paso</label><textarea id="fe" placeholder="Explicación pedagógica..."></textarea>
-    <label>Fuente o nombre del instrumento</label><input id="ff" placeholder="Ej.: Ensayo 2026">
-    <button class="p" onclick="addOne()">Agregar pregunta al banco</button>
-  </div>`;
-}
-
-async function pdfText(f){
-  if(!window.pdfjsLib){
-    await new Promise((ok,no)=>{
-      const e=document.createElement("script");
-      e.src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";
-      e.onload=ok;
-      e.onerror=no;
-      document.head.appendChild(e);
-    });
-    pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-  }
-  const buf=await f.arrayBuffer(),pdf=await pdfjsLib.getDocument({data:buf}).promise;
-  let out="";
-  for(let i=1;i<=pdf.numPages;i++){
-    const page=await pdf.getPage(i),txt=await page.getTextContent();
-    out+=txt.items.map(x=>x.str).join(" ")+"\n";
-  }
-  return out;
-}
-
-function parsePdf(txt){
-  const raw=txt.replace(/\r/g,"\n").split(/\n+/).map(x=>x.trim()).filter(Boolean).join(" ");
-  const m=raw.split(/(?=\b\d{1,2}[\.\-\)]\s+[A-ZÁÉÍÓÚ¿i])/g);
-  const res=[];
-  for(const block of m){
-    const qm=block.match(/^\b(\d{1,2})[\.\-\)]\s+(.*?)(?=\s+[ABCD][\.\-\)]\s+|$)/i);
-    if(!qm)continue;
-    const num=qm[1],qtxt=qm[2].trim();
-    const ops=[];
-    const opRegex=/\b([ABCD])[\.\-\)]\s+(.*?)(?=\s+[ABCD][\.\-\)]\s+|$)/gi;
-    let om;
-    while((om=opRegex.exec(block))!==null){
-      ops.push({letra:om[1].toUpperCase(),txt:om[2].trim()});
-    }
-    if(ops.length>=4){
-      const o4=ops.slice(0,4);
-      res.push({num,enunciado:qtxt,opciones:o4.map(x=>x.txt)});
-    }
-  }
-  return res;
-}
-
-function renderImp(el,srcName){
-  const oHtml=Object.keys(D).map(d=>`<option value="${d}">${D[d]}</option>`).join("");
-  if(!IMP.length)return el.innerHTML=`<div class="card">No se detectaron preguntas con alternativas A–D. Revisa que el documento contenga opciones numeradas.</div>`;
-  const ok=IMP.filter(x=>x.correcta!=null).length;
-  el.innerHTML=`<div class="card exp">${IMP.length} preguntas detectadas · ${ok} con clave de respuesta. Revisa, corrige y publica.</div>
-  <form id="fmI">
-  ${IMP.map((x,k)=>`
-    <div class="card" id="ic${k}">
-      <div class="top">
-        <label><input type="checkbox" id="ik${k}" checked> Publicar pregunta #${x.num||k+1}</label>
-        <span class="chip">${srcName}</span>
-      </div>
-      <label>Eje</label><select id="id${k}">${Object.keys(D).map(d=>`<option value="${d}" ${d==(x.dominio||"P")?"selected":""}>${D[d]}</option>`).join("")}</select>
-      <label>Nivel</label><select id="il${k}"><option value="1" ${x.nivel==1?"selected":""}>1</option><option value="2" ${(!x.nivel||x.nivel==2)?"selected":""}>2</option><option value="3" ${x.nivel==3?"selected":""}>3</option></select>
-      <label>Enunciado</label><textarea id="iq${k}">${esc(x.enunciado||"")}</textarea>
-      ${[0,1,2,3].map(j=>`<label>Alternativa ${["A","B","C","D"][j]}</label><input id="io${k}_${j}" value="${esc((x.opciones||[])[j]||"")}">`).join("")}
-      <label>Alternativa correcta</label>
-      <select id="ic${k}">
-        <option value="">-- Seleccionar --</option>
-        ${[0,1,2,3].map(j=>`<option value="${j}" ${x.correcta===j?"selected":""}>${["A","B","C","D"][j]}</option>`).join("")}
-      </select>
-      <label>Explicación</label><textarea id="ie${k}">${esc(x.explicacion||"")}</textarea>
-    </div>
-  `).join("")}
-  <button type="button" class="p big" onclick="pubImp('${esc(srcName)}')">Publicar seleccionadas al banco global</button>
-  </form>`;
-}
-
-async function pubImp(srcName){
-  const list=[];
-  let bad=0;
-  IMP.forEach((x,k)=>{
-    if(!g("ik"+k).checked)return;
-    const op=[0,1,2,3].map(j=>g(`io${k}_${j}`).value),c=g("ic"+k).value,o=val({
-      dominio:g("id"+k).value,nivel:g("il"+k).value,enunciado:g("iq"+k).value,opciones:op,correcta:c,explicacion:g("ie"+k).value,fuente:srcName
-    });
-    if(o)list.push(o);else bad++;
-  });
-  if(bad)alert(bad+" pregunta(s) no se publicarán: falta elegir la correcta o hay alternativas vacías o repetidas.");
-  if(!list.length)return alert("No hay preguntas válidas para publicar.");
-  try{
-    if(window.FB){await FB.add(list);BANK=(await FB.bank()).map(norm)}
-    else BANK.push(...list);
-    IMP=[];
-    admin("banco");
-  }catch(e){alert("Error al guardar: "+e.message)}
-}
-
-function readF(el){
-  const f=el.files[0];
-  if(!f)return;
-  const srcName=document.getElementById("fz").value.trim()||f.name.replace(/\.[^.]+$/,"");
-  if(/\.pdf$/i.test(f.name)){
-    document.getElementById("pv").innerHTML="<p class='m'>Procesando PDF...</p>";
-    pdfText(f).then(txt=>{
-      IMP=parsePdf(txt);
-      renderImp(document.getElementById("pv"),srcName);
-    }).catch(e=>{
-      document.getElementById("pv").innerHTML="<div class='card exp'>Error al leer PDF: "+esc(e.message)+"</div>";
-    });
-    return;
-  }
-  f.text().then(t=>{
-    let rows;
-    try{
-      if(/\.csv$/i.test(f.name)){
-        const r=csvP(t);
-        rows=r.slice(1).map(x=>({dominio:x[0],nivel:x[1],enunciado:x[2],A:x[3],B:x[4],C:x[5],D:x[6],correcta:x[7],explicacion:x[8],fuente:srcName}));
-      }else rows=JSON.parse(t);
-    }catch(e){return alert("Archivo inválido: "+e.message)}
-    PEND=[];
-    rows.forEach(r=>{
-      const o=val(Object.assign({fuente:srcName},r));
-      if(o)PEND.push(o);
-    });
-    document.getElementById("pv").innerHTML=`<p>${PEND.length} válidas · ${rows.length-PEND.length} rechazadas</p>${PEND.length?`<button class="p" onclick="pub()">Publicar ${PEND.length} preguntas</button>`:""}`;
-  });
-}
-
-async function pub(){
-  const list=PEND;PEND=[];
-  try{
-    if(window.FB){await FB.add(list);BANK=(await FB.bank()).map(norm)}
-    else BANK.push(...list);
-    aImp();
-    alert("Preguntas agregadas.");
-  }catch(e){alert("Error: "+e.message)}
-}
-
-function addOne(){
-  const g=i=>document.getElementById(i).value,o=val({
-    dominio:g("fd"),nivel:g("fl"),enunciado:g("fq"),opciones:[g("fo0"),g("fo1"),g("fo2"),g("fo3")],correcta:g("fc"),explicacion:g("fe"),fuente:g("ff")
-  });
-  if(!o)return alert("Revisa los datos: enunciado, alternativas distintas y correcta.");
-  if(window.FB){
-    FB.add([o]).then(async()=>{BANK=(await FB.bank()).map(norm);aImp();alert("Agregada al banco.")}).catch(e=>alert(e.message));
-  }else{
-    BANK.push(o);
-    aImp();
-    alert("Agregada al banco local.");
-  }
-}
-
-function csvP(t){
-  const r=[],L=t.split(/\r?\n/);
-  for(let line of L){
-    if(!line.trim())continue;
-    const c=[];let q=false,cur="";
-    for(let i=0;i<line.length;i++){
-      const ch=line[i];
-      if(ch=='"'){if(q&&line[i+1]=='"')cur+='"',i++;else q=!q}
-      else if(ch==','&&!q){c.push(cur.trim());cur=""}
-      else cur+=ch;
-    }
-    c.push(cur.trim());
-    r.push(c);
-  }
-  return r;
-}
-
-loadBank().then(init).catch(init);
+function admin(a,b){const T=["usuarios","consultas","banco","importar"],tab=T.includes(a)?a:a?"banco":(window.FB?"consultas":"banco"),msg=T.includes(a)?b:a,fb=!!window.FB;AT=tab;
+const tabs=[["usuarios","Usuarios",1],["consultas","Consultas",1],["banco","Banco",0],["importar","Importar",0]].filter(x=>fb||!x[2]);
+$.innerHTML=`<div class="top"><button onclick="home()">← Volver</button><b>Panel de administrador</b></div><div class="tabs" style="margin-top:12px;flex-wrap:wrap">${tabs.map(x=>`<button class="${x[0]==tab?"p":""}" onclick="admin('${x[0]}')">${x[1]}</button>`).join("")}</div><div id="ad">${tab=="banco"?bankHtml(msg):tab=="importar"?impHtml(msg):"<p class='m'>Cargando…</p>"}</div>`;
+if(tab=="usuarios")aUsers(msg);if(tab=="consultas")aCons(msg)}
+const ad=h=>{document.getElementById("ad").innerHTML=h},note=m=>m?`<div class="card exp">${esc(m)}</div>`:"";
+async function aUsers(msg){try{USERS=await FB.users()}catch(e){return ad("Error: "+(e.code||e.message))}
+USERS.sort((a,b)=>(a.nombre||"").localeCompare(b.nombre||""));
+ad(note(msg)+`<div class="m">${USERS.length} usuarios registrados</div>`+USERS.map((u,i)=>{const x=u.st||{},n=S.filter((y,k)=>x[k]).length;return`<div class="card s"><div><b>${esc(u.nombre||"(sin nombre)")}</b><div class="m">${esc(u.email||u.uid)} · ${n}/10 sesiones${x.diag?" · diagnóstico "+pct(x.diag)+"%":""}</div></div><button onclick="aUser(${i})">Ver</button></div>`}).join(""))}
+function aUser(i){const u=USERS[i],x=u.st||{};
+ad(`<button onclick="admin('usuarios')">← Usuarios</button><div class="card"><b>${esc(u.nombre||"")}</b><div class="m">${esc(u.email||u.uid)}</div>${Object.keys(D).map(d=>{const r=(x.dom||{})[d]||{ok:0,n:0};return`<div class="s m" style="margin-top:8px"><span>${D[d]}</span><span>${r.n?pct(r)+"%":"—"}</span></div><div class="bar"><i style="width:${pct(r)}%;background:${COL[d]}"></i></div>`}).join("")}</div>
+<div class="card"><b>Resultados por sesión</b>${S.map((y,k)=>`<div class="s" style="margin-top:8px"><span>${k+1}. ${y.t} <span class="m">${x[k]?pct(x[k])+"% · "+x[k].date:"—"}</span></span>${x[k]?`<button onclick="rst(${i},${k})">Borrar</button>`:""}</div>`).join("")}
+<p><button onclick="rst(${i},-1)">Borrar todos los resultados</button> <button onclick="delU(${i})" style="color:var(--no)">Eliminar usuario</button></p><div class="m">Eliminar usuario borra su avance y sus consultas. Para quitar también su acceso, elimínalo en Firebase → Authentication.</div></div>`)}
+async function rst(i,k){const u=USERS[i];if(!confirm(k<0?"¿Borrar TODOS los resultados de este usuario?":"¿Borrar los resultados de esa sesión?"))return;let x=u.st||{};
+if(k<0)x=x.visto?{visto:1}:{};else{delete x[k];if(k==0)delete x.diag;const dm={};S.forEach((y,j)=>{if(x[j]&&x[j].by)for(const d in x[j].by){dm[d]=dm[d]||{ok:0,n:0};dm[d].ok+=x[j].by[d].ok;dm[d].n+=x[j].by[d].n}});x.dom=dm}
+try{await FB.setSt(u.uid,x);u.st=x;aUser(i)}catch(e){alert("Error: "+(e.code||e.message))}}
+async function delU(i){const u=USERS[i];if(!confirm("¿Eliminar a "+(u.nombre||"este usuario")+" y todos sus datos?"))return;try{await FB.delUser(u.uid);admin("usuarios","Usuario eliminado.")}catch(e){alert("Error: "+(e.code||e.message))}}
+async function aCons(msg){let L;try{L=await FB.allC()}catch(e){return ad("Error: "+(e.code||e.message))}
+CONS=L.sort((a,b)=>(a.estado=="abierta"?0:1)-(b.estado=="abierta"?0:1)||b.t-a.t);
+ad(note(msg)+(L.length?`<div class="m">${L.filter(c=>c.estado=="abierta").length} pendientes de ${L.length}</div>`:"<p class='m'>No hay consultas.</p>")+CONS.map((c,i)=>`<div class="card"><div class="s"><b>${esc(c.nombre||"")}</b><span class="chip" style="background:${c.estado=="abierta"?"var(--no)":"var(--ok)"}">${c.estado=="abierta"?"Pendiente":"Resuelta"}</span></div><div class="m">${esc(c.email||"")} · ${new Date(c.t).toLocaleString("es-CL")}</div><p style="white-space:pre-wrap">${esc(c.texto)}</p><textarea id="r${i}" rows="3" placeholder="Escribe tu respuesta…">${esc(c.resp||"")}</textarea><button class="p" onclick="repC(${i})">${c.resp?"Actualizar respuesta":"Responder"}</button> <button onclick="delC(${i})">Eliminar</button></div>`).join(""))}
+async function repC(i){const t=document.getElementById("r"+i).value.trim();if(!t)return;try{await FB.replyC(CONS[i].id,t);aCons("Respuesta enviada.")}catch(e){alert("Error: "+(e.code||e.message))}}
+async function delC(i){if(!confirm("¿Eliminar esta consulta?"))return;try{await FB.delC(CONS[i].id);aCons("Consulta eliminada.")}catch(e){alert("Error: "+(e.code||e.message))}}
+// ---- Consultas del usuario
+async function consultas(pre){let L=[];try{L=(await FB.mineC(U.uid)).sort((a,b)=>b.t-a.t)}catch(e){}NEWC=0;st.cvis=Date.now();persist();
+$.innerHTML=`<div class="top"><button onclick="home()">← Volver</button><b>Consultas al profesor</b></div><div class="card"><label>Escribe tu duda o pregunta</label><textarea id="ct" rows="4">${esc(pre||"")}</textarea><div id="er"></div><button class="p big" onclick="sendC()">Enviar</button></div>`+L.map(c=>`<div class="card"><div class="m">${new Date(c.t).toLocaleString("es-CL")} · ${c.resp?"Respondida":"Pendiente"}</div><p style="white-space:pre-wrap">${esc(c.texto)}</p>${c.resp?`<div class="exp"><b>Respuesta:</b> ${esc(c.resp)}</div>`:""}</div>`).join("")}
+async function sendC(){const t=document.getElementById("ct").value.trim();if(!t)return;try{await FB.sendC({uid:U.uid,nombre:U.nombre,email:U.email,texto:t});consultas()}catch(e){document.getElementById("er").textContent="No se pudo enviar ("+(e.code||e.message)+")"}}
+async function duda(q){const t=prompt("Escribe tu duda sobre esta pregunta:");if(!t)return;try{await FB.sendC({uid:U.uid,nombre:U.nombre,email:U.email,texto:"Pregunta: "+q[2]+" ["+q[3].join(" | ")+"]\nDuda: "+t});alert("Duda enviada. Verás la respuesta en «Consultas».")}catch(e){alert("No se pudo enviar ("+(e.code||e.message)+")")}}
+// ---- Importador de instrumentos (PDF o texto)
+function impHtml(msg){const o=Object.keys(D).map(d=>`<option value="${d}">${D[d]}</option>`).join("");return note(msg)+`<div class="card"><b>Importar un instrumento</b><div class="m">Adjunta un PDF con texto (no escaneado) o un .txt, o pega el texto. Se detectan los enunciados numerados, las alternativas A–D y la clave de respuestas, y se adaptan al formato de la herramienta para que los revises antes de publicar. Las preguntas abiertas se ignoran.</div>
+<label>Nombre del instrumento (fuente)</label><input id="iz" placeholder="Ej.: ECEP Educación Media Matemática"><label>Eje por defecto</label><select id="idf">${o}</select><label>Nivel por defecto</label><select id="ilf"><option value="1">Básico</option><option value="2" selected>Medio</option><option value="3">Alto</option></select>
+<label>Archivo</label><input type="file" id="if" accept=".pdf,.txt" onchange="impFile(this)"><label>…o pega el texto</label><textarea id="it" rows="6"></textarea><button class="p" onclick="impRun(document.getElementById('it').value)">Analizar texto</button></div><div id="ip"></div>`}
+async function pdfText(f){if(!window.pdfjsLib){await new Promise((ok,no)=>{const e=document.createElement("script");e.src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";e.onload=ok;e.onerror=no;document.head.appendChild(e)});pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"}
+const d=await pdfjsLib.getDocument({data:await f.arrayBuffer()}).promise;let out="";for(let p=1;p<=d.numPages;p++){const c=await(await d.getPage(p)).getTextContent();let y=null;for(const it of c.items){const yy=it.transform[5];if(y!==null)out+=Math.abs(yy-y)>3?"\n":" ";out+=it.str;y=yy}out+="\n"}return out}
+async function impFile(el){const f=el.files[0];if(!f)return;document.getElementById("ip").innerHTML="Leyendo archivo…";try{impRun(/\.pdf$/i.test(f.name)?await pdfText(f):await f.text(),f.name)}catch(e){document.getElementById("ip").innerHTML="No se pudo leer el archivo: "+esc(e.message||e)}}
+function parseQ(t){t=t.replace(/\r/g,"");let key={},body=t;const hm=[...t.matchAll(/(^|\n)[ \t]*(?:claves?(?: de respuestas?)?|respuestas? correctas?|solucionario|pauta(?: de correcci[oó]n)?|respuestas)[ \t:.-]*(?=\n)/gi)];
+for(const h of hm.reverse()){const tail=t.slice(h.index),pairs=[...tail.matchAll(/(?:^|[\s,;])(\d{1,3})\s*[-–:.)]?\s*([A-Da-d])(?=[\s,;.]|$)/g)];if(pairs.length>=5){pairs.forEach(m=>{key[+m[1]]="abcd".indexOf(m[2].toLowerCase())});body=t.slice(0,h.index);break}}
+const ms=[...body.matchAll(/(^|\n)[ \t]*(\d{1,3})[ \t]*[.)][ \t]+/g)],out=[];
+ms.forEach((m,k)=>{const a=m.index+m[0].length,e=k+1<ms.length?ms[k+1].index:body.length;let b=body.slice(a,e).replace(/\s+/g," ").trim();
+const f=(L,from)=>{const m2=new RegExp("(^|\\s)"+L+"\\s*[).]\\s","i").exec(b.slice(from));return m2?{i:from+m2.index+m2[1].length,e:from+m2.index+m2[0].length}:null};
+const A=f("A",0),B=A&&f("B",A.e),C=B&&f("C",B.e),Dd=C&&f("D",C.e);if(!Dd)return;
+let o=[b.slice(A.e,B.i),b.slice(B.e,C.i),b.slice(C.e,Dd.i),b.slice(Dd.e)].map(x=>x.trim()),c=key[+m[2]]!=null?key[+m[2]]:-1;
+const am=/(?:respuesta correcta|respuesta|clave|correcta)\s*[:\-]\s*([A-Da-d])\b.*$/i.exec(o[3]);if(am){c="abcd".indexOf(am[1].toLowerCase());o[3]=o[3].slice(0,am.index).trim()}
+o[3]=o[3].replace(/\s*(p[áa]gina|p[áa]g\.?)\s*\d+.*$/i,"").trim();
+const e2=b.slice(0,A.i).trim();if(!e2||o.some(x=>!x||x.length>400))return;out.push({n:+m[2],e:e2,o,c})});return out}
+function impRun(t,name){const d=document.getElementById("idf").value,l=+document.getElementById("ilf").value,z=document.getElementById("iz");if(name&&!z.value)z.value=name.replace(/\.[^.]+$/,"");
+IMP=parseQ(t).map(x=>({...x,d,l}));const el=document.getElementById("ip");
+if(!IMP.length)return el.innerHTML=`<div class="card">No se detectaron preguntas con alternativas A–D. Revisa que los enunciados estén numerados («1.», «2.») y las alternativas lleven «A)», «B)», «C)», «D)». Los PDF escaneados (imágenes) no tienen texto: usa una versión con texto o pega el contenido.</div>`;
+const ok=IMP.filter(x=>x.c>=0).length,oD=Object.keys(D).map(k=>`<option value="${k}">${D[k]}</option>`);
+el.innerHTML=`<div class="card exp">${IMP.length} preguntas detectadas · ${ok} con clave de respuesta. Revisa, corrige y elige la correcta donde falte.</div>`+IMP.map((x,k)=>`<div class="card"><label><input type="checkbox" id="ik${k}" checked style="width:auto;margin:0 6px 0 0">Incluir pregunta ${x.n}</label><select id="id${k}">${oD.map(o=>o.replace(`value="${x.d}"`,`value="${x.d}" selected`)).join("")}</select><select id="il${k}">${[1,2,3].map(v=>`<option value="${v}" ${v==x.l?"selected":""}>${["Básico","Medio","Alto"][v-1]}</option>`).join("")}</select><textarea id="ie${k}" rows="3">${esc(x.e)}</textarea>${x.o.map((o,j)=>`<input id="io${k}_${j}" value="${esc(o)}">`).join("")}<select id="ic${k}"><option value="">Correcta: elegir</option>${"ABCD".split("").map((L,j)=>`<option value="${L}" ${x.c==j?"selected":""}>${L}</option>`).join("")}</select></div>`).join("")+`<button class="p big" onclick="impPub()">Publicar seleccionadas</button>`}
+function impPub(){const g=i=>document.getElementById(i),z=g("iz").value.trim()||"Importado",list=[];let bad=0;
+IMP.forEach((x,k)=>{if(!g("ik"+k).checked)return;const op=[0,1,2,3].map(j=>g(`io${k}_${j}`).value),c=g("ic"+k).value,o=val({dominio:g("id"+k).value,nivel:g("il"+k).value,enunciado:g("ie"+k).value,opciones:op,correcta:c,explicacion:c?`La alternativa correcta es ${c}) ${op["ABCD".indexOf(c)]}.`:"",fuente:z});o?list.push(o):bad++});
+if(bad)alert(bad+" pregunta(s) no se publicarán: falta elegir la correcta o hay alternativas vacías o repetidas.");if(!list.length)return;PEND=list;pub()}
+function readF(el){const f=el.files[0];if(!f)return;f.text().then(t=>{let rows;try{if(/\.csv$/i.test(f.name)){const r=csv(t),h=r[0].map(x=>x.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,""));rows=r.slice(1).map(w=>Object.fromEntries(h.map((k,i)=>[k,w[i]])))}else{rows=JSON.parse(t);if(!Array.isArray(rows))rows=rows.preguntas}}catch(e){return document.getElementById("pv").innerHTML="No se pudo leer el archivo."}
+const fz=document.getElementById("fz").value.trim();PEND=rows.map(val).filter(Boolean).map(o=>({...o,fuente:o.fuente||fz||f.name}));
+document.getElementById("pv").innerHTML=`<p>${PEND.length} válidas · ${rows.length-PEND.length} rechazadas</p>${PEND.length?`<button class="p" onclick="pub()">Publicar ${PEND.length} preguntas</button>`:""}`})}
+async function pub(){const list=PEND;PEND=[];try{if(window.FB){await FB.add(list);BANK=(await FB.bank()).map(norm)}else{const a=(ls("ecepBank")||[]).concat(list);localStorage.setItem("ecepBank",JSON.stringify(a));BANK=a.map((o,i)=>norm({...o,id:i}))}admin("Se publicaron "+list.length+" preguntas.")}catch(e){admin("Error al publicar: "+(e.code||e.message))}}
+function addOne(){const g=i=>document.getElementById(i).value,o=val({dominio:g("fd"),nivel:g("fl"),enunciado:g("fq"),opciones:["A","B","C","D"].map(x=>g("f"+x)),correcta:g("fc"),explicacion:g("fe"),ambito:g("fa"),fuente:g("fs")});if(!o)return admin("Revisa el formulario: faltan datos o hay alternativas repetidas.");PEND=[o];pub()}
+async function delSrc(i){const k=SRC[i],kk=k=="(sin fuente)"?"":k;if(!confirm("¿Eliminar todas las preguntas de «"+k+"»?"))return;try{if(window.FB){for(const q of BANK.filter(q=>q[6]==kk))await FB.del(q[8]);BANK=(await FB.bank()).map(norm)}else{const a=(ls("ecepBank")||[]).filter(o=>(o.fuente||"")!=kk);localStorage.setItem("ecepBank",JSON.stringify(a));BANK=a.map((o,i)=>norm({...o,id:i}))}admin("Eliminadas.")}catch(e){admin("Error: "+(e.code||e.message))}}
+function dl(t){const ej={dominio:"P",nivel:2,enunciado:"Enunciado de la pregunta",opciones:["Alternativa A","Alternativa B","Alternativa C","Alternativa D"],correcta:"B",explicacion:"Por qué B es correcta",fuente:"Nombre del instrumento",ambito:"Didáctica"};
+const x=t=="json"?[JSON.stringify([ej],null,1),"plantilla-instrumento.json"]:["dominio,nivel,enunciado,A,B,C,D,correcta,explicacion,fuente,ambito\nP,2,\"Enunciado\",Alt A,Alt B,Alt C,Alt D,B,\"Explicación\",\"Nombre del instrumento\",Didáctica\n","plantilla-instrumento.csv"];
+const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([x[0]]));a.download=x[1];a.click()}
+</script>
+<script type="module">
+let cfg=null;try{cfg=await import("./firebase-config.js")}catch(e){window.FBERR=location.protocol=="file:"?"Estás abriendo el archivo desde tu computador. Abre la página desde su dirección de GitHub Pages (https://...github.io/...).":"No se pudo cargar firebase-config.js. Verifica que esté subido a GitHub junto a index.html."}
+if(!cfg||!cfg.firebaseConfig||/TU_/.test(cfg.firebaseConfig.apiKey||"TU_")){window.FBERR=window.FBERR||"firebase-config.js no tiene tus datos de Firebase.";window.boot()}
+else{try{const B="https://www.gstatic.com/firebasejs/10.12.2/",{initializeApp}=await import(B+"firebase-app.js"),A=await import(B+"firebase-auth.js"),F=await import(B+"firebase-firestore.js");
+const app=initializeApp(cfg.firebaseConfig),auth=A.getAuth(app),db=F.getFirestore(app);let busy=0;
+window.FB={admins:(cfg.ADMIN_EMAILS||[]).map(e=>e.toLowerCase()),
+signUp:async(n,e,p)=>{busy=1;try{const c=await A.createUserWithEmailAndPassword(auth,e,p);await A.updateProfile(c.user,{displayName:n});return c.user}finally{busy=0}},
+signIn:(e,p)=>A.signInWithEmailAndPassword(auth,e,p),out:()=>A.signOut(auth),
+async load(uid){const d=await F.getDoc(F.doc(db,"usuarios",uid));return d.exists()?d.data().st:null},
+save:(uid,nombre,st,email)=>F.setDoc(F.doc(db,"usuarios",uid),{nombre,email:email||"",st,t:F.serverTimestamp()}),
+async bank(){const d=await F.getDocs(F.collection(db,"banco"));return d.docs.map(x=>({...x.data(),id:x.id}))},
+async add(list){for(let i=0;i<list.length;i+=400){const b=F.writeBatch(db);list.slice(i,i+400).forEach(q=>b.set(F.doc(F.collection(db,"banco")),q));await b.commit()}},
+del:id=>F.deleteDoc(F.doc(db,"banco",id)),
+async users(){const d=await F.getDocs(F.collection(db,"usuarios"));return d.docs.map(x=>({...x.data(),uid:x.id}))},
+setSt:(uid,st)=>F.updateDoc(F.doc(db,"usuarios",uid),{st}),
+async delUser(uid){const c=await F.getDocs(F.query(F.collection(db,"consultas"),F.where("uid","==",uid)));for(const x of c.docs)await F.deleteDoc(x.ref);await F.deleteDoc(F.doc(db,"usuarios",uid))},
+sendC:o=>F.addDoc(F.collection(db,"consultas"),{...o,t:Date.now(),estado:"abierta",resp:""}),
+async mineC(uid){const d=await F.getDocs(F.query(F.collection(db,"consultas"),F.where("uid","==",uid)));return d.docs.map(x=>({...x.data(),id:x.id}))},
+async allC(){const d=await F.getDocs(F.collection(db,"consultas"));return d.docs.map(x=>({...x.data(),id:x.id}))},
+replyC:(id,resp)=>F.updateDoc(F.doc(db,"consultas",id),{resp,tResp:Date.now(),estado:"resuelta"}),
+delC:id=>F.deleteDoc(F.doc(db,"consultas",id))};
+A.onAuthStateChanged(auth,u=>{if(!busy)window.boot(u)})}catch(e){console.error(e);window.FBERR="Error al conectar con Firebase: "+(e.message||e);window.FB=null;window.boot()}}
 </script></body></html>
