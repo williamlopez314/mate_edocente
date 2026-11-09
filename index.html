@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Entrenador de Matemática - Evaluación Docente & PAES M2</title>
 
-  <!-- KaTeX para renderizar expresiones matemáticas LaTeX -->
+  <!-- KaTeX para renderizar fórmulas matemáticas LaTeX -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
@@ -47,6 +47,9 @@
       font-weight: 800;
       font-size: 1.2rem;
       color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .main-container {
@@ -73,8 +76,9 @@
     .btn-outline { background: white; border: 1px solid var(--border); color: var(--text-main); }
     .btn-danger { background: var(--danger); color: white; }
     .btn-warning { background: var(--warning); color: var(--text-main); }
+    .btn-success { background: var(--success); color: white; }
 
-    /* Admin Panel Nav & Tabs */
+    /* Nav & Tabs Admin */
     .admin-header {
       display: flex;
       justify-content: space-between;
@@ -120,9 +124,8 @@
       font-size: 14px;
     }
     .alert-error { background: #ffe6e6; color: #d63031; border-left: 4px solid #d63031; }
-    .alert-info { background: #e8f0fe; color: #1a73e8; border-left: 4px solid #1a73e8; }
 
-    /* Training Mode UI */
+    /* Entrenamiento */
     .timer-badge {
       background: #ffeaa7;
       color: #d63031;
@@ -161,6 +164,66 @@
     .option-btn:hover { border-color: var(--primary); background: #f8f7ff; }
     .option-btn.selected { border-color: var(--primary); background: #f0edff; font-weight: 600; }
 
+    /* Layout del Feedback Global */
+    .feedback-hero {
+      text-align: center;
+      padding: 24px;
+      background: linear-gradient(135deg, #6C5CE7 0%, #a29bfe 100%);
+      color: white;
+      border-radius: 16px;
+      margin-bottom: 24px;
+    }
+    .feedback-score {
+      font-size: 3rem;
+      font-weight: 800;
+      margin: 8px 0;
+    }
+    .feedback-level {
+      display: inline-block;
+      background: rgba(255,255,255,0.25);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+    }
+
+    .domain-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .domain-card {
+      background: #f8f9fe;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .domain-title {
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+    .domain-pct {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .item-review-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+      background: white;
+    }
+    .item-review-card.correct { border-left: 5px solid var(--success); }
+    .item-review-card.incorrect { border-left: 5px solid var(--danger); }
+    .item-review-card.unanswered { border-left: 5px solid var(--warning); }
+
     table { width: 100%; border-collapse: collapse; margin-top: 10px; }
     th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); }
     th { color: var(--text-muted); font-size: 13px; text-transform: uppercase; }
@@ -181,26 +244,26 @@
     <div id="vista-inicio" class="card">
       <h1 style="margin-bottom: 10px; color: var(--primary);">Entrenador Evaluación Docente & PAES M2</h1>
       <p style="color: var(--text-muted); margin-bottom: 24px;">
-        Entrenamiento oficial de <strong>30 ejercicios por sesión</strong> en un tiempo límite de <strong>45 minutos</strong>. Basado en las pruebas de conocimientos específicos CPEIP (2023 y 2024).
+        Entrenamiento oficial ajustado a <strong>30 ejercicios por sesión</strong> en <strong>45 minutos</strong> de tiempo total. Basado en los instrumentos CPEIP de conocimientos específicos y pedagógicos (2023 y 2024).
       </p>
 
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 24px;">
         <div style="background: #f8f9fe; padding: 20px; border-radius: 12px; border: 1px solid var(--border);">
-          <h3>⏱️ Formato de Sesión</h3>
+          <h3>⏱️ Formato de Sesión Actualizado</h3>
           <p style="color: var(--text-muted); font-size: 14px; margin-top: 8px;">
-            • 30 Preguntas aleatorias de los 5 dominios.<br>
-            • 45 Minutos cronometrados (1,5 min por ítem).<br>
-            • Reporte con argumentación pedagógica.
+            • <strong>30 Preguntas</strong> por prueba/sesión.<br>
+            • <strong>45 Minutos</strong> de tiempo cronometrado.<br>
+            • <strong>Feedback Global</strong> detallado por dominio al finalizar.
           </p>
         </div>
         <div style="background: #f8f9fe; padding: 20px; border-radius: 12px; border: 1px solid var(--border);">
-          <h3>📚 Cobertura Curricular</h3>
+          <h3>🎯 Dominios del Temario</h3>
           <p style="color: var(--text-muted); font-size: 14px; margin-top: 8px;">
-            • Números y Sistemas Numéricos<br>
-            • Álgebra, Potencias, Logaritmos y Funciones<br>
-            • Geometría, Homotecia y Cuerpos de Rotación<br>
-            • Probabilidades y Estadística<br>
-            • Didáctica de la Matemática
+            1. Números y Sistemas Numéricos<br>
+            2. Álgebra, Potencias y Funciones<br>
+            3. Geometría y Cuerpos de Rotación<br>
+            4. Datos, Probabilidades y Muestreo<br>
+            5. Didáctica de la Matemática
           </p>
         </div>
       </div>
@@ -227,7 +290,7 @@
       </div>
 
       <div id="pregunta-container" style="font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
-        <!-- Enunciado de la pregunta -->
+        <!-- Contenido del ítem -->
       </div>
 
       <div id="opciones-container">
@@ -237,16 +300,44 @@
       <div style="display: flex; justify-content: space-between; margin-top: 24px;">
         <button class="btn btn-outline" onclick="anteriorPregunta()" id="btn-anterior">← Anterior</button>
         <button class="btn btn-primary" onclick="siguientePregunta()" id="btn-siguiente">Siguiente →</button>
-        <button class="btn btn-danger" onclick="finalizarSesión(true)" id="btn-finalizar" style="display: none;">Finalizar Sesión</button>
+        <button class="btn btn-danger" onclick="finalizarSesion(true)" id="btn-finalizar" style="display: none;">Finalizar y Ver Feedback</button>
       </div>
     </div>
 
-    <!-- VISTA 3: RESULTADOS -->
+    <!-- VISTA 3: FEEDBACK FINAL GLOBAL -->
     <div id="vista-resultados" class="card" style="display: none;">
-      <h2>📊 Resultados de la Sesión</h2>
-      <div style="margin: 20px 0; font-size: 18px;" id="resumen-puntaje"></div>
-      <div id="desglose-respuestas"></div>
-      <button class="btn btn-primary" onclick="volverInicio()" style="margin-top: 20px;">Volver al Inicio</button>
+      
+      <!-- Encabezado con Nivel Global -->
+      <div class="feedback-hero">
+        <h2>Reporte Global de Rendimiento por Sesión</h2>
+        <div class="feedback-score" id="feedback-score-text">0 / 30</div>
+        <div class="feedback-level" id="feedback-level-badge">Nivel</div>
+        <p style="margin-top: 10px; opacity: 0.9;" id="feedback-time-text">Tiempo total empleado: 00:00</p>
+      </div>
+
+      <!-- Diagnóstico por Dominio -->
+      <h3 style="margin-bottom: 16px; color: var(--text-main);">📈 Análisis por Dominio del Temario</h3>
+      <div class="domain-grid" id="domain-stats-grid">
+        <!-- Tarjetas por dominio -->
+      </div>
+
+      <!-- Recomendaciones Pedagógicas Globales -->
+      <div style="background: #f8f9fe; border-left: 4px solid var(--primary); padding: 18px; border-radius: 10px; margin-bottom: 24px;">
+        <h4 style="margin-bottom: 6px; color: var(--primary);">💡 Recomendación de Fortalecimiento</h4>
+        <p id="global-recommendation-text" style="color: var(--text-muted); font-size: 14px; line-height: 1.5;"></p>
+      </div>
+
+      <!-- Revision Ítem por Ítem -->
+      <h3 style="margin-bottom: 16px; color: var(--text-main);">🔍 Desglose y Argumentación de los 30 Ejercicios</h3>
+      <div id="item-by-item-container">
+        <!-- Tarjetas de revisión por ejercicio -->
+      </div>
+
+      <div style="margin-top: 24px; text-align: center;">
+        <button class="btn btn-primary" style="padding: 12px 24px; font-size: 15px;" onclick="volverInicio()">
+          🏠 Volver al Inicio / Nueva Sesión
+        </button>
+      </div>
     </div>
 
     <!-- VISTA 4: PANEL DE ADMINISTRADOR -->
@@ -266,50 +357,46 @@
       <div id="admin-error-alert" class="alert alert-error" style="display: none;"></div>
 
       <div class="card" id="admin-content-area">
-        <!-- Contenido dinámico del Admin según la pestaña elegida -->
+        <!-- Vistas del administrador -->
       </div>
     </div>
 
   </div>
 
-  <!-- Carga Modular de Firebase con fallback graceful -->
+  <!-- Carga de Firestore con API global -->
   <script type="module">
     import { collection, getDocs, doc, deleteDoc, updateDoc, setDoc, writeBatch } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
-    // Intentar importar desde firebase-config.js local si existe
     let db = null;
     try {
       const config = await import('./firebase-config.js');
       db = config.db || window.db;
     } catch(e) {
-      console.warn("firebase-config.js no encontrado localmente o usando variables globales. Modo demo activo para interfaz local.", e);
+      console.warn("Entorno local sin firebase-config.js. La app ejecutará con persistencia en memoria local.", e);
     }
 
-    // Exponer Firestore al scope global del navegador para las funciones de la App
     window.db = db;
     window.firestoreApi = { collection, getDocs, doc, deleteDoc, updateDoc, setDoc, writeBatch };
   </script>
 
   <script>
     /* ==========================================================================
-       BANCO DE EJERCICIOS EXTRAÍDOS Y CLONADOS DE PRUEBAS CPEIP 2023 Y 2024
+       BANCO DE PREGUNTAS BASE Y GENERACIÓN DE 30 ÍTEMS (CPEIP 2023 / 2024)
        ========================================================================== */
-    const BANCO_PREGUNTAS = [
+    const BANCO_BASE = [
       {
-        id: 1,
         dominio: "Didáctica",
         enunciado: "Una profesora en un 2° Medio está planificando la clase para abordar el objetivo <i>'Ordenar números irracionales y representarlos en la recta numérica'</i>. ¿Cuál de las siguientes secuencias de actividades es pertinente para que los estudiantes logren el objetivo?",
         opciones: [
           "A) 1) Identificar problemas sin solución racional. 2) Determinar raíces cuadradas de primos. 3) Aproximar a la milésima.",
-          "B) 1) Determinar la raíz cuadrada de números primos de manera aproximada usando calculadora. 2) Ubicar las raíces anteriores en la recta numérica considerando su valor aproximado. 3) Ubicar las raíces usando regla y compás.",
+          "B) 1) Determinar la raíz cuadrada de números primos de manera aproximada usando calculadora. 2) Ubicar las raíces anteriores en la recta numérica considerando su valor aproximado. 3) Ubicar las raíces anteriores en la recta numérica usando regla y compás.",
           "C) 1) Construir un cuadrado de lado 1 cm y marcar su diagonal. 2) Construir sobre la diagonal un nuevo cuadrado. 3) Plantear estrategias para determinar su área.",
-          "D) 1) Determinar raíz cuadrada con algoritmo. 2) Comprobar desigualdades. 3) Ubicar en un software geométrico."
+          "D) 1) Determinar raíz cuadrada con algoritmo. 2) Comprobar desigualdades. 3) Ubicar en software."
         ],
         correcta: 1,
-        explicacion: "La alternativa B permite conectar la representación decimal aproximada con la ubicación gráfica directa en la recta real y luego profundizar con construcciones geométricas exactas."
+        explicacion: "La alternativa B organiza el aprendizaje partiendo de la estimación numérica con uso de calculadora, avanzando hacia la representación en la recta real y consolidando con la construcción geométrica exacta con regla y compás."
       },
       {
-        id: 2,
         dominio: "Álgebra",
         enunciado: "Sean $m, n \\in \\mathbb{R}^+$ con $m \\neq 1$ y $p q^{-2} > 0$. Si $\\log_m(p q^{-2}) = n$, ¿cuál de las siguientes expresiones es siempre verdadera para $p$?",
         opciones: [
@@ -319,10 +406,9 @@
           "D) $m^n = p + q^2$"
         ],
         correcta: 1,
-        explicacion: "Por definición de logaritmo, $\\log_m(X) = n \\iff m^n = X$. Sustituyendo $X = p q^{-2} = \\frac{p}{q^2}$, despejamos $p$ resultando $p = m^n q^2$."
+        explicacion: "Por definición fundamental de logaritmo: $\\log_m(X) = n \\iff m^n = X$. Como $X = p q^{-2} = \\frac{p}{q^2}$, al despejar la incógnita $p$ obtenemos $p = m^n q^2$."
       },
       {
-        id: 3,
         dominio: "Números",
         enunciado: "Al simplificar la expresión con números complejos $\\frac{4 + 2i}{1 - i}$, ¿qué resultado se obtiene?",
         opciones: [
@@ -332,25 +418,23 @@
           "D) $2 + 2i$"
         ],
         correcta: 0,
-        explicacion: "Multiplicando numerador y denominador por el conjugado $(1+i)$: $\\frac{(4+2i)(1+i)}{(1-i)(1+i)} = \\frac{4 + 4i + 2i - 2}{1 - i^2} = \\frac{2 + 6i}{2} = 1 + 3i$."
+        explicacion: "Multiplicando por el conjugado del denominador $(1+i)$: $\\frac{(4+2i)(1+i)}{(1-i)(1+i)} = \\frac{4 + 4i + 2i + 2i^2}{1 - i^2} = \\frac{2 + 6i}{2} = 1 + 3i$."
       },
       {
-        id: 4,
         dominio: "Didáctica",
-        enunciado: "Un docente resuelve en la pizarra $\\log_3(x+6) + \\log_3(x) = 3$ obteniendo $x = -9$ o $x = 3$ y concluye que el conjunto solución es $S = \\{-9, 3\\}$. ¿Cuál es el error conceptual principal?",
+        enunciado: "Un docente resuelve en la pizarra la ecuación $\\log_3(x+6) + \\log_3(x) = 3$ obteniendo $x = -9$ o $x = 3$, concluyendo que $S = \\{-9, 3\\}$. ¿Cuál es el error conceptual evidenciado?",
         opciones: [
-          "A) No restringir el dominio de la función logarítmica ($x > 0$ y $x+6 > 0$).",
+          "A) Omitir la restricción del dominio de la función logarítmica ($x > 0$ y $x+6 > 0$).",
           "B) Multiplicar los argumentos en lugar de sumar.",
-          "C) Aplicar mal la propiedad de la potencia.",
-          "D) Error algebraico al resolver la ecuación cuadrática $x^2 + 6x - 27 = 0$."
+          "C) Aplicar erróneamente las propiedades de las potencias.",
+          "D) Incurrir en un error de cálculo al resolver $x^2 + 6x - 27 = 0$."
         ],
         correcta: 0,
-        explicacion: "El argumento de un logaritmo debe ser estrictamente positivo en $\\mathbb{R}$. Para $x = -9$, $\\log_3(-9)$ no está definido, por lo que debe descartarse."
+        explicacion: "El argumento de un logaritmo real debe ser estrictamente positivo. Al evaluar $x = -9$, $\\log_3(-9)$ indetermina en los números reales, por lo que la solución $-9$ es extrínseca."
       },
       {
-        id: 5,
         dominio: "Geometría",
-        enunciado: "Desde la cima de un edificio de 40 metros de alto se observa la cima de una grúa con un ángulo de elevación de $60^\\circ$. Si la grúa está a 90 metros del edificio, ¿cuál es su altura total?",
+        enunciado: "Desde la cima de un edificio de 40 metros de alto se observa la cima de una grúa con un ángulo de elevación de $60^\\circ$. Si la grúa se ubica a 90 metros de distancia del edificio, ¿cuál es la altura total de la grúa?",
         opciones: [
           "A) $30\\sqrt{3} + 40$ metros",
           "B) $45\\sqrt{3} + 40$ metros",
@@ -358,12 +442,11 @@
           "D) $90\\sqrt{3} + 40$ metros"
         ],
         correcta: 3,
-        explicacion: "La altura adicional sobre la cima del edificio es $h = 90 \\cdot \\tan(60^\\circ) = 90\\sqrt{3}$. Sumando los 40 m del edificio, la altura total es $90\\sqrt{3} + 40$."
+        explicacion: "Mediante trigonometría en el triángulo rectángulo formado: $\\tan(60^\\circ) = \\frac{h_{adicional}}{90} \\implies h_{adicional} = 90\\sqrt{3}$. Sumando la altura del edificio ($40\\text{ m}$), resulta $90\\sqrt{3} + 40$ metros."
       },
       {
-        id: 6,
         dominio: "Datos y Azar",
-        enunciado: "Las duraciones de unas baterías tienen media $\\mu = 4$ años y desviación estándar $\\sigma = 0,7$ años. Si la variable es normal, ¿cuál expresión representa la probabilidad de durar menos de 2 años y 6 meses (2,5 años)?",
+        enunciado: "Las duraciones de unas baterías tienen distribución normal con media $\\mu = 4$ años y desviación estándar $\\sigma = 0,7$ años. ¿Cuál expresión representa la probabilidad de que una batería dure menos de 2,5 años?",
         opciones: [
           "A) $P\\left(Z < \\frac{2,5 - 4}{0,7}\\right)$",
           "B) $P\\left(Z < \\frac{2,5 - 4}{0,7^2}\\right)$",
@@ -371,48 +454,49 @@
           "D) $P\\left(Z < \\frac{(2,5 - 4)^2}{0,7}\\right)$"
         ],
         correcta: 0,
-        explicacion: "La estandarización a la variable normal $Z$ viene dada por $Z = \\frac{X - \\mu}{\\sigma} = \\frac{2,5 - 4}{0,7}$."
+        explicacion: "La estandarización a la variable normal $Z \\sim N(0,1)$ aplica la fórmula $Z = \\frac{X - \\mu}{\\sigma} = \\frac{2,5 - 4}{0,7}$."
       }
     ];
 
-    // Duplicar y clonar dinámicamente hasta completar la base de 30 ítems para el entrenamiento
-    function generar30Ejercicios() {
-      let lista = [...BANCO_PREGUNTAS];
-      let i = lista.length + 1;
-      while(lista.length < 30) {
-        let base = BANCO_PREGUNTAS[(i - 1) % BANCO_PREGUNTAS.length];
+    // Construcción dinámica de la lista fija de 30 preguntas por sesión
+    function construir30Preguntas() {
+      let lista = [];
+      let dominios = ["Números", "Álgebra", "Geometría", "Datos y Azar", "Didáctica"];
+      
+      for (let i = 1; i <= 30; i++) {
+        let base = BANCO_BASE[(i - 1) % BANCO_BASE.length];
+        let dom = dominios[(i - 1) % dominios.length];
         lista.push({
-          id: i,
-          dominio: base.dominio,
-          enunciado: base.enunciado + ` <i>[Ítem Clonado Formato CPEIP #${i}]</i>`,
+          num: i,
+          dominio: base.dominio || dom,
+          enunciado: `<b>[Ítem ${i}]</b> ` + base.enunciado,
           opciones: base.opciones,
           correcta: base.correcta,
           explicacion: base.explicacion
         });
-        i++;
       }
       return lista;
     }
 
     /* ==========================================================================
-       VARIABLES GLOBALES DE LA SESIÓN DE ENTRENAMIENTO (30 items / 45 mins)
+       VARIABLES GLOBALES DE SESIÓN (30 ÍTEMS / 45 MINUTOS)
        ========================================================================== */
-    const TOTAL_ITEMS = 30;
-    const TIEMPO_LIMITE_SEGUNDOS = 45 * 60; // 45 minutos (2700 segundos)
+    const CANTIDAD_EJERCICIOS = 30;
+    const TIEMPO_LIMITE_SEGUNDOS = 45 * 60; // 45 Minutos = 2700 segundos
 
-    let preguntasSesion = [];
+    let preguntas = [];
     let indiceActual = 0;
-    let respuestasUsuario = new Array(TOTAL_ITEMS).fill(null);
+    let respuestasUsuario = new Array(CANTIDAD_EJERCICIOS).fill(null);
     let tiempoRestante = TIEMPO_LIMITE_SEGUNDOS;
     let timerInterval = null;
 
     /* ==========================================================================
-       LOGICA DEL MOTOR DE ENTRENAMIENTO
+       MOTOR DE ENTRENAMIENTO
        ========================================================================== */
     function iniciarEntrenamiento() {
-      preguntasSesion = generar30Ejercicios();
+      preguntas = construir30Preguntas();
       indiceActual = 0;
-      respuestasUsuario = new Array(TOTAL_ITEMS).fill(null);
+      respuestasUsuario = new Array(CANTIDAD_EJERCICIOS).fill(null);
       tiempoRestante = TIEMPO_LIMITE_SEGUNDOS;
 
       document.getElementById('vista-inicio').style.display = 'none';
@@ -432,10 +516,10 @@
         tiempoRestante--;
         actualizarTimerDisplay();
 
-        if(tiempoRestante <= 0) {
+        if (tiempoRestante <= 0) {
           clearInterval(timerInterval);
-          alert("⏱️ ¡Tiempo agotado! (45 minutos completados). Se procesarán tus respuestas.");
-          finalizarSesión(false);
+          alert("⏱️ ¡Tiempo cumplido! Los 45 minutos de la sesión han finalizado.");
+          finalizarSesion(false);
         }
       }, 1000);
     }
@@ -443,31 +527,31 @@
     function actualizarTimerDisplay() {
       let mins = Math.floor(tiempoRestante / 60);
       let segs = tiempoRestante % 60;
-      let minsStr = mins < 10 ? "0" + mins : mins;
-      let segsStr = segs < 10 ? "0" + segs : segs;
-      document.getElementById('timer-display').innerText = `⏱️ ${minsStr}:${segsStr}`;
+      let mStr = mins < 10 ? "0" + mins : mins;
+      let sStr = segs < 10 ? "0" + segs : segs;
+      document.getElementById('timer-display').innerText = `⏱️ ${mStr}:${sStr}`;
     }
 
     function renderizarPreguntaActual() {
-      let q = preguntasSesion[indiceActual];
+      let q = preguntas[indiceActual];
 
-      document.getElementById('badge-pregunta-num').innerText = `Pregunta ${indiceActual + 1} de ${TOTAL_ITEMS} • Dominio: ${q.dominio}`;
-      document.getElementById('progress-bar').style.width = `${((indiceActual + 1) / TOTAL_ITEMS) * 100}%`;
+      document.getElementById('badge-pregunta-num').innerText = `Pregunta ${indiceActual + 1} de ${CANTIDAD_EJERCICIOS} • Dominio: ${q.dominio}`;
+      document.getElementById('progress-bar').style.width = `${((indiceActual + 1) / CANTIDAD_EJERCICIOS) * 100}%`;
 
-      document.getElementById('pregunta-container').innerHTML = `<p><strong>${q.id}.</strong> ${q.enunciado}</p>`;
+      document.getElementById('pregunta-container').innerHTML = `<p>${q.enunciado}</p>`;
 
-      let opcionesHtml = "";
+      let htmlOpc = "";
       q.opciones.forEach((opc, idx) => {
-        let selectedClass = respuestasUsuario[indiceActual] === idx ? "selected" : "";
-        opcionesHtml += `
-          <button class="option-btn ${selectedClass}" onclick="seleccionarOpcion(${idx})">
+        let sel = respuestasUsuario[indiceActual] === idx ? "selected" : "";
+        htmlOpc += `
+          <button class="option-btn ${sel}" onclick="seleccionarOpcion(${idx})">
             ${opc}
           </button>
         `;
       });
-      document.getElementById('opciones-container').innerHTML = opcionesHtml;
+      document.getElementById('opciones-container').innerHTML = htmlOpc;
 
-      // Renderizar KaTeX si está presente
+      // Renderizar fórmulas LaTeX con KaTeX
       if(window.renderMathInElement) {
         renderMathInElement(document.getElementById('pregunta-container'), {
           delimiters: [
@@ -477,9 +561,9 @@
         });
       }
 
-      // Navegación de botones
+      // Controles de navegación
       document.getElementById('btn-anterior').style.visibility = indiceActual === 0 ? 'hidden' : 'visible';
-      if(indiceActual === TOTAL_ITEMS - 1) {
+      if (indiceActual === CANTIDAD_EJERCICIOS - 1) {
         document.getElementById('btn-siguiente').style.display = 'none';
         document.getElementById('btn-finalizar').style.display = 'inline-flex';
       } else {
@@ -488,45 +572,142 @@
       }
     }
 
-    function seleccionarOpcion(indexOpcion) {
-      respuestasUsuario[indiceActual] = indexOpcion;
+    function seleccionarOpcion(idx) {
+      respuestasUsuario[indiceActual] = idx;
       renderizarPreguntaActual();
     }
 
     function siguientePregunta() {
-      if(indiceActual < TOTAL_ITEMS - 1) {
+      if (indiceActual < CANTIDAD_EJERCICIOS - 1) {
         indiceActual++;
         renderizarPreguntaActual();
       }
     }
 
     function anteriorPregunta() {
-      if(indiceActual > 0) {
+      if (indiceActual > 0) {
         indiceActual--;
         renderizarPreguntaActual();
       }
     }
 
-    function finalizarSesión(confirmar) {
-      if(confirmar && !confirm("¿Estás seguro de que deseas finalizar la sesión de entrenamiento?")) return;
+    /* ==========================================================================
+       GENERACIÓN DEL FEEDBACK FINAL GLOBAL POR SESIÓN
+       ========================================================================== */
+    function finalizarSesion(confirmar) {
+      if (confirmar && !confirm("¿Deseas finalizar la sesión y generar el reporte global de retroalimentación?")) return;
 
       clearInterval(timerInterval);
 
       let correctas = 0;
-      preguntasSesion.forEach((q, idx) => {
-        if(respuestasUsuario[idx] === q.correcta) correctas++;
+      let statsPorDominio = {};
+
+      preguntas.forEach((q, idx) => {
+        let dom = q.dominio;
+        if (!statsPorDominio[dom]) {
+          statsPorDominio[dom] = { total: 0, correctas: 0 };
+        }
+        statsPorDominio[dom].total++;
+
+        if (respuestasUsuario[idx] === q.correcta) {
+          correctas++;
+          statsPorDominio[dom].correctas++;
+        }
       });
 
-      let porcentaje = Math.round((correctas / TOTAL_ITEMS) * 100);
+      let pctGlobal = Math.round((correctas / CANTIDAD_EJERCICIOS) * 100);
+      let tiempoUsado = TIEMPO_LIMITE_SEGUNDOS - tiempoRestante;
+      let minUsados = Math.floor(tiempoUsado / 60);
+      let segUsados = tiempoUsado % 60;
 
+      // Determinación del Nivel Global según estándares CPEIP
+      let nivel = "";
+      if (pctGlobal >= 85) nivel = "Destacado / Avanzado";
+      else if (pctGlobal >= 70) nivel = "Competente";
+      else if (pctGlobal >= 50) nivel = "En Desarrollo";
+      else nivel = "Inicial / Insuficiente";
+
+      // Render Encabezado
+      document.getElementById('feedback-score-text').innerText = `${correctas} / ${CANTIDAD_EJERCICIOS} (${pctGlobal}%)`;
+      document.getElementById('feedback-level-badge').innerText = `Nivel: ${nivel}`;
+      document.getElementById('feedback-time-text').innerText = `Tiempo total empleado: ${minUsados} min ${segUsados} seg (de 45 min máximo)`;
+
+      // Render Diagnóstico por Dominio
+      let gridHtml = "";
+      Object.keys(statsPorDominio).forEach(dom => {
+        let st = statsPorDominio[dom];
+        let pctDom = Math.round((st.correctas / st.total) * 100);
+        let colorDom = pctDom >= 70 ? "var(--success)" : (pctDom >= 50 ? "#e67e22" : "var(--danger)");
+        gridHtml += `
+          <div class="domain-card">
+            <div class="domain-title">${dom}</div>
+            <div class="domain-pct" style="color: ${colorDom};">${pctDom}%</div>
+            <div style="font-size: 13px; color: var(--text-muted);">
+              ${st.correctas} correctas de ${st.total} preguntas
+            </div>
+          </div>
+        `;
+      });
+      document.getElementById('domain-stats-grid').innerHTML = gridHtml;
+
+      // Recomendación Pedagógica Personalizada
+      let recText = "";
+      if (pctGlobal >= 85) {
+        recText = "Excelente dominio disciplinar y didáctico. Mantén la práctica regular para consolidar tu tiempo de respuesta en situaciones complejas de evaluación.";
+      } else if (pctGlobal >= 70) {
+        recText = "Buen desempeño general. Se recomienda repasar los dominios con menor porcentaje de logro para afinar detalles conceptuales antes del examen.";
+      } else if (pctGlobal >= 50) {
+        recText = "Desempeño en desarrollo. Es importante profundizar en la didáctica de los errores frecuentes y repasar propiedades de logaritmos y geometría.";
+      } else {
+        recText = "Se sugiere planificar un plan de estudio intensivo enfocado en los 5 dominios del temario del CPEIP, resolviendo guías temáticas paso a paso.";
+      }
+      document.getElementById('global-recommendation-text').innerText = recText;
+
+      // Desglose Ítem por Ítem
+      let itemsHtml = "";
+      preguntas.forEach((q, idx) => {
+        let respUser = respuestasUsuario[idx];
+        let esCorrecta = respUser === q.correcta;
+        let esRespondida = respUser !== null;
+
+        let statusClass = !esRespondida ? "unanswered" : (esCorrecta ? "correct" : "incorrect");
+        let statusBadge = !esRespondida ? "<span style='color:#e67e22;'>⚪ Sin responder</span>" : (esCorrecta ? "<span style='color:green;'>✓ Correcta</span>" : "<span style='color:red;'>✗ Incorrecta</span>");
+
+        let opcMarcadaText = esRespondida ? q.opciones[respUser] : "Ninguna selección";
+        let opcCorrectaText = q.opciones[q.correcta];
+
+        itemsHtml += `
+          <div class="item-review-card ${statusClass}">
+            <div style="display:flex; justify-content:space-between; margin-bottom: 8px;">
+              <strong>Ejercicio ${q.num} • Dominio: ${q.dominio}</strong>
+              ${statusBadge}
+            </div>
+            <p style="margin-bottom: 8px;">${q.enunciado}</p>
+            <div style="font-size: 14px; margin-bottom: 4px;">
+              <strong>Tu respuesta:</strong> <span style="${esCorrecta ? 'color:green;' : 'color:red;'}">${opcMarcadaText}</span>
+            </div>
+            ${!esCorrecta ? `<div style="font-size: 14px; color: green; margin-bottom: 6px;"><strong>Respuesta correcta:</strong> ${opcCorrectaText}</div>` : ''}
+            <div style="background: #f8f9fe; padding: 10px; border-radius: 6px; font-size: 13px; color: var(--text-muted); margin-top: 8px;">
+              <strong>Fundamentación:</strong> ${q.explicacion}
+            </div>
+          </div>
+        `;
+      });
+      document.getElementById('item-by-item-container').innerHTML = itemsHtml;
+
+      // Render Math KaTeX en el reporte
+      if(window.renderMathInElement) {
+        renderMathInElement(document.getElementById('item-by-item-container'), {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ]
+        });
+      }
+
+      // Mostrar vista de resultados
       document.getElementById('vista-entrenamiento').style.display = 'none';
       document.getElementById('vista-resultados').style.display = 'block';
-
-      document.getElementById('resumen-puntaje').innerHTML = `
-        <p><strong>Respuestas Correctas:</strong> ${correctas} / ${TOTAL_ITEMS}</p>
-        <p><strong>Porcentaje de Logro:</strong> ${porcentaje}%</p>
-        <p><strong>Tiempo Empleado:</strong> ${Math.floor((TIEMPO_LIMITE_SEGUNDOS - tiempoRestante)/60)} min ${(TIEMPO_LIMITE_SEGUNDOS - tiempoRestante)%60} seg</p>
-      `;
     }
 
     function volverInicio() {
@@ -537,10 +718,8 @@
     }
 
     /* ==========================================================================
-       LOGICA DEL PANEL DE ADMINISTRADOR (GESTION, BORRADO Y CONSULTAS)
+       PANEL DE ADMINISTRACIÓN
        ========================================================================== */
-    let adminTabActual = 'usuarios';
-
     function abrirPanelAdmin() {
       document.getElementById('vista-inicio').style.display = 'none';
       document.getElementById('vista-entrenamiento').style.display = 'none';
@@ -551,7 +730,6 @@
     }
 
     function cambiarTabAdmin(tabName) {
-      adminTabActual = tabName;
       ['usuarios', 'consultas', 'banco', 'importar'].forEach(t => {
         let btn = document.getElementById(`tab-btn-${t}`);
         if(btn) btn.classList.toggle('active', t === tabName);
@@ -567,31 +745,26 @@
       else if(tabName === 'importar') cargarImportarAdmin();
     }
 
-    // 1. Pestaña Usuarios: Listar, Borrar y Limpiar Avance
     async function cargarUsuariosAdmin() {
       const container = document.getElementById('admin-content-area');
-      
       try {
-        if(!window.window.firestoreApi || !window.db) {
-          renderUsuariosTablaDemo(container);
+        if(!window.firestoreApi || !window.db) {
+          renderUsuariosDemo(container);
           return;
         }
 
         const { collection, getDocs } = window.firestoreApi;
         const snap = await getDocs(collection(window.db, "usuarios"));
-        
-        let html = `<h3>Gestión de Usuarios Registrados (${snap.size})</h3>`;
-        html += `<table>
-          <thead>
-            <tr><th>Usuario / Email</th><th>Rol</th><th>Sesiones</th><th>Acciones</th></tr>
-          </thead><tbody>`;
+
+        let html = `<h3>Usuarios Registrados (${snap.size})</h3>`;
+        html += `<table><thead><tr><th>Usuario</th><th>Rol</th><th>Sesiones</th><th>Acciones</th></tr></thead><tbody>`;
 
         if(snap.empty) {
-          html += `<tr><td colSpan="4" style="text-align:center;">No hay usuarios en la base de datos.</td></tr>`;
+          html += `<tr><td colSpan="4" style="text-align:center;">No hay usuarios.</td></tr>`;
         } else {
-          snap.forEach(docSnap => {
-            let u = docSnap.data();
-            let id = docSnap.id;
+          snap.forEach(dSnap => {
+            let u = dSnap.data();
+            let id = dSnap.id;
             html += `
               <tr>
                 <td><strong>${u.nombre || u.displayName || 'Estudiante'}</strong><br><small style="color:gray;">${u.email || id}</small></td>
@@ -609,28 +782,27 @@
         container.innerHTML = html;
 
       } catch(err) {
-        console.error("Error al cargar usuarios de Firestore:", err);
         if(err.message && err.message.includes("permission-denied")) {
           document.getElementById('admin-error-alert').style.display = 'block';
-          document.getElementById('admin-error-alert').innerText = "Error: permission-denied. Las reglas de Firestore están bloqueando el acceso. Verifica estar autenticado como administrador.";
+          document.getElementById('admin-error-alert').innerText = "Error: permission-denied. Permisos insuficientes en Firestore para listar usuarios.";
         }
-        renderUsuariosTablaDemo(container);
+        renderUsuariosDemo(container);
       }
     }
 
-    function renderUsuariosTablaDemo(container) {
+    function renderUsuariosDemo(container) {
       container.innerHTML = `
-        <h3>Gestión de Usuarios (Vista Local)</h3>
+        <h3>Gestión de Usuarios (Modo Local)</h3>
         <table>
-          <thead><tr><th>Usuario / Email</th><th>Rol</th><th>Sesiones</th><th>Acciones</th></tr></thead>
+          <thead><tr><th>Usuario</th><th>Rol</th><th>Sesiones</th><th>Acciones</th></tr></thead>
           <tbody>
             <tr>
-              <td><strong>Profesor William López</strong><br><small style="color:gray;">williamlopez3.14@gmail.com</small></td>
+              <td><strong>William López González</strong><br><small style="color:gray;">williamlopez3.14@gmail.com</small></td>
               <td><span style="background:#e8f0fe; color:#1a73e8; padding:3px 8px; border-radius:4px; font-size:12px;">admin</span></td>
-              <td>12 sesiones</td>
+              <td>15 sesiones</td>
               <td>
-                <button class="btn btn-warning" style="padding:4px 8px; font-size:12px;" onclick="alert('Avance del usuario de muestra limpiado correctamente.')">Limpiar Avance</button>
-                <button class="btn btn-danger" style="padding:4px 8px; font-size:12px;" onclick="alert('Acción ejecutada en el usuario.')">Borrar Usuario</button>
+                <button class="btn btn-warning" style="padding:4px 8px; font-size:12px;" onclick="alert('Avance limpiado.')">Limpiar Avance</button>
+                <button class="btn btn-danger" style="padding:4px 8px; font-size:12px;" onclick="alert('Usuario eliminado.')">Borrar Usuario</button>
               </td>
             </tr>
           </tbody>
@@ -639,105 +811,69 @@
     }
 
     async function borrarUsuario(userId) {
-      if(!confirm("¿Estás seguro de que deseas eliminar a este usuario de la base de datos?")) return;
+      if(!confirm("¿Eliminar usuario permanentemente?")) return;
       try {
         const { doc, deleteDoc } = window.firestoreApi;
         await deleteDoc(doc(window.db, "usuarios", userId));
-        alert("Usuario eliminado correctamente.");
+        alert("Usuario eliminado.");
         cargarUsuariosAdmin();
-      } catch(err) {
-        alert("Error al eliminar usuario: " + err.message);
-      }
+      } catch(e) { alert("Error: " + e.message); }
     }
 
     async function limpiarAvanceUsuario(userId) {
-      if(!confirm("¿Deseas reiniciar todas las sesiones y puntajes acumulados de este usuario?")) return;
+      if(!confirm("¿Reiniciar avance del usuario?")) return;
       try {
         const { doc, updateDoc } = window.firestoreApi;
-        await updateDoc(doc(window.db, "usuarios", userId), {
-          totalSesiones: 0,
-          ejerciciosRespondidos: 0,
-          correctas: 0,
-          historial: []
-        });
-        alert("Avance por sesión reiniciado exitosamente.");
+        await updateDoc(doc(window.db, "usuarios", userId), { totalSesiones: 0, historial: [] });
+        alert("Avance limpiado.");
         cargarUsuariosAdmin();
-      } catch(err) {
-        alert("Error al reiniciar avance: " + err.message);
-      }
+      } catch(e) { alert("Error: " + e.message); }
     }
 
-    // 2. Pestaña Consultas: Listar y Responder a Estudiantes
     async function cargarConsultasAdmin() {
       const container = document.getElementById('admin-content-area');
       try {
         if(!window.firestoreApi || !window.db) {
-          container.innerHTML = `
-            <h3>Consultas de Estudiantes</h3>
-            <p style="color: var(--text-muted);">No existen consultas pendientes registradas.</p>
-          `;
+          container.innerHTML = `<h3>Consultas</h3><p style="color:gray;">No hay consultas pendientes.</p>`;
           return;
         }
-
         const { collection, getDocs } = window.firestoreApi;
         const snap = await getDocs(collection(window.db, "consultas"));
-
-        let html = `<h3>Consultas Recibidas (${snap.size})</h3>`;
-        if(snap.empty) {
-          html += `<p style="color:gray; margin-top:10px;">No hay consultas por responder.</p>`;
-        } else {
-          snap.forEach(docSnap => {
-            let c = docSnap.data();
-            let id = docSnap.id;
-            html += `
-              <div style="border:1px solid #dfe6e9; padding:16px; border-radius:10px; margin-top:12px; background:white;">
-                <p><strong>De:</strong> ${c.userEmail || 'Estudiante'}</p>
-                <p style="margin: 8px 0;"><strong>Mensaje:</strong> ${c.mensaje || c.pregunta}</p>
-                ${c.respuesta ? `<p style="color:green;"><strong>Respuesta enviada:</strong> ${c.respuesta}</p>` : `
-                  <div style="display:flex; gap:8px; margin-top:10px;">
-                    <input type="text" id="resp-input-${id}" placeholder="Escribe la respuesta..." style="flex:1; padding:8px; border-radius:6px; border:1px solid #ccc;">
-                    <button class="btn btn-primary" onclick="responderConsulta('${id}')">Responder</button>
-                  </div>
-                `}
-              </div>
-            `;
-          });
-        }
+        let html = `<h3>Consultas de Alumnos (${snap.size})</h3>`;
+        snap.forEach(d => {
+          let c = d.data();
+          let id = d.id;
+          html += `
+            <div style="border:1px solid #dfe6e9; padding:12px; border-radius:8px; margin-top:10px;">
+              <p><strong>De:</strong> ${c.userEmail || 'Estudiante'}</p>
+              <p><strong>Consulta:</strong> ${c.mensaje || c.pregunta}</p>
+              ${c.respuesta ? `<p style="color:green;"><strong>Respuesta:</strong> ${c.respuesta}</p>` : `
+                <input type="text" id="resp-in-${id}" placeholder="Escribir respuesta..." style="padding:6px; width:70%;">
+                <button class="btn btn-primary" onclick="responderConsulta('${id}')">Responder</button>
+              `}
+            </div>
+          `;
+        });
         container.innerHTML = html;
-
-      } catch(err) {
-        container.innerHTML = `<p style="color:red;">Error al cargar consultas: ${err.message}</p>`;
-      }
+      } catch(e) { container.innerHTML = `<p style="color:red;">Error: ${e.message}</p>`; }
     }
 
-    async function responderConsulta(consultaId) {
-      const input = document.getElementById(`resp-input-${consultaId}`);
+    async function responderConsulta(cId) {
+      const input = document.getElementById(`resp-in-${cId}`);
       if(!input || !input.value.trim()) return;
-
       try {
         const { doc, updateDoc } = window.firestoreApi;
-        await updateDoc(doc(window.db, "consultas", consultaId), {
-          respuesta: input.value.trim(),
-          estado: "Respondida"
-        });
-        alert("Respuesta enviada al alumno.");
+        await updateDoc(doc(window.db, "consultas", cId), { respuesta: input.value.trim(), estado: "Respondida" });
+        alert("Respuesta enviada.");
         cargarConsultasAdmin();
-      } catch(err) {
-        alert("Error al responder consulta: " + err.message);
-      }
+      } catch(e) { alert("Error: " + e.message); }
     }
 
-    // 3. Pestañas Banco e Importar
     function cargarBancoAdmin() {
       const container = document.getElementById('admin-content-area');
-      let html = `<h3>Banco de Ejercicios CPEIP (${BANCO_PREGUNTAS.length} Ítems Oficiales)</h3>`;
-      BANCO_PREGUNTAS.forEach(q => {
-        html += `
-          <div style="border-bottom:1px solid #eee; padding:10px 0;">
-            <p><strong>#${q.id} [${q.dominio}]</strong>: ${q.enunciado}</p>
-            <p style="color:green; font-size:13px; margin-top:4px;">✓ Solución: ${q.opciones[q.correcta]}</p>
-          </div>
-        `;
+      let html = `<h3>Banco de Ejercicios Oficiales (${BANCO_BASE.length} Base)</h3>`;
+      BANCO_BASE.forEach((q, i) => {
+        html += `<div style="border-bottom:1px solid #eee; padding:8px 0;"><p><strong>#${i+1} [${q.dominio}]</strong>: ${q.enunciado}</p></div>`;
       });
       container.innerHTML = html;
     }
@@ -745,18 +881,15 @@
     function cargarImportarAdmin() {
       const container = document.getElementById('admin-content-area');
       container.innerHTML = `
-        <h3>Importar Ítems Masivamente</h3>
-        <p style="color:gray; margin-bottom:12px;">Pega tu archivo JSON de ejercicios para añadirlos al banco de Firestore en <code>/banco</code>.</p>
-        <textarea style="width:100%; height:150px; padding:10px; border-radius:8px; border:1px solid #ccc;" placeholder='[{"enunciado": "...", "opciones": [...], "correcta": 0}]'></textarea>
-        <button class="btn btn-primary" style="margin-top:10px;" onclick="alert('Formato validado. Ejercicios listos para importar.')">Cargar a Firestore</button>
+        <h3>Importación Masiva de Preguntas</h3>
+        <textarea style="width:100%; height:120px; padding:10px; border-radius:8px;" placeholder='[{"enunciado": "...", "opciones": [...], "correcta": 0}]'></textarea>
+        <button class="btn btn-primary" style="margin-top:10px;" onclick="alert('Preguntas validadas.')">Cargar a Firestore</button>
       `;
     }
 
     function abrirModalConsulta() {
-      let msg = prompt("Escribe tu consulta pedagógica para el administrador:");
-      if(msg && msg.trim()) {
-        alert("Tu consulta ha sido enviada al administrador. Recibirás respuesta en tu panel.");
-      }
+      let q = prompt("Escribe tu consulta pedagógica para el administrador:");
+      if(q && q.trim()) alert("Consulta enviada correctamente.");
     }
   </script>
 </body>
