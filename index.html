@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Preparación ECEP · Matemática Media</title>
+<title>MateDocente · Entrenador Evaluación Docente & PAES M2</title>
 <style>
 :root{--bg:#f4f6ff;--c:#fff;--t:#1c2236;--m:#667089;--p:#4f6df5;--p2:#8b5cf6;--ok:#16a34a;--no:#dc2626;--b:#e2e6f3}
 @media(prefers-color-scheme:dark){:root{--bg:#0e1220;--c:#171d31;--t:#e9ecf8;--m:#9aa4c0;--p:#7b93ff;--p2:#a78bfa;--ok:#4ade80;--no:#fb7185;--b:#2a3350}}
@@ -71,7 +71,7 @@ if(o.length<4)o.push("Ninguna de las anteriores");return sh([d,l,q,o,0,e])};
 const G={
 N:[[1,()=>{const a=ri(2,5),m=ri(3,6),n=m+ri(1,3);return mk("N",1,`¿Cuál es el resultado de ${a}${sp(m)} · ${a}${sp(n)}?`,`${a}${sp(m+n)}`,[`${a}${sp(m*n)}`,`${a*a}${sp(m+n)}`,`${a}${sp(n-m)}`],"Con igual base se suman los exponentes.")}],
 [1,()=>{const p=pk([10,20,25,30,40]),r=ri(2,12)*20;return mk("N",1,`¿Cuánto es el ${p}% de ${r}?`,r*p/100,[r*p/10,r+p,r*(100-p)/100],"Se multiplica por p/100.")}],
-[2,()=>{const b=ri(2,5),k=ri(3,6);return mk("N",2,`Si el logaritmo en base ${b} de x es ${k}, cuánto vale x?`,b**k,[b*k,b+k,b**(k-1)],`log_b x = k equivale a x = b^k = ${b**k}.`)}],
+[2,()=>{const b=ri(2,5),k=ri(3,6);return mk("N",2,`Si el logaritmo en base ${b} de x es ${k}, ¿cuánto vale x?`,b**k,[b*k,b+k,b**(k-1)],`log_b x = k equivale a x = b^k = ${b**k}.`)}],
 [2,()=>{const a=ri(2,6),b=pk([2,3,5,7]);return mk("N",2,`¿A qué es igual √${a*a*b}?`,`${a}√${b}`,[`${a*a}√${b}`,`${a}√${a*b}`,`${a+b}√${b}`],`√(${a*a}·${b}) = ${a}√${b}.`)}],
 [3,()=>{const n=ri(20,200),v=["1","i","−1","−i"];return mk("N",3,`¿Cuál es el valor de i${sp(n)}?`,v[n%4],v.filter((x,j)=>j!=n%4),`Las potencias de i se repiten cada 4; ${n} deja resto ${n%4}.`)}],
 [3,()=>{const k=pk([4,6,8,10]),n=pk([3,5,7]);return mk("N",3,`Al racionalizar ${k}/√${n} se obtiene`,`${k}√${n}/${n}`,[`${k}/${n}`,`${k}√${n}`,`${k}√${n}/${k}`],"Se multiplica numerador y denominador por √n.")}]],
@@ -82,7 +82,7 @@ A:[[1,()=>{const x=ri(2,9),a=ri(2,7),b=ri(1,9);return mk("A",1,`Si ${a}x + ${b} 
 [2,()=>{const x=ri(4,9),y=ri(1,3);return mk("A",2,`Si x + y = ${x+y} y x − y = ${x-y}, ¿cuánto vale x?`,x,[y,x+y,x-y],"Al sumar las ecuaciones: 2x = "+(2*x)+".")}],
 [3,()=>{const x0=ri(1,6),a=ri(2,5),b=ri(1,5);return mk("A",3,`La solución de ${a}x − ${b} > ${a*x0-b} es`,`x > ${x0}`,[`x < ${x0}`,`x > ${-x0}`,`x > ${x0+b}`],`${a}x > ${a*x0}, luego x > ${x0}.`)}],
 [3,()=>{const h=ri(1,5),r=ri(2,4);return mk("A",3,`El conjunto solución de |x − ${h}| < ${r} es`,`(${h-r}, ${h+r})`,[`(−∞, ${h-r}) ∪ (${h+r}, ∞)`,`(${-h-r}, ${-h+r})`,`(${h}, ${r})`],`−${r} < x − ${h} < ${r}.`)}],
-[3,()=>{const m=ri(2,6);return mk("A",3,`¿Para qué valores de k la ecuación x² + kx + ${m*m} = 0 tiene una única solución real?`,`k = ${2*m} o k = −${2*m}`,[`k = ${2*m}`,`k = ${m} o k = −${m}`,`k = ${m*m}`],"Δ = 0 ⇒ k² = "+(4*m*m)+".")}]],
+[3,()=>{const m=ri(2,6);return mk("A",3,`¿Para qué valores de k la ecuación x² + kx + ${m*m} = 0 tiene una única solución real?`,`k = ${2*m} o k = −${2*m}`,[`k = ${2*m}`,`k = ${m} o k = −${m}`,`k = ${m*m}`],`Δ = 0 ⇒ k² = ${4*m*m}.`)}]],
 F:[[1,()=>{const a=ri(2,6),b=ri(1,9),t=ri(2,6);return mk("F",1,`Si f(x) = ${a}x + ${b}, ¿cuánto vale f(${t})?`,a*t+b,[a+t+b,a*(t+b),a*t-b],`${a}·${t}+${b}.`)}],
 [2,()=>{const a=ri(1,3),b=pk([-4,-3,-2,2,3,4]),c=ri(1,5),t=ri(2,4),v=a*t*t+b*t+c;return mk("F",2,`Si f(x) = ${a}x² ${b<0?"−":"+"} ${Math.abs(b)}x + ${c}, ¿cuánto vale f(${t})?`,v,[v+1,v-1,a*t*t+b+c],"Se reemplaza x y se respeta la jerarquía de operaciones.")}],
 [2,()=>{const x1=ri(0,3),dx=ri(1,4),m=ri(2,5),y1=ri(0,5);return mk("F",2,`¿Cuál es la pendiente de la recta que pasa por (${x1}, ${y1}) y (${x1+dx}, ${y1+m*dx})?`,m,[`1/${m}`,m+1,-m],"Pendiente = Δy/Δx.")}],
@@ -102,7 +102,7 @@ D:[[1,()=>{let a,m;do{m=ri(10,20);a=[ri(5,25),ri(5,25),ri(5,25),ri(5,25)];a.push
 [2,()=>{const a=[...new Set(Array.from({length:12},()=>ri(1,30)))].slice(0,7),s=[...a].sort((x,y)=>x-y);return mk("D",2,`¿Cuál es la mediana de ${a.join(", ")}?`,s[3],[s[2],s[4],a[3]],"Se ordenan los datos y se toma el central.")}],
 [2,()=>{const n=ri(5,12);return mk("D",2,`¿De cuántas formas se pueden elegir 2 personas entre ${n}?`,n*(n-1)/2,[n*(n-1),n*n,n*(n-1)/2+n],"C(n,2) = n(n−1)/2.")}],
 [3,()=>{const X=ri(1,3),Y=ri(4,8);return mk("D",3,`Si P(A∩B) = ${X/10} y P(B) = ${Y/10}, ¿cuánto vale P(A|B)?`,(X/Y).toFixed(2),[((Y-X)/10).toFixed(2),(X*Y/100).toFixed(2),(1-X/Y).toFixed(2)],"P(A|B) = P(A∩B)/P(B).")}],
-[3,()=>{const n=ri(4,6),f=[1,1,2,6,24,120,720];return mk("D",3,`¿De cuántas formas se pueden ordenar ${n} libros distintos en un estante?`,f[n],[n*n,n*(n-1),f[n-1]],"n!.")}]]]};
+[3,()=>{const n=ri(4,6),f=[1,1,2,6,24,120,720];return mk("D",3,`¿De cuántas formas se pueden ordenar ${n} libros distintos en un estante?`,f[n],[n*n,n*(n-1),f[n-1]],"n!.")}]]};
 function dom0(d,l,u){let c=Q.filter(q=>q[0]==d&&(d=="P"||q[1]==l)&&!u.has(q[2])),q;
 if(d=="P"){if(!c.length)c=Q.filter(q=>q[0]=="P");q=sh(pk(c))}
 else if(c.length&&Math.random()<.4)q=sh(pk(c));
@@ -140,7 +140,7 @@ if(WANTADM){WANTADM=0;if(isAdmin())return admin();AUTHERR="Este correo no tiene 
 else{U=U||ls("ecepU");if(!U)return auth();st=ls(lk())||{};BANK=(ls("ecepBank")||[]).map((o,i)=>norm({...o,id:i}))}
 st.visto?home():welcome()}
 function auth(m){m=m||"reg";const fb=!!window.FB;
-$.innerHTML=`<div class="hero"><div class="logo">∑</div><h1>Preparación ECEP</h1><div class="m">Matemática · Educación Media</div></div><div class="card">`+
+$.innerHTML=`<div class="hero"><div class="logo">📐</div><h1>MateDocente</h1><div class="m">Entrenamiento Evaluación Docente & PAES M2</div></div><div class="card">`+
 (fb&&m=="adm"?`<b>🔑 Acceso administrador</b><div class="m">Ingresa con el correo de administrador.</div>`:fb?`<div class="tabs"><button class="${m=="reg"?"p":""}" onclick="auth('reg')">Registrarme</button><button class="${m=="in"?"p":""}" onclick="auth('in')">Ingresar</button></div>`:`<p class="m">Modo sin conexión: tu avance se guarda solo en este dispositivo.${window.FBERR?"<br><b>Motivo:</b> "+esc(window.FBERR):""}</p>`)+
 (m=="reg"||!fb?`<label>Tu nombre</label><input id="n" autocomplete="name">`:"")+
 (fb?`<label>Correo</label><input id="e" type="email" autocomplete="email"><label>Contraseña (mínimo 6 caracteres)</label><input id="pw" type="password">`:"")+
@@ -150,7 +150,7 @@ if(!window.FB){if(!n)return er("Escribe tu nombre");U={uid:"local",nombre:n};loc
 try{if(m=="reg"){if(!n)return er("Escribe tu nombre");boot(await FB.signUp(n,e,p))}else{WANTADM=m=="adm";await FB.signIn(e,p)}}
 catch(x){er(({"auth/email-already-in-use":"Ese correo ya está registrado. Usa «Ingresar».","auth/weak-password":"La contraseña debe tener al menos 6 caracteres.","auth/invalid-email":"Correo inválido.","auth/invalid-credential":"Correo o contraseña incorrectos."})[x.code]||"No se pudo completar: "+(x.code||x.message))}}
 async function out(){if(window.FB)await FB.out();else{localStorage.removeItem("ecepU");U=null;auth()}}
-function welcome(re){$.innerHTML=`<div class="hero"><div class="logo">∑</div><h1>¡Bienvenido/a, ${esc(U.nombre)}!</h1><div class="m">Tu entrenamiento para la ECEP de Matemática (Educación Media)</div></div>
+function welcome(re){$.innerHTML=`<div class="hero"><div class="logo">📐</div><h1>¡Bienvenido/a, ${esc(U.nombre)}!</h1><div class="m">Entrenamiento Evaluación Docente & PAES M2</div></div>
 <div class="card"><b>Cómo funciona</b><ol>
 <li><b>10 sesiones</b> de 45 minutos y 30 preguntas: diagnóstico, 5 temáticas, evaluación intermedia, didáctica, nivel avanzado y evaluación final.</li>
 <li><b>Empieza con el diagnóstico</b> para medir tu nivel; al final lo comparas con tu evaluación final.</li>
@@ -161,12 +161,40 @@ function welcome(re){$.innerHTML=`<div class="hero"><div class="logo">∑</div><
 <p class="m">El reloj corre 45 minutos; al terminar el tiempo la sesión se cierra sola y las preguntas sin responder cuentan como incorrectas.</p>
 <button class="p big" onclick="go2()">${re?"Volver":"Comenzar"}</button></div>`}
 function go2(){if(!st.visto){st.visto=1;persist()}home()}
-function home(){run&&clearInterval(run.tm);run=null;setTimeout(sy,0);const done=S.filter((s,i)=>st[i]).length,dm=st.dom||{},nx=S.findIndex((s,i)=>!st[i]);
-const w=Object.keys(D).filter(d=>dm[d]&&dm[d].n>=3).sort((a,b)=>pct(dm[a])-pct(dm[b]))[0];
-$.innerHTML=`<div class="top"><div><div class="m">Hola,</div><h1 style="margin:0">${esc(U.nombre)}</h1></div><div class="ring" style="background:conic-gradient(var(--p) ${done*36}deg,var(--b) 0)"><b>${done}/10</b></div></div>
-<div class="card"><b>Tu dominio por eje</b>${Object.keys(D).map(d=>{const r=dm[d]||{ok:0,n:0};return`<div class="s m" style="margin-top:8px"><span>${D[d]}</span><span>${r.n?pct(r)+"%":"—"}</span></div><div class="bar"><i style="width:${pct(r)}%;background:${COL[d]}"></i></div>`}).join("")}${w?`<div class="m">Prioridad de estudio: <b>${D[w]}</b></div>`:""}</div>`+
-S.map((x,i)=>`<div class="card s"><div class="s" style="justify-content:flex-start;gap:12px"><span class="num">${i+1}</span><div><b>${x.t}</b><div class="m">${x.d}</div>${st[i]?`<span class="chip" style="background:${pct(st[i])>=70?"var(--ok)":"var(--p)"}">Último: ${pct(st[i])}%</span> `:""}${i==nx?`<span class="chip" style="background:var(--p2)">Siguiente</span>`:""}</div></div><button class="p" onclick="start(${i})">${st[i]?"Repetir":"Iniciar"}</button></div>`).join("")+
-`<div class="card"><p style="margin-top:0">${window.FB?"Sesión: "+esc(U.email||""):"Modo sin conexión (este dispositivo)"}</p><p class="m" id="sy"></p><button onclick="welcome(1)">Cómo funciona</button> ${window.FB?`<button onclick="consultas()">Consultas${NEWC?" ("+NEWC+" nueva"+(NEWC>1?"s":"")+")":""}</button> `:""}${isAdmin()?`<button onclick="admin()">Administrador</button> `:""}${window.FB?"":`<button onclick="exp()">Exportar</button> <button onclick="imp()">Importar</button> `}<button onclick="out()">Cerrar sesión</button></div>`}
+function home(){run&&clearInterval(run.tm);run=null;setTimeout(sy,0);const done=S.filter((s,i)=>st[i]).length,nx=S.findIndex((s,i)=>!st[i]);
+$.innerHTML=`<div class="top"><div style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:1.2rem"><span style="font-size:1.4rem">📐</span> MateDocente</div>${isAdmin()?`<button onclick="admin()">Panel de administrador</button>`:`<button onclick="out()">Cerrar sesión</button>`}</div>
+<div class="card" style="padding:24px">
+<h1 style="font-size:1.75rem;color:var(--p);margin-top:0">Entrenador Evaluación Docente & PAES M2</h1>
+<p class="m" style="font-size:1rem">Entrenamiento oficial ajustado a <b>30 ejercicios por sesión</b> en <b>45 minutos</b> de tiempo total. Basado en los instrumentos CPEIP de conocimientos específicos y pedagógicos (2023 y 2024).</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0">
+<div style="background:var(--bg);padding:16px;border-radius:12px;border:1px solid var(--b)">
+<b>⏱️ Formato de Sesión Actualizado</b>
+<ul style="margin:8px 0 0;padding-left:20px;font-size:.92rem" class="m">
+<li><b>30 Preguntas</b> por prueba/sesión.</li>
+<li><b>45 Minutos</b> de tiempo cronometrado.</li>
+<li><b>Feedback Global</b> detallado por dominio al finalizar.</li>
+</ul>
+</div>
+<div style="background:var(--bg);padding:16px;border-radius:12px;border:1px solid var(--b)">
+<b>🎯 Dominios del Temario</b>
+<ol style="margin:8px 0 0;padding-left:20px;font-size:.92rem" class="m">
+<li>Números y Sistemas Numéricos</li>
+<li>Álgebra, Potencias y Funciones</li>
+<li>Geometría y Cuerpos de Rotación</li>
+<li>Datos, Probabilidades y Muestreo</li>
+<li>Didáctica de la Matemática</li>
+</ol>
+</div>
+</div>
+<div style="display:flex;gap:12px;flex-wrap:wrap">
+<button class="p" style="flex:2;padding:14px;font-size:1.05rem" onclick="start(${nx>=0?nx:0})">🚀 Iniciar Sesión (30 Ejercicios / 45 Min)</button>
+${window.FB?`<button style="flex:1;padding:14px" onclick="consultas()">💬 Enviar Consulta Pedagógica</button>`:""}
+</div>
+</div>
+<div class="card"><b>Sesiones de Entrenamiento (${done}/10 completadas)</b>
+<div class="m" style="margin-bottom:12px">Puedes realizar las sesiones en orden o elegir la que desees repasar.</div>`+
+S.map((x,i)=>`<div class="card s" style="margin:8px 0"><div class="s" style="justify-content:flex-start;gap:12px"><span class="num">${i+1}</span><div><b>${x.t}</b><div class="m">${x.d}</div>${st[i]?`<span class="chip" style="background:${pct(st[i])>=70?"var(--ok)":"var(--p)"}">Último: ${pct(st[i])}%</span> `:""}${i==nx?`<span class="chip" style="background:var(--p2)">Siguiente</span>`:""}</div></div><button class="p" onclick="start(${i})">${st[i]?"Repetir":"Iniciar"}</button></div>`).join("")+
+`</div><div class="card"><p style="margin-top:0">${window.FB?"Sesión: "+esc(U.email||""):"Modo sin conexión"}</p><p class="m" id="sy"></p><button onclick="welcome(1)">Cómo funciona</button> ${window.FB?"":`<button onclick="exp()">Exportar</button> <button onclick="imp()">Importar</button> `}<button onclick="out()">Cerrar sesión</button></div>`}
 function exp(){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(st)],{type:"application/json"}));a.download="avance-ecep.json";a.click()}
 function imp(){const i=document.createElement("input");i.type="file";i.accept=".json";i.onchange=()=>i.files[0].text().then(t=>{try{st=JSON.parse(t);persist();home()}catch(e){alert("Archivo inválido")}});i.click()}
 function upd(){const e=document.getElementById("tm");if(e&&run)e.textContent="⏱ "+Math.floor(run.t/60)+":"+String(run.t%60).padStart(2,"0")}
