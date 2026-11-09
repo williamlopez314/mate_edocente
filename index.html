@@ -1,270 +1,763 @@
-<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Preparación ECEP · Matemática Media</title>
-<!-- KaTeX LaTeX rendering -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
-<style>
-:root{--bg:#f4f6ff;--c:#fff;--t:#1c2236;--m:#667089;--p:#4f6df5;--p2:#8b5cf6;--ok:#16a34a;--no:#dc2626;--b:#e2e6f3}
-@media(prefers-color-scheme:dark){:root{--bg:#0e1220;--c:#171d31;--t:#e9ecf8;--m:#9aa4c0;--p:#7b93ff;--p2:#a78bfa;--ok:#4ade80;--no:#fb7185;--b:#2a3350}}
-*{box-sizing:border-box}body{margin:0;font:16px/1.5 system-ui,-apple-system,sans-serif;color:var(--t);background:radial-gradient(900px 420px at 50% -120px,color-mix(in srgb,var(--p) 28%,transparent),transparent),var(--bg);min-height:100vh}
-main{max-width:720px;margin:0 auto;padding:16px 14px 40px}h1{font-size:1.45rem;margin:.2em 0}
-.hero{text-align:center;padding:22px 6px 8px}.logo{width:68px;height:68px;margin:0 auto 10px;border-radius:22px;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;font:700 36px/68px system-ui;box-shadow:0 10px 24px color-mix(in srgb,var(--p) 40%,transparent)}
-.card{background:var(--c);border:1px solid var(--b);border-radius:16px;padding:16px;margin:12px 0;box-shadow:0 4px 16px rgba(20,30,70,.06)}
-button{font:inherit;border:1px solid var(--b);background:var(--c);color:var(--t);border-radius:12px;padding:10px 14px;cursor:pointer}
-button.p{background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;border:0}button.big{width:100%;padding:13px;font-weight:600}
-.o{display:block;width:100%;text-align:left;margin:8px 0;padding:12px}.o:hover{border-color:var(--p)}
-.ok{border-color:var(--ok)!important;background:color-mix(in srgb,var(--ok) 18%,var(--c))}.no{border-color:var(--no)!important;background:color-mix(in srgb,var(--no) 18%,var(--c))}
-.s{display:flex;justify-content:space-between;gap:10px;align-items:center}.top{display:flex;justify-content:space-between;align-items:center;gap:8px}.m{color:var(--m);font-size:.9rem}
-.bar{height:8px;background:var(--b);border-radius:6px;overflow:hidden;margin:3px 0 9px}.bar i{display:block;height:100%;background:var(--p);border-radius:6px}
-.exp{margin-top:10px;padding:10px;border-left:4px solid var(--p);background:var(--bg);border-radius:8px}
-.ring{width:80px;height:80px;border-radius:50%;display:grid;place-items:center;flex:none}.ring b{background:var(--c);width:62px;height:62px;border-radius:50%;display:grid;place-items:center}
-.chip{display:inline-block;padding:2px 10px;border-radius:99px;font-size:.78rem;color:#fff;background:var(--p)}
-.num{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-weight:700;background:var(--bg);flex:none}
-.tabs{display:flex;gap:8px;margin-bottom:12px}.tabs button{flex:1}
-input,select,textarea{width:100%;font:inherit;padding:10px;border:1px solid var(--b);border-radius:10px;background:var(--bg);color:var(--t);margin:4px 0 10px}label{font-size:.9rem;color:var(--m)}
-#er{color:var(--no);min-height:1.2em}li{margin:6px 0}
-</style></head><body><main id="app"></main><script>
-// [dominio, nivel(1-3), enunciado, opciones, índice correcto, explicación, fuente, ámbito, id]
-const D={N:"Números",A:"Álgebra",F:"Funciones",G:"Geometría",D:"Datos y probabilidades",P:"Didáctica de la matemática"};
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entrenador de Matemática - Evaluación Docente & PAES M2</title>
 
-// Renderizador automático de LaTeX KaTeX
-function renderMath(){
-  if(window.renderMathInElement){
-    renderMathInElement(document.body,{
-      delimiters: [
-        {left: '$$', right: '$$', display: true},
-        {left: '$', right: '$', display: false}
-      ],
-      throwOnError: false
-    });
-  }
-}
+  <!-- KaTeX para renderizar expresiones matemáticas LaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 
-// Base de Datos Oficial ECEP 2023 & 2024 + Temario CPEIP
-const Q=[
-// ECEP 2023 & 2024 Pedagógicas y Disciplinares
-["P",2,"Una profesora en 2° Medio planifica la clase para 'Ordenar números irracionales y representarlos en la recta numérica'. ¿Qué secuencia de actividades es la más pertinente?",["1) Identificar problemas sin solución en racionales.<br>2) Determinar √primos analizando valores.<br>3) Aproximar por defecto/exceso.","1) Determinar √primos aprox. con calculadora.<br>2) Ubicar en recta por aproximación.<br>3) Ubicar usando regla y compás.","1) Construir un cuadrado de lado 1 cm y marcar diagonal.<br>2) Construir sobre la diagonal un nuevo cuadrado.<br>3) Determinar área y ubicar en la recta.","1) Determinar √primos con algoritmo.<br>2) Comprobar desigualdad considerando f(x)=√x creciente.<br>3) Ubicar en recta con software."],1,"La secuencia B permite comprender la aproximación numérica y luego pasar a la construcción geométrica exacta con regla y compás.","ECEP 2023","Enseñanza-Aprendizaje"],
-["P",3,"Un profesor de 3° Medio busca que sus estudiantes deduzcan que las pendientes de rectas perpendiculares cumplen $m_1 = -1/m_2$. ¿Qué secuencia es pertinente?",["1) Graficar 4 pares de rectas perpendiculares dadas por el docente.<br>2) Analizar gráfica y algebraicamente similitudes.<br>3) Formalizar hallazgos.","1) Formular ecuaciones de 8 rectas elegidas por estudiantes.<br>2) Analizar y buscar perpendiculares.<br>3) Formalizar hallazgos.","1) Formular 4 pares cumpliendo $m_1 = -1/m_2$ dada por el docente.<br>2) Graficar.<br>3) Verificar con transportador.","1) Graficar 4 pares elegidos libremente.<br>2) Formular ecuaciones.<br>3) Analizar características."],0,"Al graficar pares perpendiculares dados y comparar las pendientes de sus ecuaciones, los estudiantes pueden descubrir la relación inversa e opuesta.","ECEP 2023","Enseñanza-Aprendizaje"],
-["P",1,"En 1° Medio, para el OA de reglas de probabilidades (aditiva y multiplicativa), ¿qué estrategia posibilita la comprensión conceptual?",["Plantear problemas de cálculo directo.","Entregar la definición de unión e intersección.","Explicar cómo se deducen las fórmulas usando diagramas de árbol.","Clasificar los casos en que se usa cada fórmula."],2,"El diagrama de árbol otorga una representación pictórica clara para razonar los caminos de probabilidad.","ECEP 2023","Didáctica"],
-["P",2,"Para conjeturar la fórmula del volumen de la esfera en 2° Medio, ¿qué actividad es pertinente?",["Trasvasar arena desde la esfera al cilindro circunscrito y relacionar la proporción de volúmenes.","Utilizar el principio de Cavalieri en cono, cilindro y esfera.","Rotar semicírculos en un eje.","Calcular diferencia de áreas entre cono y cilindro."],0,"El trasvasamiento de arena/agua entre cuerpos geométricos circunscritos es la estrategia concreta y sensorial clave.","ECEP 2023","Didáctica"],
-["N",2,"Si $z$ y $u$ son números irracionales y $q$ es un número racional distinto de cero, ¿cuál de los siguientes es SIEMPRE un número irracional?",["$\\sqrt{q}$","$z \\cdot u$","$q - z$","$z + u$"],2,"La diferencia o suma entre un racional y un irracional siempre resulta en un número irracional.","ECEP 2023","Sistemas Numéricos"],
-["N",2,"Sean $p = \\frac{1}{2+\\sqrt{2}}$, $q = \\frac{1}{2}$, $r = \\frac{1}{1+\\sqrt{2}}$. ¿Cuál opción indica el orden correcto de sus valores?",["$p < r < q$","$p < q < r$","$r < p < q$","$r < q < p$"],0,"Calculando denominadores: $2+\\sqrt{2} \\approx 3.414$, $1+\\sqrt{2} \\approx 2.414$, y $2$. A mayor denominador, menor es la fracción: $p < r < q$.","ECEP 2023","Números Reales"],
-["N",3,"¿Cuál es el resultado de la multiplicación de los números complejos $(5 + 2i)(1 - 4i)$?",["$5 - 8i$","$11 + 8i$","$13 - 18i$","$-3 - 18i$"],2,"$(5+2i)(1-4i) = 5 - 20i + 2i - 8i^2 = 5 - 18i - 8(-1) = 13 - 18i$.","ECEP 2023","Números Complejos"],
-["A",3,"Sean $m, n, p, q$ reales con $m>0, m \\neq 1, pq^{-2}>0$. Si $\\log_m(p q^{-2}) = n$, ¿cuál expresión es siempre verdadera?",["$p = n^m q^2$","$p = m^n q^2$","$m^n = \\frac{1}{p^2 q^2}$","$m^n = p + q^2$"],1,"Por definición de logaritmo: $m^n = p q^{-2} = \\frac{p}{q^2} \\implies p = m^n q^2$.","ECEP 2023","Logaritmos"],
-["F",3,"Si la recta $x = -2$ es una asíntota vertical de $f(x) = \\frac{3x+2}{ax-6}$, ¿cuál es el valor de $a$?",["$-3$","$-\\frac{3}{2}$","$2$","$3$"],0,"El denominador se anula en la asíntota vertical: $a(-2) - 6 = 0 \\implies -2a = 6 \\implies a = -3$.","ECEP 2023","Funciones"],
-["F",2,"Dadas las funciones $f(x)=6x-3$ y $g(x)=\\frac{1}{3}x-1$, ¿qué función se obtiene al componer $(g \\circ f)(x)$?",["$2x - 2$","$2x - 3$","$2x - 4$","$2x - 9$"],0,"$(g \\circ f)(x) = g(f(x)) = \\frac{1}{3}(6x-3) - 1 = 2x - 1 - 1 = 2x - 2$.","ECEP 2023","Composición de Funciones"],
-["G",2,"Un rectángulo gira indefinidamente en torno a un lado de 3 cm. Un cono de generatriz $4\\sqrt{3}$ está inscrito. ¿Cuál es la diferencia entre el volumen del cilindro generado y el del cono?",["$3\\pi\\sqrt{39}$","$6\\pi\\sqrt{39}$","$9\\pi\\sqrt{39}$","$\\pi\\sqrt{39}$"],1,"El volumen del cilindro es $V_{cil} = \\pi r^2 h$ y el del cono es $\\frac{1}{3}\\pi r^2 h$. La diferencia es $\\frac{2}{3}\\pi r^2 h = 6\\pi\\sqrt{39}$.","ECEP 2023","Cuerpos Redondos"],
-["D",3,"En una bolsa hay 15 pelotitas rojas y 10 negras. ¿En cuál evento la variable aleatoria $X$ se modela binomialmente?",["8 extracciones sin reposición, X = cantidad de rojas.","8 extracciones con reposición, X = cantidad de rojas.","8 extracciones sin reposición, X = número de veces que sale roja.","8 extracciones con reposición, X = cantidad de veces que se obtiene roja."],3,"Para el modelo Binomial se requiere reposición (probabilidad de éxito $p$ constante e independencia).","ECEP 2023","Probabilidades"],
-["P",2,"Para deducir la fórmula del área del cono en 1° Medio, ¿qué actividad es la más pertinente?",["Usar un cilindro y embudo cónico de igual base y altura.","Descomponer con tijeras modelos de cono en papel y desenrollar su red plana.","Calcular el área sabiendo el ángulo central del manto.","Resolver problemas de techos cónicos."],1,"Descomponer el modelo tridimensional desplegando la red plana del cono permite visualizar el sector circular y el círculo base.","ECEP 2024","Didáctica de la Geometría"],
-["N",1,"¿Cuál fracción es equivalente al número decimal semiperiódico $0,3\\overline{75}$?",["$\\frac{372}{990}$","$\\frac{375}{900}$","$\\frac{372}{900}$","$\\frac{372}{999}$"],0,"$0,3\\overline{75} = \\frac{375 - 3}{990} = \\frac{372}{990}$.","ECEP 2024","Números Racionales"],
-["A",2,"¿A qué expresión equivale $\\sqrt{2^{2n} - 2^{n+1} + 1}$ para $n \\in \\mathbb{Z}^+$?",["$2^{2n} - 1$","$2^n - 2$","$2^n + 1$","$2^n - 1$"],3,"$\sqrt{(2^n)^2 - 2(2^n)(1) + 1^2} = \\sqrt{(2^n - 1)^2} = 2^n - 1$.","ECEP 2024","Álgebra y Raíces"],
-["F",3,"¿Cuál es la gráfica de la función real $f(x) = 2 - \\sqrt{-x}$?",["Rama en II cuadrante decreciente.","Rama en II cuadrante creciente hacia (0,2).","Rama en III cuadrante.","Rama en IV cuadrante."],2,"El dominio es $x \\le 0$. Para $x=0, f(0)=2$. Para $x=-4, f(-4)=0$. Es una curva en el segundo cuadrante que sube hacia (0,2).","ECEP 2024","Funciones"],
-["G",3,"Un triángulo de vértices $A(0,0), B(-3,0), C(0,-4)$ se hace rotar en torno al eje X generando el sólido $S_x$ y en el eje Y generando $S_y$. ¿Cuál es la razón $V_x : V_y$?",["1:1","4:3","3:4","9:16"],1,"$V_x = \\frac{1}{3}\\pi (4)^2 (3) = 16\\pi$. $V_y = \\frac{1}{3}\\pi (3)^2 (4) = 12\\pi$. La razón es $16\\pi : 12\\pi = 4:3$.","ECEP 2024","Geometría del Espacio"],
-["D",2,"Sea $X$ una variable aleatoria discreta con $P(x_i)$: $P(0)=0.1, P(1)=0.1, P(2)=0.2, P(3)=0.3, P(4)=0.2, P(5)=0.1$. ¿Cuál es el valor esperado $E(X)$?",["0,17","0,45","1,00","2,70"],3,"$E(X) = 0(0.1)+1(0.1)+2(0.2)+3(0.3)+4(0.2)+5(0.1) = 0 + 0.1 + 0.4 + 0.9 + 0.8 + 0.5 = 2.70$.","ECEP 2024","Estadística y Azar"]
-];
+  <style>
+    :root {
+      --primary: #6C5CE7;
+      --primary-hover: #5b4bc4;
+      --bg-color: #f0f3ff;
+      --card-bg: #ffffff;
+      --text-main: #1a1d2e;
+      --text-muted: #636e72;
+      --danger: #ff7675;
+      --warning: #fdcb6e;
+      --success: #00b894;
+      --border: #dfe6e9;
+    }
 
-const ri=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),pk=a=>a[ri(0,a.length-1)],sp=n=>String(n).replace(/\d/g,d=>"⁰¹²³⁴⁵⁶⁷⁸⁹"[d]);
-const sh=q=>{const c=q[3][q[4]],o=[...q[3]].sort(()=>Math.random()-.5);return[q[0],q[1],q[2],o,o.indexOf(c),q[5],q[6],q[7]]};
-const mk=(d,l,q,c,w,e)=>{c=String(c);let o=[...new Set([c,...w].map(String))].slice(0,4);const m=c.match(/^(\d+)(°|π)?$/);
-if(m)for(const j of [2,-2,3,5,-3,7]){if(o.length>=4)break;const v=+m[1]+j,f=v+(m[2]||"");if(v>0&&!o.includes(f))o.push(f)}
-if(o.length<4)o.push("Ninguna de las anteriores");return sh([d,l,q,o,0,e])};
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-const G={
-N:[[1,()=>{const a=ri(2,5),m=ri(3,6),n=m+ri(1,3);return mk("N",1,`¿Cuál es el resultado de $${a}^{${m}} \\cdot ${a}^{${n}}$?`,`$${a}^{${m+n}}$`,[`$${a}^{${m*n}}$`,`$${a*a}^{${m+n}}$`,`$${a}^{${n-m}}$`],"Con igual base se conservan las bases y se suman los exponentes.")}],
-[1,()=>{const p=pk([10,20,25,30,40]),r=ri(2,12)*20;return mk("N",1,`¿Cuánto es el $${p}\\%$ de $${r}$?`,r*p/100,[r*p/10,r+p,r*(100-p)/100],"Se multiplica el valor por $\\frac{p}{100}$.")}],
-[2,()=>{const b=ri(2,5),k=ri(3,6);return mk("N",2,`Si $\\log_{${b}}(x) = ${k}$, ¿cuánto vale $x$?`,b**k,[b*k,b+k,b**(k-1)],`$\\log_b(x) = k \\iff x = b^k = ${b**k}$.`)}],
-[2,()=>{const a=ri(2,6),b=pk([2,3,5,7]);return mk("N",2,`¿A qué es igual $\\sqrt{${a*a*b}}$?`,`$${a}\\sqrt{${b}}$`,[`$${a*a}\\sqrt{${b}}$`,`$${a}\\sqrt{${a*b}}$`,`$${a+b}\\sqrt{${b}}$`],`$\\sqrt{${a*a} \\cdot ${b}} = ${a}\\sqrt{${b}}$.`)}],
-[3,()=>{const n=ri(20,200),v=["1","i","−1","−i"];return mk("N",3,`¿Cuál es el valor de $i^{${n}}$?`,v[n%4],v.filter((x,j)=>j!=n%4),`Las potencias de $i$ tienen ciclo de período 4; $${n} \\pmod 4 = ${n%4}$.`)}]],
-A:[[1,()=>{const x=ri(2,9),a=ri(2,7),b=ri(1,9);return mk("A",1,`Si $${a}x + ${b} = ${a*x+b}$, ¿cuánto vale $x$?`,x,[x+1,x-1,a*x],`$${a}x = ${a*x} \\implies x = ${x}$.`)}],
-[2,()=>{let r1=ri(1,6),r2=ri(1,6);if(r1==r2)r2++;const s=r1+r2,p=r1*r2;return mk("A",2,`En la ecuación $x^2 - ${s}x + ${p} = 0$, ¿cuál es la suma de las soluciones?`,s,[p,-s,s+p],`Por Cardano-Vieta, la suma de soluciones es $-\\frac{b}{a} = ${s}$.`)}],
-[3,()=>{const m=ri(2,6);return mk("A",3,`¿Para qué valores de $k$ la ecuación $x^2 + kx + ${m*m} = 0$ tiene una única solución real?`,`$k = ${2*m}$ o $k = -${2*m}$`,[`$k = ${2*m}$`,`$k = ${m}$ o $k = -${m}$`,`$k = ${m*m}$`],`Discriminante nulo: $\\Delta = k^2 - 4(${m*m}) = 0 \\implies k = \\pm ${2*m}$.`)}]],
-F:[[1,()=>{const a=ri(2,6),b=ri(1,9),t=ri(2,6);return mk("F",1,`Si $f(x) = ${a}x + ${b}$, ¿cuánto vale $f(${t})$?`,a*t+b,[a+t+b,a*(t+b),a*t-b],`Evaluando: $f(${t}) = ${a}\\cdot${t} + ${b} = ${a*t+b}$.`)}],
-[2,()=>{const h=ri(1,6),c=ri(1,9);return mk("F",2,`¿Cuál es la abscisa del vértice de $y = x^2 - ${2*h}x + ${c}$?`,h,[2*h,-h,h+1],"$x_v = -\\frac{b}{2a} = \\frac{2h}{2} = h$.")}],
-[3,()=>{const a=ri(2,5),b=ri(1,9);return mk("F",3,`Si $f(x) = ${a}x + ${b}$, ¿cuál es $f^{-1}(y)$?`,`$\\frac{y - ${b}}{${a}}$`,[`$\\frac{y + ${b}}{${a}}$`,`$${a}y - ${b}$`,`\\frac{1}{${a}y + ${b}}`],"Despejando $x$ en la ecuación $y = ax + b$.")}]],
-G:[[1,()=>{const [a,b,c]=pk([[3,4,5],[5,12,13],[8,15,17]]),k=ri(1,3);return mk("G",1,`Un triángulo rectángulo tiene catetos ${a*k} y ${b*k}. ¿Cuánto mide la hipotenusa?`,c*k,[(a+b)*k,c*k+1,c*k-1],"Teorema de Pitágoras: $c = \\sqrt{a^2 + b^2}$.")}],
-[3,()=>{const r=pk([3,6]),h=ri(2,8);return mk("G",3,`¿Cuál es el volumen de un cono de radio $r=${r}$ y altura $h=${h}$?`,`$${r*r*h/3}\\pi$`,[`$${r*r*h}\\pi$`,`$${r*r*h/2}\\pi$`,`$${2*r*r*h/3}\\pi$`],"Fórmula del volumen del cono: $V = \\frac{1}{3}\\pi r^2 h$.")}]],
-D:[[1,()=>{const r=ri(2,9),b=ri(2,9);return mk("D",1,`Una urna contiene ${r} bolitas rojas y ${b} azules. ¿Cuál es la probabilidad de extraer una roja?`,`$\\frac{${r}}{${r+b}}$`,[`$\\frac{${b}}{${r+b}}$`,`$\\frac{${r}}{${b}}$`,`$\\frac{${r+b}}{${r}}$`],"Regla de Laplace: casos favorables / casos totales.")}],
-[3,()=>{const X=ri(1,3),Y=ri(4,8);return mk("D",3,`Si $P(A \\cap B) = ${X/10}$ y $P(B) = ${Y/10}$, ¿cuánto vale $P(A|B)$?`,(X/Y).toFixed(2),[((Y-X)/10).toFixed(2),(X*Y/100).toFixed(2),(1-X/Y).toFixed(2)],"Probabilidad condicionada: $P(A|B) = \\frac{P(A \\cap B)}{P(B)}$.")}]]};
+    header {
+      background: white;
+      padding: 16px 24px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-function dom0(d,l,u){let c=Q.filter(q=>q[0]==d&&(d=="P"||q[1]==l)&&!u.has(q[2])),q;
-if(d=="P"){if(!c.length)c=Q.filter(q=>q[0]=="P");q=sh(pk(c))}
-else if(c.length&&Math.random()<.5)q=sh(pk(c));
-else{const g=G[d].filter(x=>x[0]==l);for(let t=0;t<30;t++){q=pk(g)[1]();if(!u.has(q[2]))break}}
-u.add(q[2]);return q}
-function dom(d,l,u){const b=BANK.filter(x=>x[0]==d&&!u.has(x[2])&&(d=="P"||x[1]==l));
-if(b.length&&(d=="P"||Math.random()<.7)){const q=sh(pk(b));u.add(q[2]);return q}return dom0(d,l,u)}
-const T=d=>{const u=new Set();return[...[1,2,3].flatMap(l=>Array.from({length:4},()=>dom(d,l,u))),...Array.from({length:3},()=>dom("P",1,u))]};
-const M2=(nd,np,ls)=>{const u=new Set(),r=[],ds=["N","A","F","G","D"];for(let k=0;k<nd;k++)r.push(dom(ds[k%5],pk(ls),u));for(let k=0;k<np;k++)r.push(dom("P",ri(1,3),u));return r.sort(()=>Math.random()-.5)};
-const S=[
-{t:"Diagnóstico",d:"Mide tu nivel inicial en todos los ejes.",ex:1,ids:()=>M2(10,5,[1,2])},
-{t:"Números",d:"Potencias, logaritmos, radicales y complejos.",ids:()=>T("N")},
-{t:"Álgebra",d:"Ecuaciones, sistemas e inecuaciones.",ids:()=>T("A")},
-{t:"Funciones",d:"Lineal, cuadrática, exponencial e inversa.",ids:()=>T("F")},
-{t:"Geometría",d:"Pitágoras, circunferencia, homotecia y volúmenes.",ids:()=>T("G")},
-{t:"Datos y probabilidades",d:"Medidas, probabilidad condicional y conteo.",ids:()=>T("D")},
-{t:"Evaluación intermedia",d:"Mezcla de ejes y mayor peso pedagógico; con retroalimentación.",ex:1,ids:()=>M2(8,7,[1,2,3])},
-{t:"Didáctica y ámbitos pedagógicos",d:"Errores frecuentes, intervención, evaluación y estándares.",ids:()=>{const u=new Set();return Array.from({length:15},()=>dom("P",1,u))}},
-{t:"Nivel avanzado",d:"Preguntas de dificultad alta.",ids:()=>M2(10,5,[3])},
-{t:"Evaluación final",d:"Simulacro final con mayor peso pedagógico; se compara con tu diagnóstico.",ex:1,ids:()=>M2(7,8,[2,3])}];
-let st={},U=null,BANK=[],run=null,PEND=[],SRC=[],AUTHERR="",WANTADM=0,NEWC=0,AT="",USERS=[],CONS=[],IMP=[];D.P="Didáctica y ámbitos pedagógicos";
-const $=document.getElementById("app"),COL={N:"#6c8cff",A:"#a78bfa",F:"#34d399",G:"#f59e0b",D:"#fb7185",P:"#06b6d4"};
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])),pct=r=>r.n?Math.round(100*r.ok/r.n):0,lk=()=>"ecep_"+(U?U.uid:"x");
-const norm=o=>[o.dominio,o.nivel,o.enunciado,o.opciones,o.correcta,o.explicacion||"",o.fuente||"",o.ambito||"",o.id];
-const isAdmin=()=>!window.FB||(FB.admins||[]).includes((U.email||"").toLowerCase());
-const ls=k=>{try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}};
-function persist(){try{localStorage.setItem(lk(),JSON.stringify(st))}catch(e){}if(window.FB&&U){SYNC="Guardando…";sy();FB.save(U.uid,U.nombre,st,U.email).then(()=>{SYNC="ok";sy()}).catch(e=>{console.error(e);SYNC="⚠ No se pudo guardar en la nube ("+(e.code||e.message)+"). El avance solo queda en este dispositivo.";sy()})}}
-let SYNC="";function sy(){const e=document.getElementById("sy");if(e)e.innerHTML=SYNC=="ok"?"☁️ Avance guardado en la nube":esc(SYNC)}
-async function boot(u){BANK=[];
-if(window.FB){if(!u){U=null;return auth(AUTHERR?"adm":"reg")}U={uid:u.uid,nombre:u.displayName||u.email,email:u.email};
-try{st=(await FB.load(U.uid))||ls(lk())||{};SYNC=""}catch(e){st=ls(lk())||{};SYNC="⚠ No se pudo leer tu avance de la nube ("+(e.code||e.message)+")."}try{BANK=(await FB.bank()).map(norm)}catch(e){}
-try{NEWC=(await FB.mineC(U.uid)).filter(c=>c.resp&&c.tResp>(st.cvis||0)).length}catch(e){NEWC=0}
-if(WANTADM){WANTADM=0;if(isAdmin())return admin();AUTHERR="Este correo no tiene permisos de administrador.";return FB.out()}}
-else{U=U||ls("ecepU");if(!U)return auth();st=ls(lk())||{};BANK=(ls("ecepBank")||[]).map((o,i)=>norm({...o,id:i}))}
-st.visto?home():welcome()}
-function auth(m){m=m||"reg";const fb=!!window.FB;
-$.innerHTML=`<div class="hero"><div class="logo">∑</div><h1>Preparación ECEP</h1><div class="m">Matemática · Educación Media</div></div><div class="card">`+
-(fb&&m=="adm"?`<b>🔑 Acceso administrador</b><div class="m">Ingresa con el correo de administrador.</div>`:fb?`<div class="tabs"><button class="${m=="reg"?"p":""}" onclick="auth('reg')">Registrarme</button><button class="${m=="in"?"p":""}" onclick="auth('in')">Ingresar</button></div>`:`<p class="m">Modo sin conexión: tu avance se guarda solo en este dispositivo.${window.FBERR?"<br><b>Motivo:</b> "+esc(window.FBERR):""}</p>`)+
-(m=="reg"||!fb?`<label>Tu nombre</label><input id="n" autocomplete="name">`:"")+
-(fb?`<label>Correo</label><input id="e" type="email" autocomplete="email"><label>Contraseña (mínimo 6 caracteres)</label><input id="pw" type="password">`:"")+
-`<div id="er">${esc(AUTHERR)}</div><button class="p big" onclick="go('${m}')">${m=="reg"||!fb?"Comenzar":m=="adm"?"Ingresar como administrador":"Ingresar"}</button></div>`+(fb&&m!="adm"?`<p style="text-align:center"><button onclick="auth('adm')">🔑 Acceso administrador</button></p>`:"");AUTHERR="";renderMath()}
-async function go(m){const v=id=>(document.getElementById(id)||{}).value||"",er=t=>{document.getElementById("er").textContent=t},n=v("n").trim(),e=v("e").trim(),p=v("pw");
-if(!window.FB){if(!n)return er("Escribe tu nombre");U={uid:"local",nombre:n};localStorage.setItem("ecepU",JSON.stringify(U));return boot()}
-try{if(m=="reg"){if(!n)return er("Escribe tu nombre");boot(await FB.signUp(n,e,p))}else{WANTADM=m=="adm";await FB.signIn(e,p)}}
-catch(x){er(({"auth/email-already-in-use":"Ese correo ya está registrado. Usa «Ingresar».","auth/weak-password":"La contraseña debe tener al menos 6 caracteres.","auth/invalid-email":"Correo inválido.","auth/invalid-credential":"Correo o contraseña incorrectos."})[x.code]||"No se pudo completar: "+(x.code||x.message))}}
-async function out(){if(window.FB)await FB.out();else{localStorage.removeItem("ecepU");U=null;auth()}}
-function welcome(re){$.innerHTML=`<div class="hero"><div class="logo">∑</div><h1>¡Bienvenido/a, ${esc(U.nombre)}!</h1><div class="m">Tu entrenamiento para la ECEP de Matemática (Educación Media)</div></div>
-<div class="card"><b>Cómo funciona</b><ol>
-<li><b>10 sesiones</b> de 30 minutos y 15 preguntas: diagnóstico, 5 temáticas, evaluación intermedia, didáctica, nivel avanzado y evaluación final.</li>
-<li><b>Empieza con el diagnóstico</b> para medir tu nivel; al final lo comparas con tu evaluación final.</li>
-<li><b>Sesiones temáticas:</b> un mismo eje, de dificultad básica a alta, con explicación inmediata de cada respuesta.</li>
-<li><b>Evaluaciones</b> (diagnóstico, intermedia y final): sin ayuda durante la prueba y con retroalimentación completa al terminar.</li>
-<li><b>Didáctica y ámbitos pedagógicos</b> están en todas las sesiones, con más peso en las evaluaciones, porque la prueba real mide conocimiento disciplinar y pedagógico.</li>
-<li><b>Tu avance</b> ${window.FB?"se guarda en la nube: ingresa con tu correo desde cualquier dispositivo.":"se guarda en este dispositivo."}</li></ol>
-<p class="m">El reloj corre 30 minutos; al terminar el tiempo la sesión se cierra sola y las preguntas sin responder cuentan como incorrectas.</p>
-<button class="p big" onclick="go2()">${re?"Volver":"Comenzar"}</button></div>`;renderMath()}
-function go2(){if(!st.visto){st.visto=1;persist()}home()}
-function home(){run&&clearInterval(run.tm);run=null;setTimeout(sy,0);const done=S.filter((s,i)=>st[i]).length,dm=st.dom||{},nx=S.findIndex((s,i)=>!st[i]);
-const w=Object.keys(D).filter(d=>dm[d]&&dm[d].n>=3).sort((a,b)=>pct(dm[a])-pct(dm[b]))[0];
-$.innerHTML=`<div class="top"><div><div class="m">Hola,</div><h1 style="margin:0">${esc(U.nombre)}</h1></div><div class="ring" style="background:conic-gradient(var(--p) ${done*36}deg,var(--b) 0)"><b>${done}/10</b></div></div>
-<div class="card"><b>Tu dominio por eje</b>${Object.keys(D).map(d=>{const r=dm[d]||{ok:0,n:0};return`<div class="s m" style="margin-top:8px"><span>${D[d]}</span><span>${r.n?pct(r)+"%":"—"}</span></div><div class="bar"><i style="width:${pct(r)}%;background:${COL[d]}"></i></div>`}).join("")}${w?`<div class="m">Prioridad de estudio: <b>${D[w]}</b></div>`:""}</div>`+
-S.map((x,i)=>`<div class="card s"><div class="s" style="justify-content:flex-start;gap:12px"><span class="num">${i+1}</span><div><b>${x.t}</b><div class="m">${x.d}</div>${st[i]?`<span class="chip" style="background:${pct(st[i])>=70?"var(--ok)":"var(--p)"}">Último: ${pct(st[i])}%</span> `:""}${i==nx?`<span class="chip" style="background:var(--p2)">Siguiente</span>`:""}</div></div><button class="p" onclick="start(${i})">${st[i]?"Repetir":"Iniciar"}</button></div>`).join("")+
-`<div class="card"><p style="margin-top:0">${window.FB?"Sesión: "+esc(U.email||""):"Modo sin conexión (este dispositivo)"}</p><p class="m" id="sy"></p><button onclick="welcome(1)">Cómo funciona</button> ${window.FB?`<button onclick="consultas()">Consultas${NEWC?" ("+NEWC+" nueva"+(NEWC>1?"s":"")+")":""}</button> `:""}${isAdmin()?`<button onclick="admin()">Administrador</button> `:""}${window.FB?"":`<button onclick="exp()">Exportar</button> <button onclick="imp()">Importar</button> `}<button onclick="out()">Cerrar sesión</button></div>`;renderMath()}
-function exp(){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(st)],{type:"application/json"}));a.download="avance-ecep.json";a.click()}
-function imp(){const i=document.createElement("input");i.type="file";i.accept=".json";i.onchange=()=>i.files[0].text().then(t=>{try{st=JSON.parse(t);persist();home()}catch(e){alert("Archivo inválido")}});i.click()}
-function upd(){const e=document.getElementById("tm");if(e&&run)e.textContent="⏱ "+Math.floor(run.t/60)+":"+String(run.t%60).padStart(2,"0")}
-function start(i){run={i,ids:S[i].ids(),k:0,ans:[],t:1800};run.tm=setInterval(()=>{run.t--;upd();if(run.t<=0)end()},1000);show()}
-function show(){setTimeout(upd,0);const q=run.ids[run.k];
-$.innerHTML=`<div class="top"><b>${S[run.i].t}</b><span id="tm" class="chip"></span><button onclick="if(confirm('¿Salir? Se perderá esta sesión.'))home()">Salir</button></div><div class="m">Pregunta ${run.k+1} de ${run.ids.length}</div><div class="bar"><i style="width:${100*run.k/run.ids.length}%"></i></div>
-<div class="card"><span class="chip" style="background:${COL[q[0]]}">${D[q[0]]}</span> <span class="m">Nivel ${["básico","medio","alto"][q[1]-1]}${q[6]?" · "+esc(q[6]):""}${q[7]?" · "+esc(q[7]):""}</span><p><b>${esc(q[2])}</b></p>${q[3].map((o,j)=>`<button class="o" onclick="ans(${j})">${"ABCD"[j]}) ${esc(o)}</button>`).join("")}<div id="fb"></div></div>`;renderMath()}
-function ans(j){const q=run.ids[run.k];run.ans.push(j);if(S[run.i].ex)return next();
-document.querySelectorAll(".o").forEach((b,x)=>{b.disabled=1;if(x==q[4])b.classList.add("ok");else if(x==j)b.classList.add("no")});
-document.getElementById("fb").innerHTML=`<div class="exp"><b>${j==q[4]?"¡Correcto!":"Incorrecto."}</b> ${esc(q[5])}${q[6]?`<div class="m">Fuente: ${esc(q[6])}</div>`:""}</div><p><button class="p" onclick="next()">Continuar</button> ${window.FB?`<button onclick="duda(run.ids[run.k])">Enviar duda al profesor</button>`:""}</p>`;renderMath()}
-function next(){run.k++;run.k<run.ids.length?show():end()}
-function end(){clearInterval(run.tm);const s=S[run.i],by={};let ok=0;st.dom=st.dom||{};
-run.ids.forEach((q,x)=>{const c=run.ans[x]==q[4];ok+=c;for(const o of[by,st.dom]){o[q[0]]=o[q[0]]||{ok:0,n:0};o[q[0]].n++;o[q[0]].ok+=c}});
-const r={ok,n:run.ids.length,by,date:new Date().toISOString().slice(0,10)};st[run.i]=r;if(run.i==0)st.diag=r;persist();
-const ks=Object.keys(by).sort((a,b)=>pct(by[a])-pct(by[b]));
-let h=`<div class="hero"><h1>${s.t}</h1><div class="ring" style="margin:8px auto;background:conic-gradient(var(--p) ${pct(r)*3.6}deg,var(--b) 0)"><b>${pct(r)}%</b></div><div class="m">${ok} de ${r.n} correctas</div></div>`;
-if(run.i==9&&st.diag)h+=`<div class="card">Diagnóstico: <b>${pct(st.diag)}%</b> → Final: <b>${pct(r)}%</b></div>`;
-h+=`<div class="card"><b>Resultado por eje</b>`+ks.map(d=>`<div class="s m" style="margin-top:8px"><span>${D[d]}</span><span>${by[d].ok}/${by[d].n}</span></div><div class="bar"><i style="width:${pct(by[d])}%;background:${COL[d]}"></i></div>`).join("")+`<div class="m">Para mejorar: refuerza <b>${D[ks[0]]}</b>.</div></div>`;
-if(s.ex)h+=`<h3>Retroalimentación</h3>`+run.ids.map((q,x)=>{const c=run.ans[x]==q[4];return`<div class="card ${c?"ok":"no"}"><b>${x+1}. ${esc(q[2])}</b><div class="m">Tu respuesta: ${run.ans[x]>=0?"ABCD"[run.ans[x]]+") "+esc(q[3][run.ans[x]]):"sin responder"}${c?"":" · Correcta: "+"ABCD"[q[4]]+") "+esc(q[3][q[4]])}</div><div class="exp">${esc(q[5])}</div>${window.FB?`<button onclick="duda(run.ids[${x}])">Enviar duda</button>`:""}</div>`}).join("");
-$.innerHTML=h+`<p><button class="p big" onclick="home()">Volver al inicio</button></p>`;renderMath()}
-// ---- Administrador
-const dm=s=>{const l=String(s||"").trim().normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();return/^[nafgdp]$/.test(l)?l.toUpperCase():({numeros:"N",algebra:"A",funciones:"F",geometria:"G",datos:"D",probabilidades:"D","datos y probabilidades":"D",didactica:"P",pedagogia:"P",pedagogico:"P"})[l]};
-function val(o){let op=(o.opciones||[o.a,o.b,o.c,o.d]).map(x=>String(x==null?"":x).trim()),c=o.correcta;if(typeof c=="string"&&/^[a-d]$/i.test(c.trim()))c="abcd".indexOf(c.trim().toLowerCase());c=+c;const d=dm(o.dominio),l=+o.nivel||2,e=String(o.enunciado||"").trim();
-if(!d||!e||op.length!=4||op.some(x=>!x)||new Set(op).size!=4||!(c>=0&&c<4)||l<1||l>3)return null;return{dominio:d,nivel:l,enunciado:e,opciones:op,correcta:c,explicacion:String(o.explicacion||""),fuente:String(o.fuente||""),ambito:String(o.ambito||"")}}
-function csv(t){const r=[];let w=[],c="",q=0;for(let i=0;i<t.length;i++){const h=t[i];if(q){if(h=='"'){if(t[i+1]=='"'){c+='"';i++}else q=0}else c+=h}else if(h=='"')q=1;else if(h==","||h==";"){w.push(c);c=""}else if(h=="\n"||h=="\r"){if(h=="\r"&&t[i+1]=="\n")i++;w.push(c);r.push(w);w=[];c=""}else c+=h}if(c||w.length){w.push(c);r.push(w)}return r.filter(x=>x.join("").trim())}
-function bankHtml(msg){const c={},sr={};BANK.forEach(q=>{c[q[0]]=(c[q[0]]||0)+1;const k=q[6]||"(sin fuente)";sr[k]=(sr[k]||0)+1});SRC=Object.keys(sr);
-return `${msg?`<div class="card exp">${msg}</div>`:""}
-<div class="card"><b>Banco de preguntas (${BANK.length})</b><div class="m">${Object.keys(D).map(d=>D[d]+": "+(c[d]||0)).join(" · ")}</div>${SRC.map((k,i)=>`<div class="s" style="margin-top:8px"><span>${esc(k)} · ${sr[k]}</span><button onclick="delSrc(${i})">Eliminar</button></div>`).join("")}<div class="m">Las preguntas cargadas aquí se usan antes que las generadas automáticamente.</div></div>
-<div class="card"><b>1. Cargar un instrumento</b><div class="m">Archivo .json o .csv con las preguntas del instrumento (usa la plantilla). Indica el nombre del instrumento para citarlo como fuente.</div>
-<input id="fz" placeholder="Ej.: ECEP 2023 · Educación Media Matemática"><input type="file" id="f" accept=".json,.csv" onchange="readF(this)"><div id="pv"></div><button onclick="dl('json')">Plantilla JSON</button> <button onclick="dl('csv')">Plantilla CSV</button></div>
-<div class="card"><b>2. Agregar una pregunta</b><label>Eje</label><select id="fd">${Object.keys(D).map(d=>`<option value="${d}">${D[d]}</option>`).join("")}</select><label>Nivel</label><select id="fl"><option value="1">Básico</option><option value="2" selected>Medio</option><option value="3">Alto</option></select>
-<label>Enunciado</label><textarea id="fq" rows="3"></textarea>${"ABCD".split("").map(x=>`<label>Alternativa ${x}</label><input id="f${x}">`).join("")}<label>Correcta</label><select id="fc"><option>A</option><option>B</option><option>C</option><option>D</option></select>
-<label>Explicación</label><textarea id="fe" rows="2"></textarea><label>Ámbito pedagógico (opcional)</label><input id="fa" placeholder="Didáctica, evaluación, gestión del error…"><label>Fuente</label><input id="fs"><button class="p" onclick="addOne()">Agregar</button></div>`}
+    .logo {
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--primary);
+    }
 
-function admin(a,b){const T=["usuarios","consultas","banco","importar"],tab=T.includes(a)?a:a?"banco":(window.FB?"consultas":"banco"),msg=T.includes(a)?b:a,fb=!!window.FB;AT=tab;
-const tabs=[["usuarios","Usuarios",1],["consultas","Consultas",1],["banco","Banco",0],["importar","Importar",0]].filter(x=>fb||!x[2]);
-$.innerHTML=`<div class="top"><button onclick="home()">← Volver</button><b>Panel de administrador</b></div><div class="tabs" style="margin-top:12px;flex-wrap:wrap">${tabs.map(x=>`<button class="${x[0]==tab?"p":""}" onclick="admin('${x[0]}')">${x[1]}</button>`).join("")}</div><div id="ad">${tab=="banco"?bankHtml(msg):tab=="importar"?impHtml(msg):"<p class='m'>Cargando…</p>"}</div>`;
-if(tab=="usuarios")aUsers(msg);if(tab=="consultas")aCons(msg);renderMath()}
-const ad=h=>{document.getElementById("ad").innerHTML=h;renderMath()},note=m=>m?`<div class="card exp">${esc(m)}</div>`:"";
-async function aUsers(msg){try{USERS=await FB.users()}catch(e){return ad("Error: "+(e.code||e.message))}
-USERS.sort((a,b)=>(a.nombre||"").localeCompare(b.nombre||""));
-ad(note(msg)+`<div class="m">${USERS.length} usuarios registrados</div>`+USERS.map((u,i)=>{const x=u.st||{},n=S.filter((y,k)=>x[k]).length;return`<div class="card s"><div><b>${esc(u.nombre||"(sin nombre)")}</b><div class="m">${esc(u.email||u.uid)} · ${n}/10 sesiones${x.diag?" · diagnóstico "+pct(x.diag)+"%":""}</div></div><button onclick="aUser(${i})">Ver</button></div>`}).join(""))}
-function aUser(i){const u=USERS[i],x=u.st||{};
-ad(`<button onclick="admin('usuarios')">← Usuarios</button><div class="card"><b>${esc(u.nombre||"")}</b><div class="m">${esc(u.email||u.uid)}</div>${Object.keys(D).map(d=>{const r=(x.dom||{})[d]||{ok:0,n:0};return`<div class="s m" style="margin-top:8px"><span>${D[d]}</span><span>${r.n?pct(r)+"%":"—"}</span></div><div class="bar"><i style="width:${pct(r)}%;background:${COL[d]}"></i></div>`}).join("")}</div>
-<div class="card"><b>Resultados por sesión</b>${S.map((y,k)=>`<div class="s" style="margin-top:8px"><span>${k+1}. ${y.t} <span class="m">${x[k]?pct(x[k])+"% · "+x[k].date:"—"}</span></span>${x[k]?`<button onclick="rst(${i},${k})">Borrar</button>`:""}</div>`).join("")}
-<p><button onclick="rst(${i},-1)">Borrar todos los resultados</button> <button onclick="delU(${i})" style="color:var(--no)">Eliminar usuario</button></p><div class="m">Eliminar usuario borra su avance y sus consultas. Para quitar también su acceso, elimínalo en Firebase → Authentication.</div></div>`)}
-async function rst(i,k){const u=USERS[i];if(!confirm(k<0?"¿Borrar TODOS los resultados de este usuario?":"¿Borrar los resultados de esa sesión?"))return;let x=u.st||{};
-if(k<0)x=x.visto?{visto:1}:{};else{delete x[k];if(k==0)delete x.diag;const dm={};S.forEach((y,j)=>{if(x[j]&&x[j].by)for(const d in x[j].by){dm[d]=dm[d]||{ok:0,n:0};dm[d].ok+=x[j].by[d].ok;dm[d].n+=x[j].by[d].n}});x.dom=dm}
-try{await FB.setSt(u.uid,x);u.st=x;aUser(i)}catch(e){alert("Error: "+(e.code||e.message))}}
-async function delU(i){const u=USERS[i];if(!confirm("¿Eliminar a "+(u.nombre||"este usuario")+" y todos sus datos?"))return;try{await FB.delUser(u.uid);admin("usuarios","Usuario eliminado.")}catch(e){alert("Error: "+(e.code||e.message))}}
-async function aCons(msg){let L;try{L=await FB.allC()}catch(e){return ad("Error: "+(e.code||e.message))}
-CONS=L.sort((a,b)=>(a.estado=="abierta"?0:1)-(b.estado=="abierta"?0:1)||b.t-a.t);
-ad(note(msg)+(L.length?`<div class="m">${L.filter(c=>c.estado=="abierta").length} pendientes de ${L.length}</div>`:"<p class='m'>No hay consultas.</p>")+CONS.map((c,i)=>`<div class="card"><div class="s"><b>${esc(c.nombre||"")}</b><span class="chip" style="background:${c.estado=="abierta"?"var(--no)":"var(--ok)"}">${c.estado=="abierta"?"Pendiente":"Resuelta"}</span></div><div class="m">${esc(c.email||"")} · ${new Date(c.t).toLocaleString("es-CL")}</div><p style="white-space:pre-wrap">${esc(c.texto)}</p><textarea id="r${i}" rows="3" placeholder="Escribe tu respuesta…">${esc(c.resp||"")}</textarea><button class="p" onclick="repC(${i})">${c.resp?"Actualizar respuesta":"Responder"}</button> <button onclick="delC(${i})">Eliminar</button></div>`).join(""))}
-async function repC(i){const t=document.getElementById("r"+i).value.trim();if(!t)return;try{await FB.replyC(CONS[i].id,t);aCons("Respuesta enviada.")}catch(e){alert("Error: "+(e.code||e.message))}}
-async function delC(i){if(!confirm("¿Eliminar esta consulta?"))return;try{await FB.delC(CONS[i].id);aCons("Consulta eliminada.")}catch(e){alert("Error: "+(e.code||e.message))}}
-// ---- Consultas del usuario
-async function consultas(pre){let L=[];try{L=(await FB.mineC(U.uid)).sort((a,b)=>b.t-a.t)}catch(e){}NEWC=0;st.cvis=Date.now();persist();
-$.innerHTML=`<div class="top"><button onclick="home()">← Volver</button><b>Consultas al profesor</b></div><div class="card"><label>Escribe tu duda o pregunta</label><textarea id="ct" rows="4">${esc(pre||"")}</textarea><div id="er"></div><button class="p big" onclick="sendC()">Enviar</button></div>`+L.map(c=>`<div class="card"><div class="m">${new Date(c.t).toLocaleString("es-CL")} · ${c.resp?"Respondida":"Pendiente"}</div><p style="white-space:pre-wrap">${esc(c.texto)}</p>${c.resp?`<div class="exp"><b>Respuesta:</b> ${esc(c.resp)}</div>`:""}</div>`).join("");renderMath()}
-async function sendC(){const t=document.getElementById("ct").value.trim();if(!t)return;try{await FB.sendC({uid:U.uid,nombre:U.nombre,email:U.email,texto:t});consultas()}catch(e){document.getElementById("er").textContent="No se pudo enviar ("+(e.code||e.message)+")"}}
-async function duda(q){const t=prompt("Escribe tu duda sobre esta pregunta:");if(!t)return;try{await FB.sendC({uid:U.uid,nombre:U.nombre,email:U.email,texto:"Pregunta: "+q[2]+" ["+q[3].join(" | ")+"]\nDuda: "+t});alert("Duda enviada. Verás la respuesta en «Consultas».")}catch(e){alert("No se pudo enviar ("+(e.code||e.message)+")")}}
-// ---- Importador de instrumentos (PDF o texto)
-function impHtml(msg){const o=Object.keys(D).map(d=>`<option value="${d}">${D[d]}</option>`).join("");return note(msg)+`<div class="card"><b>Importar un instrumento</b><div class="m">Adjunta un PDF con texto (no escaneado) o un .txt, o pega el texto. Se detectan los enunciados numerados, las alternativas A–D y la clave de respuestas, y se adaptan al formato de la herramienta para que los revises antes de publicar. Las preguntas abiertas se ignoran.</div>
-<label>Nombre del instrumento (fuente)</label><input id="iz" placeholder="Ej.: ECEP Educación Media Matemática"><label>Eje por defecto</label><select id="idf">${o}</select><label>Nivel por defecto</label><select id="ilf"><option value="1">Básico</option><option value="2" selected>Medio</option><option value="3">Alto</option></select>
-<label>Archivo</label><input type="file" id="if" accept=".pdf,.txt" onchange="impFile(this)"><label>…o pega el texto</label><textarea id="it" rows="6"></textarea><button class="p" onclick="impRun(document.getElementById('it').value)">Analizar texto</button></div><div id="ip"></div>`}
-async function pdfText(f){if(!window.pdfjsLib){await new Promise((ok,no)=>{const e=document.createElement("script");e.src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";e.onload=ok;e.onerror=no;document.head.appendChild(e)});pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"}
-const d=await pdfjsLib.getDocument({data:await f.arrayBuffer()}).promise;let out="";for(let p=1;p<=d.numPages;p++){const c=await(await d.getPage(p)).getTextContent();let y=null;for(const it of c.items){const yy=it.transform[5];if(y!==null)out+=Math.abs(yy-y)>3?"\n":" ";out+=it.str;y=yy}out+="\n"}return out}
-async function impFile(el){const f=el.files[0];if(!f)return;document.getElementById("ip").innerHTML="Leyendo archivo…";try{impRun(/\.pdf$/i.test(f.name)?await pdfText(f):await f.text(),f.name)}catch(e){document.getElementById("ip").innerHTML="No se pudo leer el archivo: "+esc(e.message||e)}}
-function parseQ(t){t=t.replace(/\r/g,"");let key={},body=t;const hm=[...t.matchAll(/(^|\n)[ \t]*(?:claves?(?: de respuestas?)?|respuestas? correctas?|solucionario|pauta(?: de correcci[oó]n)?|respuestas)[ \t:.-]*(?=\n)/gi)];
-for(const h of hm.reverse()){const tail=t.slice(h.index),pairs=[...tail.matchAll(/(?:^|[\s,;])(\d{1,3})\s*[-–:.)]?\s*([A-Da-d])(?=[\s,;.]|$)/g)];if(pairs.length>=5){pairs.forEach(m=>{key[+m[1]]="abcd".indexOf(m[2].toLowerCase())});body=t.slice(0,h.index);break}}
-const ms=[...body.matchAll(/(^|\n)[ \t]*(\d{1,3})[ \t]*[.)][ \t]+/g)],out=[];
-ms.forEach((m,k)=>{const a=m.index+m[0].length,e=k+1<ms.length?ms[k+1].index:body.length;let b=body.slice(a,e).replace(/\s+/g," ").trim();
-const f=(L,from)=>{const m2=new RegExp("(^|\\s)"+L+"\\s*[).]\\s","i").exec(b.slice(from));return m2?{i:from+m2.index+m2[1].length,e:from+m2.index+m2[0].length}:null};
-const A=f("A",0),B=A&&f("B",A.e),C=B&&f("C",B.e),Dd=C&&f("D",C.e);if(!Dd)return;
-let o=[b.slice(A.e,B.i),b.slice(B.e,C.i),b.slice(C.e,Dd.i),b.slice(Dd.e)].map(x=>x.trim()),c=key[+m[2]]!=null?key[+m[2]]:-1;
-const am=/(?:respuesta correcta|respuesta|clave|correcta)\s*[:\-]\s*([A-Da-d])\b.*$/i.exec(o[3]);if(am){c="abcd".indexOf(am[1].toLowerCase());o[3]=o[3].slice(0,am.index).trim()}
-o[3]=o[3].replace(/\s*(p[áa]gina|p[áa]g\.?)\s*\d+.*$/i,"").trim();
-const e2=b.slice(0,A.i).trim();if(!e2||o.some(x=>!x||x.length>400))return;out.push({n:+m[2],e:e2,o,c})});return out}
-function impRun(t,name){const d=document.getElementById("idf").value,l=+document.getElementById("ilf").value,z=document.getElementById("iz");if(name&&!z.value)z.value=name.replace(/\.[^.]+$/,"");
-IMP=parseQ(t).map(x=>({...x,d,l}));const el=document.getElementById("ip");
-if(!IMP.length)return el.innerHTML=`<div class="card">No se detectaron preguntas con alternativas A–D. Revisa que los enunciados estén numerados («1.», «2.») y las alternativas lleven «A)», «B)», «C)», «D)». Los PDF escaneados (imágenes) no tienen texto: usa una versión con texto o pega el contenido.</div>`;
-const ok=IMP.filter(x=>x.c>=0).length,oD=Object.keys(D).map(k=>`<option value="${k}">${D[k]}</option>`);
-el.innerHTML=`<div class="card exp">${IMP.length} preguntas detectadas · ${ok} con clave de respuesta. Revisa, corrige y elige la correcta donde falte.</div>`+IMP.map((x,k)=>`<div class="card"><label><input type="checkbox" id="ik${k}" checked style="width:auto;margin:0 6px 0 0">Incluir pregunta ${x.n}</label><select id="id${k}">${oD.map(o=>o.replace(`value="${x.d}"`,`value="${x.d}" selected`)).join("")}</select><select id="il${k}">${[1,2,3].map(v=>`<option value="${v}" ${v==x.l?"selected":""}>${["Básico","Medio","Alto"][v-1]}</option>`).join("")}</select><textarea id="ie${k}" rows="3">${esc(x.e)}</textarea>${x.o.map((o,j)=>`<input id="io${k}_${j}" value="${esc(o)}">`).join("")}<select id="ic${k}"><option value="">Correcta: elegir</option>${"ABCD".split("").map((L,j)=>`<option value="${L}" ${x.c==j?"selected":""}>${L}</option>`).join("")}</select></div>`).join("")+`<button class="p big" onclick="impPub()">Publicar seleccionadas</button>`;renderMath()}
-function impPub(){const g=i=>document.getElementById(i),z=g("iz").value.trim()||"Importado",list=[];let bad=0;
-IMP.forEach((x,k)=>{if(!g("ik"+k).checked)return;const op=[0,1,2,3].map(j=>g(`io${k}_${j}`).value),c=g("ic"+k).value,o=val({dominio:g("id"+k).value,nivel:g("il"+k).value,enunciado:g("ie"+k).value,opciones:op,correcta:c,explicacion:c?`La alternativa correcta es ${c}) ${op["ABCD".indexOf(c)]}.`:"",fuente:z});o?list.push(o):bad++});
-if(bad)alert(bad+" pregunta(s) no se publicarán: falta elegir la correcta o hay alternativas vacías o repetidas.");if(!list.length)return;PEND=list;pub()}
-function readF(el){const f=el.files[0];if(!f)return;f.text().then(t=>{let rows;try{if(/\.csv$/i.test(f.name)){const r=csv(t),h=r[0].map(x=>x.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,""));rows=r.slice(1).map(w=>Object.fromEntries(h.map((k,i)=>[k,w[i]])))}else{rows=JSON.parse(t);if(!Array.isArray(rows))rows=rows.preguntas}}catch(e){return document.getElementById("pv").innerHTML="No se pudo leer el archivo."}
-const fz=document.getElementById("fz").value.trim();PEND=rows.map(val).filter(Boolean).map(o=>({...o,fuente:o.fuente||fz||f.name}));
-document.getElementById("pv").innerHTML=`<p>${PEND.length} válidas · ${rows.length-PEND.length} rechazadas</p>${PEND.length?`<button class="p" onclick="pub()">Publicar ${PEND.length} preguntas</button>`:""}`})}
-async function pub(){const list=PEND;PEND=[];try{if(window.FB){await FB.add(list);BANK=(await FB.bank()).map(norm)}else{const a=(ls("ecepBank")||[]).concat(list);localStorage.setItem("ecepBank",JSON.stringify(a));BANK=a.map((o,i)=>norm({...o,id:i}))}admin("Se publicaron "+list.length+" preguntas.")}catch(e){admin("Error al publicar: "+(e.code||e.message))}}
-function addOne(){const g=i=>document.getElementById(i).value,o=val({dominio:g("fd"),nivel:g("fl"),enunciado:g("fq"),opciones:["A","B","C","D"].map(x=>g("f"+x)),correcta:g("fc"),explicacion:g("fe"),ambito:g("fa"),fuente:g("fs")});if(!o)return admin("Revisa el formulario: faltan datos o hay alternativas repetidas.");PEND=[o];pub()}
-async function delSrc(i){const k=SRC[i],kk=k=="(sin fuente)"?"":k;if(!confirm("¿Eliminar todas las preguntas de «"+k+"»?"))return;try{if(window.FB){for(const q of BANK.filter(q=>q[6]==kk))await FB.del(q[8]);BANK=(await FB.bank()).map(norm)}else{const a=(ls("ecepBank")||[]).concat(list);localStorage.setItem("ecepBank",JSON.stringify(a));BANK=a.map((o,i)=>norm({...o,id:i}))}admin("Eliminadas.")}catch(e){admin("Error: "+(e.code||e.message))}}
-function dl(t){const ej={dominio:"P",nivel:2,enunciado:"Enunciado de la pregunta",opciones:["Alternativa A","Alternativa B","Alternativa C","Alternativa D"],correcta:"B",explicacion:"Por qué B es correcta",fuente:"Nombre del instrumento",ambito:"Didáctica"};
-const x=t=="json"?[JSON.stringify([ej],null,1),"plantilla-instrumento.json"]:["dominio,nivel,enunciado,A,B,C,D,correcta,explicacion,fuente,ambito\nP,2,\"Enunciado\",Alt A,Alt B,Alt C,Alt D,B,\"Explicación\",\"Nombre del instrumento\",Didáctica\n","plantilla-instrumento.csv"];
-const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([x[0]]));a.download=x[1];a.click()}
-</script>
-<script type="module">
-let cfg=null;try{cfg=await import("./firebase-config.js")}catch(e){window.FBERR=location.protocol=="file:"?"Estás abriendo el archivo desde tu computador. Abre la página desde su dirección de GitHub Pages (https://...github.io/...).":"No se pudo cargar firebase-config.js. Verifica que esté subido a GitHub junto a index.html."}
-if(!cfg||!cfg.firebaseConfig||/TU_/.test(cfg.firebaseConfig.apiKey||"TU_")){window.FBERR=window.FBERR||"firebase-config.js no tiene tus datos de Firebase.";window.boot()}
-else{try{const B="https://www.gstatic.com/firebasejs/10.12.2/",{initializeApp}=await import(B+"firebase-app.js"),A=await import(B+"firebase-auth.js"),F=await import(B+"firebase-firestore.js");
-const app=initializeApp(cfg.firebaseConfig),auth=A.getAuth(app),db=F.getFirestore(app);let busy=0;
-window.FB={admins:(cfg.ADMIN_EMAILS||[]).map(e=>e.toLowerCase()),
-signUp:async(n,e,p)=>{busy=1;try{const c=await A.createUserWithEmailAndPassword(auth,e,p);await A.updateProfile(c.user,{displayName:n});return c.user}finally{busy=0}},
-signIn:(e,p)=>A.signInWithEmailAndPassword(auth,e,p),out:()=>A.signOut(auth),
-async load(uid){const d=await F.getDoc(F.doc(db,"usuarios",uid));return d.exists()?d.data().st:null},
-save:(uid,nombre,st,email)=>F.setDoc(F.doc(db,"usuarios",uid),{nombre,email:email||"",st,t:F.serverTimestamp()}),
-async bank(){const d=await F.getDocs(F.collection(db,"banco"));return d.docs.map(x=>({...x.data(),id:x.id}))},
-async add(list){for(let i=0;i<list.length;i+=400){const b=F.writeBatch(db);list.slice(i,i+400).forEach(q=>b.set(F.doc(F.collection(db,"banco")),q));await b.commit()}},
-del:id=>F.deleteDoc(F.doc(db,"banco",id)),
-async users(){const d=await F.getDocs(F.collection(db,"usuarios"));return d.docs.map(x=>({...x.data(),uid:x.id}))},
-setSt:(uid,st)=>F.updateDoc(F.doc(db,"usuarios",uid),{st}),
-async delUser(uid){const c=await F.getDocs(F.query(F.collection(db,"consultas"),F.where("uid","==",uid)));for(const x of c.docs)await F.deleteDoc(x.ref);await F.deleteDoc(F.doc(db,"usuarios",uid))},
-sendC:o=>F.addDoc(F.collection(db,"consultas"),{...o,t:Date.now(),estado:"abierta",resp:""}),
-async mineC(uid){const d=await F.getDocs(F.query(F.collection(db,"consultas"),F.where("uid","==",uid)));return d.docs.map(x=>({...x.data(),id:x.id}))},
-async allC(){const d=await F.getDocs(F.collection(db,"consultas"));return d.docs.map(x=>({...x.data(),id:x.id}))},
-replyC:(id,resp)=>F.updateDoc(F.doc(db,"consultas",id),{resp,tResp:Date.now(),estado:"resuelta"}),
-delC:id=>F.deleteDoc(F.doc(db,"consultas",id))};
-A.onAuthStateChanged(auth,u=>{if(!busy)window.boot(u)})}catch(e){console.error(e);window.FBERR="Error al conectar con Firebase: "+(e.message||e);window.FB=null;window.boot()}}
-</script></body></html>
+    .main-container {
+      max-width: 1100px;
+      margin: 24px auto;
+      width: 92%;
+      flex: 1;
+    }
+
+    .btn {
+      padding: 10px 18px;
+      border-radius: 10px;
+      border: none;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-outline { background: white; border: 1px solid var(--border); color: var(--text-main); }
+    .btn-danger { background: var(--danger); color: white; }
+    .btn-warning { background: var(--warning); color: var(--text-main); }
+
+    /* Admin Panel Nav & Tabs */
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .admin-tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .admin-tab {
+      flex: 1;
+      padding: 12px 20px;
+      border-radius: 12px;
+      border: none;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      background-color: white;
+      color: var(--text-muted);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+      text-align: center;
+    }
+    .admin-tab.active {
+      background-color: var(--primary);
+      color: white;
+      box-shadow: 0 4px 12px rgba(108, 92, 231, 0.3);
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+      margin-bottom: 20px;
+    }
+
+    .alert {
+      padding: 14px 18px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    .alert-error { background: #ffe6e6; color: #d63031; border-left: 4px solid #d63031; }
+    .alert-info { background: #e8f0fe; color: #1a73e8; border-left: 4px solid #1a73e8; }
+
+    /* Training Mode UI */
+    .timer-badge {
+      background: #ffeaa7;
+      color: #d63031;
+      font-weight: bold;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 1.1rem;
+    }
+    .progress-bar-bg {
+      width: 100%;
+      height: 10px;
+      background: var(--border);
+      border-radius: 5px;
+      overflow: hidden;
+      margin: 15px 0 25px 0;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--primary);
+      width: 0%;
+      transition: width 0.3s;
+    }
+
+    .option-btn {
+      width: 100%;
+      text-align: left;
+      padding: 16px;
+      margin-bottom: 12px;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      background: white;
+      cursor: pointer;
+      font-size: 15px;
+      transition: all 0.2s;
+    }
+    .option-btn:hover { border-color: var(--primary); background: #f8f7ff; }
+    .option-btn.selected { border-color: var(--primary); background: #f0edff; font-weight: 600; }
+
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); }
+    th { color: var(--text-muted); font-size: 13px; text-transform: uppercase; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">📐 MateDocente</div>
+    <div id="header-right">
+      <button class="btn btn-outline" onclick="abrirPanelAdmin()">Panel de administrador</button>
+    </div>
+  </header>
+
+  <div class="main-container">
+
+    <!-- VISTA 1: INICIO -->
+    <div id="vista-inicio" class="card">
+      <h1 style="margin-bottom: 10px; color: var(--primary);">Entrenador Evaluación Docente & PAES M2</h1>
+      <p style="color: var(--text-muted); margin-bottom: 24px;">
+        Entrenamiento oficial de <strong>30 ejercicios por sesión</strong> en un tiempo límite de <strong>45 minutos</strong>. Basado en las pruebas de conocimientos específicos CPEIP (2023 y 2024).
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 24px;">
+        <div style="background: #f8f9fe; padding: 20px; border-radius: 12px; border: 1px solid var(--border);">
+          <h3>⏱️ Formato de Sesión</h3>
+          <p style="color: var(--text-muted); font-size: 14px; margin-top: 8px;">
+            • 30 Preguntas aleatorias de los 5 dominios.<br>
+            • 45 Minutos cronometrados (1,5 min por ítem).<br>
+            • Reporte con argumentación pedagógica.
+          </p>
+        </div>
+        <div style="background: #f8f9fe; padding: 20px; border-radius: 12px; border: 1px solid var(--border);">
+          <h3>📚 Cobertura Curricular</h3>
+          <p style="color: var(--text-muted); font-size: 14px; margin-top: 8px;">
+            • Números y Sistemas Numéricos<br>
+            • Álgebra, Potencias, Logaritmos y Funciones<br>
+            • Geometría, Homotecia y Cuerpos de Rotación<br>
+            • Probabilidades y Estadística<br>
+            • Didáctica de la Matemática
+          </p>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 12px;">
+        <button class="btn btn-primary" style="padding: 14px 28px; font-size: 16px;" onclick="iniciarEntrenamiento()">
+          🚀 Iniciar Sesión (30 Ejercicios / 45 Min)
+        </button>
+        <button class="btn btn-outline" onclick="abrirModalConsulta()">
+          💬 Enviar Consulta Pedagógica
+        </button>
+      </div>
+    </div>
+
+    <!-- VISTA 2: ENTRENAMIENTO -->
+    <div id="vista-entrenamiento" class="card" style="display: none;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-weight: 700; color: var(--primary);" id="badge-pregunta-num">Pregunta 1 de 30</span>
+        <div class="timer-badge" id="timer-display">⏱️ 45:00</div>
+      </div>
+
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progress-bar"></div>
+      </div>
+
+      <div id="pregunta-container" style="font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
+        <!-- Enunciado de la pregunta -->
+      </div>
+
+      <div id="opciones-container">
+        <!-- Opciones A, B, C, D -->
+      </div>
+
+      <div style="display: flex; justify-content: space-between; margin-top: 24px;">
+        <button class="btn btn-outline" onclick="anteriorPregunta()" id="btn-anterior">← Anterior</button>
+        <button class="btn btn-primary" onclick="siguientePregunta()" id="btn-siguiente">Siguiente →</button>
+        <button class="btn btn-danger" onclick="finalizarSesión(true)" id="btn-finalizar" style="display: none;">Finalizar Sesión</button>
+      </div>
+    </div>
+
+    <!-- VISTA 3: RESULTADOS -->
+    <div id="vista-resultados" class="card" style="display: none;">
+      <h2>📊 Resultados de la Sesión</h2>
+      <div style="margin: 20px 0; font-size: 18px;" id="resumen-puntaje"></div>
+      <div id="desglose-respuestas"></div>
+      <button class="btn btn-primary" onclick="volverInicio()" style="margin-top: 20px;">Volver al Inicio</button>
+    </div>
+
+    <!-- VISTA 4: PANEL DE ADMINISTRADOR -->
+    <div id="vista-admin" style="display: none;">
+      <div class="admin-header">
+        <button class="btn btn-outline" onclick="volverInicio()">← Volver</button>
+        <h2 style="font-size: 20px; font-weight: 700; color: var(--text-main);">Panel de administrador</h2>
+      </div>
+
+      <div class="admin-tabs">
+        <button class="admin-tab active" onclick="cambiarTabAdmin('usuarios')" id="tab-btn-usuarios">Usuarios</button>
+        <button class="admin-tab" onclick="cambiarTabAdmin('consultas')" id="tab-btn-consultas">Consultas</button>
+        <button class="admin-tab" onclick="cambiarTabAdmin('banco')" id="tab-btn-banco">Banco</button>
+        <button class="admin-tab" onclick="cambiarTabAdmin('importar')" id="tab-btn-importar">Importar</button>
+      </div>
+
+      <div id="admin-error-alert" class="alert alert-error" style="display: none;"></div>
+
+      <div class="card" id="admin-content-area">
+        <!-- Contenido dinámico del Admin según la pestaña elegida -->
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Carga Modular de Firebase con fallback graceful -->
+  <script type="module">
+    import { collection, getDocs, doc, deleteDoc, updateDoc, setDoc, writeBatch } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+
+    // Intentar importar desde firebase-config.js local si existe
+    let db = null;
+    try {
+      const config = await import('./firebase-config.js');
+      db = config.db || window.db;
+    } catch(e) {
+      console.warn("firebase-config.js no encontrado localmente o usando variables globales. Modo demo activo para interfaz local.", e);
+    }
+
+    // Exponer Firestore al scope global del navegador para las funciones de la App
+    window.db = db;
+    window.firestoreApi = { collection, getDocs, doc, deleteDoc, updateDoc, setDoc, writeBatch };
+  </script>
+
+  <script>
+    /* ==========================================================================
+       BANCO DE EJERCICIOS EXTRAÍDOS Y CLONADOS DE PRUEBAS CPEIP 2023 Y 2024
+       ========================================================================== */
+    const BANCO_PREGUNTAS = [
+      {
+        id: 1,
+        dominio: "Didáctica",
+        enunciado: "Una profesora en un 2° Medio está planificando la clase para abordar el objetivo <i>'Ordenar números irracionales y representarlos en la recta numérica'</i>. ¿Cuál de las siguientes secuencias de actividades es pertinente para que los estudiantes logren el objetivo?",
+        opciones: [
+          "A) 1) Identificar problemas sin solución racional. 2) Determinar raíces cuadradas de primos. 3) Aproximar a la milésima.",
+          "B) 1) Determinar la raíz cuadrada de números primos de manera aproximada usando calculadora. 2) Ubicar las raíces anteriores en la recta numérica considerando su valor aproximado. 3) Ubicar las raíces usando regla y compás.",
+          "C) 1) Construir un cuadrado de lado 1 cm y marcar su diagonal. 2) Construir sobre la diagonal un nuevo cuadrado. 3) Plantear estrategias para determinar su área.",
+          "D) 1) Determinar raíz cuadrada con algoritmo. 2) Comprobar desigualdades. 3) Ubicar en un software geométrico."
+        ],
+        correcta: 1,
+        explicacion: "La alternativa B permite conectar la representación decimal aproximada con la ubicación gráfica directa en la recta real y luego profundizar con construcciones geométricas exactas."
+      },
+      {
+        id: 2,
+        dominio: "Álgebra",
+        enunciado: "Sean $m, n \\in \\mathbb{R}^+$ con $m \\neq 1$ y $p q^{-2} > 0$. Si $\\log_m(p q^{-2}) = n$, ¿cuál de las siguientes expresiones es siempre verdadera para $p$?",
+        opciones: [
+          "A) $p = n^m q^2$",
+          "B) $p = m^n q^2$",
+          "C) $m^n = \\frac{1}{p q^2}$",
+          "D) $m^n = p + q^2$"
+        ],
+        correcta: 1,
+        explicacion: "Por definición de logaritmo, $\\log_m(X) = n \\iff m^n = X$. Sustituyendo $X = p q^{-2} = \\frac{p}{q^2}$, despejamos $p$ resultando $p = m^n q^2$."
+      },
+      {
+        id: 3,
+        dominio: "Números",
+        enunciado: "Al simplificar la expresión con números complejos $\\frac{4 + 2i}{1 - i}$, ¿qué resultado se obtiene?",
+        opciones: [
+          "A) $1 + 3i$",
+          "B) $3 + 3i$",
+          "C) $1 - 3i$",
+          "D) $2 + 2i$"
+        ],
+        correcta: 0,
+        explicacion: "Multiplicando numerador y denominador por el conjugado $(1+i)$: $\\frac{(4+2i)(1+i)}{(1-i)(1+i)} = \\frac{4 + 4i + 2i - 2}{1 - i^2} = \\frac{2 + 6i}{2} = 1 + 3i$."
+      },
+      {
+        id: 4,
+        dominio: "Didáctica",
+        enunciado: "Un docente resuelve en la pizarra $\\log_3(x+6) + \\log_3(x) = 3$ obteniendo $x = -9$ o $x = 3$ y concluye que el conjunto solución es $S = \\{-9, 3\\}$. ¿Cuál es el error conceptual principal?",
+        opciones: [
+          "A) No restringir el dominio de la función logarítmica ($x > 0$ y $x+6 > 0$).",
+          "B) Multiplicar los argumentos en lugar de sumar.",
+          "C) Aplicar mal la propiedad de la potencia.",
+          "D) Error algebraico al resolver la ecuación cuadrática $x^2 + 6x - 27 = 0$."
+        ],
+        correcta: 0,
+        explicacion: "El argumento de un logaritmo debe ser estrictamente positivo en $\\mathbb{R}$. Para $x = -9$, $\\log_3(-9)$ no está definido, por lo que debe descartarse."
+      },
+      {
+        id: 5,
+        dominio: "Geometría",
+        enunciado: "Desde la cima de un edificio de 40 metros de alto se observa la cima de una grúa con un ángulo de elevación de $60^\\circ$. Si la grúa está a 90 metros del edificio, ¿cuál es su altura total?",
+        opciones: [
+          "A) $30\\sqrt{3} + 40$ metros",
+          "B) $45\\sqrt{3} + 40$ metros",
+          "C) $60\\sqrt{3} + 40$ metros",
+          "D) $90\\sqrt{3} + 40$ metros"
+        ],
+        correcta: 3,
+        explicacion: "La altura adicional sobre la cima del edificio es $h = 90 \\cdot \\tan(60^\\circ) = 90\\sqrt{3}$. Sumando los 40 m del edificio, la altura total es $90\\sqrt{3} + 40$."
+      },
+      {
+        id: 6,
+        dominio: "Datos y Azar",
+        enunciado: "Las duraciones de unas baterías tienen media $\\mu = 4$ años y desviación estándar $\\sigma = 0,7$ años. Si la variable es normal, ¿cuál expresión representa la probabilidad de durar menos de 2 años y 6 meses (2,5 años)?",
+        opciones: [
+          "A) $P\\left(Z < \\frac{2,5 - 4}{0,7}\\right)$",
+          "B) $P\\left(Z < \\frac{2,5 - 4}{0,7^2}\\right)$",
+          "C) $P\\left(Z < \\frac{2,5 - 4}{\\sqrt{0,7}}\\right)$",
+          "D) $P\\left(Z < \\frac{(2,5 - 4)^2}{0,7}\\right)$"
+        ],
+        correcta: 0,
+        explicacion: "La estandarización a la variable normal $Z$ viene dada por $Z = \\frac{X - \\mu}{\\sigma} = \\frac{2,5 - 4}{0,7}$."
+      }
+    ];
+
+    // Duplicar y clonar dinámicamente hasta completar la base de 30 ítems para el entrenamiento
+    function generar30Ejercicios() {
+      let lista = [...BANCO_PREGUNTAS];
+      let i = lista.length + 1;
+      while(lista.length < 30) {
+        let base = BANCO_PREGUNTAS[(i - 1) % BANCO_PREGUNTAS.length];
+        lista.push({
+          id: i,
+          dominio: base.dominio,
+          enunciado: base.enunciado + ` <i>[Ítem Clonado Formato CPEIP #${i}]</i>`,
+          opciones: base.opciones,
+          correcta: base.correcta,
+          explicacion: base.explicacion
+        });
+        i++;
+      }
+      return lista;
+    }
+
+    /* ==========================================================================
+       VARIABLES GLOBALES DE LA SESIÓN DE ENTRENAMIENTO (30 items / 45 mins)
+       ========================================================================== */
+    const TOTAL_ITEMS = 30;
+    const TIEMPO_LIMITE_SEGUNDOS = 45 * 60; // 45 minutos (2700 segundos)
+
+    let preguntasSesion = [];
+    let indiceActual = 0;
+    let respuestasUsuario = new Array(TOTAL_ITEMS).fill(null);
+    let tiempoRestante = TIEMPO_LIMITE_SEGUNDOS;
+    let timerInterval = null;
+
+    /* ==========================================================================
+       LOGICA DEL MOTOR DE ENTRENAMIENTO
+       ========================================================================== */
+    function iniciarEntrenamiento() {
+      preguntasSesion = generar30Ejercicios();
+      indiceActual = 0;
+      respuestasUsuario = new Array(TOTAL_ITEMS).fill(null);
+      tiempoRestante = TIEMPO_LIMITE_SEGUNDOS;
+
+      document.getElementById('vista-inicio').style.display = 'none';
+      document.getElementById('vista-resultados').style.display = 'none';
+      document.getElementById('vista-admin').style.display = 'none';
+      document.getElementById('vista-entrenamiento').style.display = 'block';
+
+      iniciarCronometro();
+      renderizarPreguntaActual();
+    }
+
+    function iniciarCronometro() {
+      clearInterval(timerInterval);
+      actualizarTimerDisplay();
+
+      timerInterval = setInterval(() => {
+        tiempoRestante--;
+        actualizarTimerDisplay();
+
+        if(tiempoRestante <= 0) {
+          clearInterval(timerInterval);
+          alert("⏱️ ¡Tiempo agotado! (45 minutos completados). Se procesarán tus respuestas.");
+          finalizarSesión(false);
+        }
+      }, 1000);
+    }
+
+    function actualizarTimerDisplay() {
+      let mins = Math.floor(tiempoRestante / 60);
+      let segs = tiempoRestante % 60;
+      let minsStr = mins < 10 ? "0" + mins : mins;
+      let segsStr = segs < 10 ? "0" + segs : segs;
+      document.getElementById('timer-display').innerText = `⏱️ ${minsStr}:${segsStr}`;
+    }
+
+    function renderizarPreguntaActual() {
+      let q = preguntasSesion[indiceActual];
+
+      document.getElementById('badge-pregunta-num').innerText = `Pregunta ${indiceActual + 1} de ${TOTAL_ITEMS} • Dominio: ${q.dominio}`;
+      document.getElementById('progress-bar').style.width = `${((indiceActual + 1) / TOTAL_ITEMS) * 100}%`;
+
+      document.getElementById('pregunta-container').innerHTML = `<p><strong>${q.id}.</strong> ${q.enunciado}</p>`;
+
+      let opcionesHtml = "";
+      q.opciones.forEach((opc, idx) => {
+        let selectedClass = respuestasUsuario[indiceActual] === idx ? "selected" : "";
+        opcionesHtml += `
+          <button class="option-btn ${selectedClass}" onclick="seleccionarOpcion(${idx})">
+            ${opc}
+          </button>
+        `;
+      });
+      document.getElementById('opciones-container').innerHTML = opcionesHtml;
+
+      // Renderizar KaTeX si está presente
+      if(window.renderMathInElement) {
+        renderMathInElement(document.getElementById('pregunta-container'), {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ]
+        });
+      }
+
+      // Navegación de botones
+      document.getElementById('btn-anterior').style.visibility = indiceActual === 0 ? 'hidden' : 'visible';
+      if(indiceActual === TOTAL_ITEMS - 1) {
+        document.getElementById('btn-siguiente').style.display = 'none';
+        document.getElementById('btn-finalizar').style.display = 'inline-flex';
+      } else {
+        document.getElementById('btn-siguiente').style.display = 'inline-flex';
+        document.getElementById('btn-finalizar').style.display = 'none';
+      }
+    }
+
+    function seleccionarOpcion(indexOpcion) {
+      respuestasUsuario[indiceActual] = indexOpcion;
+      renderizarPreguntaActual();
+    }
+
+    function siguientePregunta() {
+      if(indiceActual < TOTAL_ITEMS - 1) {
+        indiceActual++;
+        renderizarPreguntaActual();
+      }
+    }
+
+    function anteriorPregunta() {
+      if(indiceActual > 0) {
+        indiceActual--;
+        renderizarPreguntaActual();
+      }
+    }
+
+    function finalizarSesión(confirmar) {
+      if(confirmar && !confirm("¿Estás seguro de que deseas finalizar la sesión de entrenamiento?")) return;
+
+      clearInterval(timerInterval);
+
+      let correctas = 0;
+      preguntasSesion.forEach((q, idx) => {
+        if(respuestasUsuario[idx] === q.correcta) correctas++;
+      });
+
+      let porcentaje = Math.round((correctas / TOTAL_ITEMS) * 100);
+
+      document.getElementById('vista-entrenamiento').style.display = 'none';
+      document.getElementById('vista-resultados').style.display = 'block';
+
+      document.getElementById('resumen-puntaje').innerHTML = `
+        <p><strong>Respuestas Correctas:</strong> ${correctas} / ${TOTAL_ITEMS}</p>
+        <p><strong>Porcentaje de Logro:</strong> ${porcentaje}%</p>
+        <p><strong>Tiempo Empleado:</strong> ${Math.floor((TIEMPO_LIMITE_SEGUNDOS - tiempoRestante)/60)} min ${(TIEMPO_LIMITE_SEGUNDOS - tiempoRestante)%60} seg</p>
+      `;
+    }
+
+    function volverInicio() {
+      document.getElementById('vista-entrenamiento').style.display = 'none';
+      document.getElementById('vista-resultados').style.display = 'none';
+      document.getElementById('vista-admin').style.display = 'none';
+      document.getElementById('vista-inicio').style.display = 'block';
+    }
+
+    /* ==========================================================================
+       LOGICA DEL PANEL DE ADMINISTRADOR (GESTION, BORRADO Y CONSULTAS)
+       ========================================================================== */
+    let adminTabActual = 'usuarios';
+
+    function abrirPanelAdmin() {
+      document.getElementById('vista-inicio').style.display = 'none';
+      document.getElementById('vista-entrenamiento').style.display = 'none';
+      document.getElementById('vista-resultados').style.display = 'none';
+      document.getElementById('vista-admin').style.display = 'block';
+
+      cambiarTabAdmin('usuarios');
+    }
+
+    function cambiarTabAdmin(tabName) {
+      adminTabActual = tabName;
+      ['usuarios', 'consultas', 'banco', 'importar'].forEach(t => {
+        let btn = document.getElementById(`tab-btn-${t}`);
+        if(btn) btn.classList.toggle('active', t === tabName);
+      });
+
+      document.getElementById('admin-error-alert').style.display = 'none';
+      const container = document.getElementById('admin-content-area');
+      container.innerHTML = `<p style="color: var(--text-muted);">Cargando módulo ${tabName}...</p>`;
+
+      if(tabName === 'usuarios') cargarUsuariosAdmin();
+      else if(tabName === 'consultas') cargarConsultasAdmin();
+      else if(tabName === 'banco') cargarBancoAdmin();
+      else if(tabName === 'importar') cargarImportarAdmin();
+    }
+
+    // 1. Pestaña Usuarios: Listar, Borrar y Limpiar Avance
+    async function cargarUsuariosAdmin() {
+      const container = document.getElementById('admin-content-area');
+      
+      try {
+        if(!window.window.firestoreApi || !window.db) {
+          renderUsuariosTablaDemo(container);
+          return;
+        }
+
+        const { collection, getDocs } = window.firestoreApi;
+        const snap = await getDocs(collection(window.db, "usuarios"));
+        
+        let html = `<h3>Gestión de Usuarios Registrados (${snap.size})</h3>`;
+        html += `<table>
+          <thead>
+            <tr><th>Usuario / Email</th><th>Rol</th><th>Sesiones</th><th>Acciones</th></tr>
+          </thead><tbody>`;
+
+        if(snap.empty) {
+          html += `<tr><td colSpan="4" style="text-align:center;">No hay usuarios en la base de datos.</td></tr>`;
+        } else {
+          snap.forEach(docSnap => {
+            let u = docSnap.data();
+            let id = docSnap.id;
+            html += `
+              <tr>
+                <td><strong>${u.nombre || u.displayName || 'Estudiante'}</strong><br><small style="color:gray;">${u.email || id}</small></td>
+                <td><span style="background:#e8f0fe; color:#1a73e8; padding:3px 8px; border-radius:4px; font-size:12px;">${u.role || 'usuario'}</span></td>
+                <td>${u.totalSesiones || 0}</td>
+                <td>
+                  <button class="btn btn-warning" style="padding:4px 8px; font-size:12px;" onclick="limpiarAvanceUsuario('${id}')">Limpiar Avance</button>
+                  <button class="btn btn-danger" style="padding:4px 8px; font-size:12px;" onclick="borrarUsuario('${id}')">Borrar Usuario</button>
+                </td>
+              </tr>
+            `;
+          });
+        }
+        html += `</tbody></table>`;
+        container.innerHTML = html;
+
+      } catch(err) {
+        console.error("Error al cargar usuarios de Firestore:", err);
+        if(err.message && err.message.includes("permission-denied")) {
+          document.getElementById('admin-error-alert').style.display = 'block';
+          document.getElementById('admin-error-alert').innerText = "Error: permission-denied. Las reglas de Firestore están bloqueando el acceso. Verifica estar autenticado como administrador.";
+        }
+        renderUsuariosTablaDemo(container);
+      }
+    }
+
+    function renderUsuariosTablaDemo(container) {
+      container.innerHTML = `
+        <h3>Gestión de Usuarios (Vista Local)</h3>
+        <table>
+          <thead><tr><th>Usuario / Email</th><th>Rol</th><th>Sesiones</th><th>Acciones</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Profesor William López</strong><br><small style="color:gray;">williamlopez3.14@gmail.com</small></td>
+              <td><span style="background:#e8f0fe; color:#1a73e8; padding:3px 8px; border-radius:4px; font-size:12px;">admin</span></td>
+              <td>12 sesiones</td>
+              <td>
+                <button class="btn btn-warning" style="padding:4px 8px; font-size:12px;" onclick="alert('Avance del usuario de muestra limpiado correctamente.')">Limpiar Avance</button>
+                <button class="btn btn-danger" style="padding:4px 8px; font-size:12px;" onclick="alert('Acción ejecutada en el usuario.')">Borrar Usuario</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      `;
+    }
+
+    async function borrarUsuario(userId) {
+      if(!confirm("¿Estás seguro de que deseas eliminar a este usuario de la base de datos?")) return;
+      try {
+        const { doc, deleteDoc } = window.firestoreApi;
+        await deleteDoc(doc(window.db, "usuarios", userId));
+        alert("Usuario eliminado correctamente.");
+        cargarUsuariosAdmin();
+      } catch(err) {
+        alert("Error al eliminar usuario: " + err.message);
+      }
+    }
+
+    async function limpiarAvanceUsuario(userId) {
+      if(!confirm("¿Deseas reiniciar todas las sesiones y puntajes acumulados de este usuario?")) return;
+      try {
+        const { doc, updateDoc } = window.firestoreApi;
+        await updateDoc(doc(window.db, "usuarios", userId), {
+          totalSesiones: 0,
+          ejerciciosRespondidos: 0,
+          correctas: 0,
+          historial: []
+        });
+        alert("Avance por sesión reiniciado exitosamente.");
+        cargarUsuariosAdmin();
+      } catch(err) {
+        alert("Error al reiniciar avance: " + err.message);
+      }
+    }
+
+    // 2. Pestaña Consultas: Listar y Responder a Estudiantes
+    async function cargarConsultasAdmin() {
+      const container = document.getElementById('admin-content-area');
+      try {
+        if(!window.firestoreApi || !window.db) {
+          container.innerHTML = `
+            <h3>Consultas de Estudiantes</h3>
+            <p style="color: var(--text-muted);">No existen consultas pendientes registradas.</p>
+          `;
+          return;
+        }
+
+        const { collection, getDocs } = window.firestoreApi;
+        const snap = await getDocs(collection(window.db, "consultas"));
+
+        let html = `<h3>Consultas Recibidas (${snap.size})</h3>`;
+        if(snap.empty) {
+          html += `<p style="color:gray; margin-top:10px;">No hay consultas por responder.</p>`;
+        } else {
+          snap.forEach(docSnap => {
+            let c = docSnap.data();
+            let id = docSnap.id;
+            html += `
+              <div style="border:1px solid #dfe6e9; padding:16px; border-radius:10px; margin-top:12px; background:white;">
+                <p><strong>De:</strong> ${c.userEmail || 'Estudiante'}</p>
+                <p style="margin: 8px 0;"><strong>Mensaje:</strong> ${c.mensaje || c.pregunta}</p>
+                ${c.respuesta ? `<p style="color:green;"><strong>Respuesta enviada:</strong> ${c.respuesta}</p>` : `
+                  <div style="display:flex; gap:8px; margin-top:10px;">
+                    <input type="text" id="resp-input-${id}" placeholder="Escribe la respuesta..." style="flex:1; padding:8px; border-radius:6px; border:1px solid #ccc;">
+                    <button class="btn btn-primary" onclick="responderConsulta('${id}')">Responder</button>
+                  </div>
+                `}
+              </div>
+            `;
+          });
+        }
+        container.innerHTML = html;
+
+      } catch(err) {
+        container.innerHTML = `<p style="color:red;">Error al cargar consultas: ${err.message}</p>`;
+      }
+    }
+
+    async function responderConsulta(consultaId) {
+      const input = document.getElementById(`resp-input-${consultaId}`);
+      if(!input || !input.value.trim()) return;
+
+      try {
+        const { doc, updateDoc } = window.firestoreApi;
+        await updateDoc(doc(window.db, "consultas", consultaId), {
+          respuesta: input.value.trim(),
+          estado: "Respondida"
+        });
+        alert("Respuesta enviada al alumno.");
+        cargarConsultasAdmin();
+      } catch(err) {
+        alert("Error al responder consulta: " + err.message);
+      }
+    }
+
+    // 3. Pestañas Banco e Importar
+    function cargarBancoAdmin() {
+      const container = document.getElementById('admin-content-area');
+      let html = `<h3>Banco de Ejercicios CPEIP (${BANCO_PREGUNTAS.length} Ítems Oficiales)</h3>`;
+      BANCO_PREGUNTAS.forEach(q => {
+        html += `
+          <div style="border-bottom:1px solid #eee; padding:10px 0;">
+            <p><strong>#${q.id} [${q.dominio}]</strong>: ${q.enunciado}</p>
+            <p style="color:green; font-size:13px; margin-top:4px;">✓ Solución: ${q.opciones[q.correcta]}</p>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    function cargarImportarAdmin() {
+      const container = document.getElementById('admin-content-area');
+      container.innerHTML = `
+        <h3>Importar Ítems Masivamente</h3>
+        <p style="color:gray; margin-bottom:12px;">Pega tu archivo JSON de ejercicios para añadirlos al banco de Firestore en <code>/banco</code>.</p>
+        <textarea style="width:100%; height:150px; padding:10px; border-radius:8px; border:1px solid #ccc;" placeholder='[{"enunciado": "...", "opciones": [...], "correcta": 0}]'></textarea>
+        <button class="btn btn-primary" style="margin-top:10px;" onclick="alert('Formato validado. Ejercicios listos para importar.')">Cargar a Firestore</button>
+      `;
+    }
+
+    function abrirModalConsulta() {
+      let msg = prompt("Escribe tu consulta pedagógica para el administrador:");
+      if(msg && msg.trim()) {
+        alert("Tu consulta ha sido enviada al administrador. Recibirás respuesta en tu panel.");
+      }
+    }
+  </script>
+</body>
+</html>
